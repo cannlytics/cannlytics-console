@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<!-- Invoicing Page -->
+<!-- Created 12/18/2020 -->
+{% extends "cannlytics_console/console.html" %}
+{% block console_body %}
+
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="fs-5 mb-0 lh-base">Invoicing</h1>
+    </div>
+
+    <!-- Invoicing Table -->
+    <!-- TODO: Populate latest from organizations/{id}/transfers/{id}-->
+    <div class="col">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <h2 class="h6 my-3">Invoices</h2>
+        </div>
+        <div class="d-flex align-items-center text-dark">
+          <form
+            id="search-transfers"
+            class="d-flex px-2"
+            role="search"
+            style="width:unset;"
+          >
+            <input
+              type="text"
+              class="table-search-input form-control form-control-sm"
+              placeholder="Search"
+              aria-label="Search"
+              name="transfer"
+              style="width:unset;"
+            >
+            <button
+              type="submit"
+              id="search-transfers-button"
+              class="nav-search-button btn btn-sm btn-default p-0"
+              style="transform:translateX(-32px);width:0;"
+            >
+              <span data-feather="search"></span>
+            </button>
+          </form>
+          <div class="dropdown">
+            <button
+              type="button"
+              data-toggle="dropdown"
+              aria-expanded="false"
+              id="dropdown-time-transfers"
+              class="btn btn-sm btn-outline-secondary dropdown-toggle"
+            >
+              This week
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-time-transfers">
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">Yesterday</a></li>
+              <li><a class="dropdown-item" href="#">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="#">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="#">Last 90 days</a></li>
+              <li><a class="dropdown-item" href="#">Custom</a></li>
+            </ul>
+          </div>
+          <a
+            type="button"
+            class="btn btn-sm btn-outline-secondary ml-2"
+            href="/intake/transfer"
+          >
+            New
+          </a>
+        </div>
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Client</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>OpenTHC</td>
+            <td>In-Transit</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>OpenTHC</td>
+            <td>Received</td>
+          </tr>
+        </tbody>
+      </table><!-- End of transfers table -->
+    </div>
+
+  </main>
+
+{% endblock console_body %}
+
+<!-- Invoicing JavaScript -->
+{% block console_js %}
+  <script>
+    {% comment %} cannlytics.intake.initialize(); {% endcomment %}
+  </script>
+{% endblock console_js %}
+
+</html>
