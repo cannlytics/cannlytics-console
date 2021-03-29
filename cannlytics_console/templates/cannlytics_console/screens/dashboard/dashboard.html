@@ -4,11 +4,51 @@
 <!-- Created 11/26/2020 Thanksgiving Day -->
 {% extends "cannlytics_console/console.html" %}
 {% block console_body %}
-
+{% load static %}
   <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
+    <!-- Welcome message (Only show to new users) -->
+    <div class="mt-5">
+      <h1 class="fs-2">{{ dashboard.welcome_message.title }}</h1>
+      <p class="fs-6 text-secondary">{{ dashboard.welcome_message.message }}<p>
+    </div>
+
+    <!-- Get started cards -->
+    <h1 class="fs-5 mb-0 lh-base mt-4 mb-3">Get started with Cannlytics</h1>
+    <div class="row row-cols-1 row-cols-lg-3 g-4 mb-5">
+      {% for item in dashboard.organization_choices %}
+        <div class="col-6 col--4 my-3">
+          <div
+            class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
+            style="max-width: 375px;"
+          >
+            <a
+              class="card-block stretched-link text-decoration-none"
+              href="/get-started/profile/?type={{ item.type }}"
+            >
+              <div class="card-body">
+                <h5 class="card-title text-dark fs-5">{{ item.title }}</h5>
+                <p class="card-text text-secondary fs-5 mb-4">
+                  <small>{{ item.description }}</small>
+                </p>
+              </div>
+              <div class="card-footer no-border">
+                <a
+                  class="text-danger fs-6 pt-3"
+                  href="/get-started/profile/?type={{ item.type }}"
+                >
+                  {{ item.action }} &rarr;
+                </a>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+
     <!-- Header -->
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    {% comment %} <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 class="fs-5 mb-0 lh-base">Dashboard</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
@@ -16,38 +56,13 @@
           <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
         </div>
         <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-          <span data-feather="calendar"></span>
+          {% icon "calendar" %}
           This week
         </button>
       </div>
-    </div>
-
-    <!-- Activity Graph -->
-    <!-- TODO: Only show if the user has projects -->
-    {% comment %} <div class="d-none d-lg-block">
-      <div class="dropdown d-flex align-items-center">
-        <a
-          class="h6 dropdown-toggle text-dark mt-3"
-          id="heatmapType"
-          data-toggle="dropdown"
-          aria-expanded="false"
-          role="button"
-          href="#"
-        >
-          Samples
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="heatmapType">
-          <li><a class="dropdown-item" href="#">Projects</a></li>
-          <li><a class="dropdown-item" href="#">Batches</a></li>
-          <li><a class="dropdown-item" href="#">Clients</a></li>
-          <li><a class="dropdown-item" href="#">Transfers</a></li>
-          <li><a class="dropdown-item" href="#">Turnaround</a></li>
-        </ul>
-      </div>
-      <div id="heatmap" class="overflow-auto w-100"></div>
     </div> {% endcomment %}
 
-    <!-- Simplified dashboard tables -->
+    {% comment %} <!-- Simplified dashboard tables -->
     <div class="row">
 
       <!-- Simple timesries -->
@@ -86,7 +101,7 @@
     <!-- Simple reports table -->
     {% include "cannlytics_console/screens/dashboard/dashboard_reports_table.html" %}
 
-    </div>
+    </div> {% endcomment %}
 
   </main>
   
@@ -94,10 +109,10 @@
 
 <!-- Dashobard JavaScript -->
 {% block console_js %}
-  <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.5.2/dist/frappe-charts.min.iife.js"></script>
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.5.2/dist/frappe-charts.min.iife.js"></script> {% endcomment %}
   {% comment %} <script src="{% static 'cannlytics_console/plugins/chartjs/chartjs-chart-matrix.min.js' %}"></script> {% endcomment %}
-  <script>
+  {% comment %} <script>
     cannlytics.dashboard.initialize();
-  </script>
+  </script> {% endcomment %}
 {% endblock %}
 </html>

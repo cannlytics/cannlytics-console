@@ -5,7 +5,9 @@
  * Created: 1/2/2021
  */
 
+
 export const accountSettings = {
+
 
   saveAccount(data) {
     /* 
@@ -14,6 +16,7 @@ export const accountSettings = {
     console.log('Todo: Save user fields to firestore!');
   },
 
+
   exportAccount(data) {
     /* 
     * Exports a user's data.
@@ -21,19 +24,14 @@ export const accountSettings = {
     console.log('Export all of a users data to Excel.');
   },
 
-  uploadAccountPhoto() {
-    /* 
-    * Upload an image for a user's account.
-    */
-    console.log('Todo: Upload photo!');
-  },
 
   createPin(data) {
     /* 
     * Create a pin for a user.
     */
-   console.log('Todo: Create  apin!');
+   console.log('Todo: Create a pin!');
   },
+
 
   uploadSignature(data) {
     /* 
@@ -43,6 +41,7 @@ export const accountSettings = {
     return collection.add(data);
   },
 
+
   deleteSignature(data) {
     /* 
     * Remove a signature from a user.
@@ -50,5 +49,6 @@ export const accountSettings = {
     const collection = db.collection('organizations');
     return collection.add(data);
   },
+
 
 };

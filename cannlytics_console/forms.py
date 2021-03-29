@@ -1,27 +1,28 @@
 from django import forms
-from django.core.mail import send_mail
-from django.conf import settings
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+# from django.core.mail import send_mail
+# from django.conf import settings
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Submit
 # from django.template.loader import render_to_string
 
-class LoginForm(forms.Form):
+# class LoginForm(forms.Form):
 
-    email = forms.CharField(
-        label="Email",
-        required=True,
-    )
-    password = forms.CharField(
-        label="Password",
-        required=True,
-        widget=forms.PasswordInput,
-    )
+#     email = forms.CharField(
+#         label="Email",
+#         required=True,
+#     )
+#     password = forms.CharField(
+#         label="Password",
+#         required=True,
+#         widget=forms.PasswordInput,
+#     )
 
-    def sign_in(self):
-        # TODO: Login in the user
-        print("Loging in user")
-        print(self.cleaned_data)
-        pass
+#     def sign_in(self):
+#         # TODO: Login in the user
+#         print("Loging in user")
+#         print(self.cleaned_data)
+#         pass
+
 
 # class ContactForm(forms.Form):
 #     """ Contact page form. """

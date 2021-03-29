@@ -2,11 +2,12 @@
 # virtual environment/host machine into your container,
 # run 'pip freeze > requirements.txt' in the terminal to overwrite this file.
 
-black
+cannlytics==0.0.2
 dj_static
-django==3.0.7
+django>=3.1.6
 django-crispy-forms
 django-environ==0.4.5
+django-feather==0.2.6
 django-livereload-server
 django-storages[google]==1.9.1
 firebase_admin==4.3.0

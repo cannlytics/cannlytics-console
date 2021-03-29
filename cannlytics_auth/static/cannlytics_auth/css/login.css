@@ -14,127 +14,65 @@ body {
 a.text-dark:hover {
   text-decoration: underline;
 }
-
-/*------------------------------------------------
-  Text
--------------------------------------------------- */
-
 * {
   font-family: 'Source Serif Pro', Georgia, 'Times New Roman', Times, serif;
 }
-.brand-title {
-  font-family: 'Cinzel' !important;
-  letter-spacing: 0.5px;
-  font-size: 1.75rem;
-  line-height: 1;
-  font-weight: 100;
-  margin: 0;
+
+.bg-decorative {
+  background-color: #062A00;
+  /* background-image: -webkit-linear-gradient(-45deg, #062A00, #104607ff); */
+  background-image: -webkit-linear-gradient(-45deg, #2d47a3ff, #90d3bcff);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+/* url("../images/chemist.png"),  */
+
+/* Custom checkboxes */
+.form-check a {
+  color: inherit;
+  font-weight: 700;
+}
+
+.custom-close-button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
+  cursor: pointer;
+}
+.custom-close-button:hover,
+.custom-close-button:focus {
+    background: transparent;
+}
+.custom-close-button:focus {
+    outline: 1px solid transparent;
+    outline-offset: -4px;
+}
+.custom-close-button:active {
+    transform: scale(0.99);
 }
 
 /*------------------------------------------------
-  Login Form
+  Animation
 -------------------------------------------------- */
 
-.login {
-  display: -ms-flexbox;
-  display: flex;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.form-login {
-  width: 100%;
-  max-width: 420px;
-  padding: 15px;
-}
+.floating {   
+  animation-name: floating; 
+  animation-duration: 10s; 
+  animation-iteration-count: infinite; 
+  animation-timing-function: ease-in-out; 
+  /* margin-left: 30px; 
+  margin-top: 5px;  */
+} 
 
-/*------------------------------------------------
-  Floating labels
--------------------------------------------------- */
-
-.form-label-group {
-  position: relative;
-  margin-bottom: 1rem;
-}
-.form-label-group input,
-.form-label-group label {
-  height: 3.125rem;
-  padding: .75rem;
-}
-.form-label-group label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  line-height: 1.5;
-  color: #495057;
-  pointer-events: none;
-  cursor: text;
-  border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
-}
-.form-label-group input::-webkit-input-placeholder {
-  color: transparent;
-}
-.form-label-group input::-moz-placeholder {
-  color: transparent;
-}
-.form-label-group input:-ms-input-placeholder {
-  color: transparent;
-}
-.form-label-group input::-ms-input-placeholder {
-  color: transparent;
-}
-.form-label-group input::placeholder {
-  color: transparent;
-}
-.form-label-group input:not(:-moz-placeholder-shown) {
-  padding-top: 1.25rem;
-  padding-bottom: .25rem;
-}
-.form-label-group input:not(:-ms-input-placeholder) {
-  padding-top: 1.25rem;
-  padding-bottom: .25rem;
-}
-.form-label-group input:not(:placeholder-shown) {
-  padding-top: 1.25rem;
-  padding-bottom: .25rem;
-}
-.form-label-group input:not(:-moz-placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-.form-label-group input:not(:-ms-input-placeholder) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-.form-label-group input:not(:placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-/* Fallback for Edge */
-@supports (-ms-ime-align: auto) {
-  .form-label-group {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column-reverse;
-    flex-direction: column-reverse;
-  }
-  .form-label-group label {
-    position: static;
-  }
-  .form-label-group input::-ms-input-placeholder {
-    color: #777;
-  }
-}
+@keyframes floating { 
+  0% { transform: translate(0,  0px); } 
+  50%  { transform: translate(0, 10px); } 
+  100%   { transform: translate(0, -0px); }     
+} 
 
 /*------------------------------------------------
   Dark login theme
@@ -142,12 +80,13 @@ a.text-dark:hover {
 
 body.dark,
 body.dark .login {
-  background-color: #062A00;
+  /* background-color: #062A00; */
+  background-color: rgb(50, 52, 67);
 }
 body.dark .text-dark {
   color: #fff !important;
 }
-body.dark .form-control {
+/* body.dark .form-control {
   background-color: #236619;
   background-clip: padding-box;
   border: 1px solid #3f7f34;
@@ -163,7 +102,7 @@ body.dark input:-webkit-autofill:hover,
 body.dark input:-webkit-autofill:focus, 
 body.dark input:-webkit-autofill:active  {
   -webkit-box-shadow:0 0 0 50px #23661975 inset !important;
-}
+} */
 body.dark .form-label-group input:not(:-moz-placeholder-shown) ~ label {
   color: #ccc;
 }
@@ -174,4 +113,20 @@ body.dark .form-label-group input:not(:placeholder-shown) ~ label {
   color: #fff;
 }
 
-/* Custom checkboxes (wishlist) */
+/* Dark toasts */
+body.dark .toast {
+  background-color: #646464;
+}
+body.dark .toast-header {
+  /* background-color: #b0002080 !important; */
+  border-color: #646464;
+}
+body.dark .toast-body {
+  background-color: #616161;
+}
+/* .toast-error .toast-header {
+  background-color: #E63F5D !important;
+} */
+.error-icon {
+  color: #E63F5D;
+}

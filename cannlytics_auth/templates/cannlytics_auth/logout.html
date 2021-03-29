@@ -6,16 +6,31 @@
 {% block title %}Logged Out | Cannlytics{% endblock %}
 {% block login_form %}
   <div class="text-center">
-    <p class="h5 font-weight-light serif text-center mb-4">
-      You have been logged out.
+    <p class="h6 font-weight-light serif text-center mb-4">
+      You have been logged out. Navigating home in
+      <span id="navigation-countdown">10</span>...
     </p>
     <a
-      class="btn btn-success"
+      class="btn bg-gradient-green text-white"
+      style="width: 191px;"
       type="button"
       href="{% url 'cannlytics_auth:index' page='login' %}"
     >
       Sign In
     </a>
   </div>
+
+  <!-- Redirect to login JavaScript -->
+  <script>
+    var count = 10;
+    var countdownElement = document.getElementById('navigation-countdown');
+    setInterval(function() {
+      count -= 1
+      countdownElement.textContent = count.toString();
+      if (count === 0) document.location.href = '/account/login/';
+    }, 1000);
+  </script>
+
 {% endblock %}
+
 </html>

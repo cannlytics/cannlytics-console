@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <!-- Login Page -->
+<!-- Created 2/18/2021 -->
 {% extends "cannlytics_auth/base_login.html" %}
 {% load static %}
 {% block login_form %}
@@ -27,68 +28,92 @@
     }
   </style>
 
-  <!-- TODO: Smaller text fields -->
-
-  <!-- Email Field -->
-  <div class="fieldWrapper">
-    <div class="form-label-group">
+  <!-- Email -->
+  <div class="mb-3 row">
+    <label
+      for="login-email"
+      class="col-sm-2 col-form-label pe-2"
+    >
+      Email
+    </label>
+    <div class="col-sm-10">
       <input
-        name="email"
         type="email"
-        id="input_email"
         class="form-control"
-        placeholder="Email address"
+        id="login-email"
         required
         autofocus
         spellcheck="false"
       >
-      <label for="input_email">Email address</label>
     </div>
   </div>
 
-  <!-- Password Field -->
-  <div class="fieldWrapper">
-    <div class="form-label-group">
+  <!-- Password -->
+  <div class="mb-3 row">
+    <label
+      for="login-password"
+      class="col-sm-2 col-form-label pe-2"
+    >
+      Password
+    </label>
+    <div class="col-sm-10">
       <input
-        name="password"
         type="password"
-        id="input_password"
         class="form-control"
-        placeholder="Password"
+        id="login-password"
         required
-        autofocus
       >
-      <label for="input_password">Password</label>
     </div>
   </div>
 
-  <!-- Options -->
-  <div class="d-flex justify-content-between">
+  <!-- Reset password or sign up -->
+  <div class="d-flex justify-content-between w-100">
+    <div class="d-flex align-items-center">
+      <small>
+        <a
+          href="{% url 'cannlytics_auth:index' page='password-reset' %}"
+          class="text-dark"
+        >
+          Lost your password? Get a new one &rarr;
+        </a>
+      </small>
+    </div>
+    <div class="d-flex align-items-center">
+      <p class="text-center h6 font-weight-light mb-0">
+        <small>
+          <a class="text-dark" href="{% url 'cannlytics_auth:index' page='sign-up' %}">
+            <b>Sign up &rarr;</b>
+          </a>
+        </small>
+      </p>
+    </div>
+  </div>
 
-    <!-- Remember Me FIXME: custom checkbox color -->
+  <!-- Remember Me FIXME: custom checkbox color -->
+  {% comment %} <div class="d-flex justify-content-between">
     <div class="custom-control custom-checkbox mb-3">
       <input type="checkbox" class="custom-control-input app-action" id="input_remember_password">
-      <label class="custom-control-label app-action" for="input_remember_password">Remember me</label>
+      <label class="custom-control-label app-action" for="input_remember_password">
+        Stay signed in?
+      </label>
     </div>
-
-    <!-- Reset Password -->
-    <a
-      href="{% url 'cannlytics_auth:index' page='password-reset' %}"
-      class="text-dark"
-    >
-      Lost password?
-    </a>
-  
-  </div><!-- End of Options -->
+  </div> {% endcomment %}
 
   <!-- Sign In -->
-  <button
-    class="w-100 btn btn-success"
-    type="button"
-    onclick="signIn()"
-  >
-    Sign In
-  </button>
+  <div class="d-flex justify-content-end w-100 mt-4">
+  <!-- Optional: Loading indicator -->
+  {% comment %} <button class="btn bg-gradient-green text-white" type="button" disabled>
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+  </button> {% endcomment %}
+    <button
+      class="ms-1 btn bg-gradient-green text-white"
+      style="max-width:250px;"
+      type="button"
+      onclick="signIn()"
+    >
+      Sign In
+    </button>
+  </div>
 
   <!-- Or -->
   <div class="text-dark text-center my-3">
@@ -101,18 +126,6 @@
   </div>
   <img style="display:none;" src="{% static 'cannlytics_auth/images/logos/signin-assets/btn_google_signin_dark_focus_web@2x.png' %}"/>
   <img style="display:none;" src="{% static 'cannlytics_auth/images/logos/signin-assets/btn_google_signin_dark_pressed_web@2x.png' %}"/>
-
-  <!-- Sign Up -->
-  <p class="text-dark text-center h6 font-weight-light mt-5">
-    <small>New to Cannlytics?
-      <a
-        class="text-dark"
-        href="{% url 'cannlytics_auth:index' page='sign-up' %}"
-      >
-        <b>Sign up!</b>
-      </a>
-    </small>
-  </p> 
 
 {% endblock %}
 </html>

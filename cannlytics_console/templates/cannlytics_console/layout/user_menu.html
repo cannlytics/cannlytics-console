@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<!-- User Menu -->
+<!-- Created 2/20/2021 -->
+{% load static icon %}
+<li class="nav-item dropdown">
+
+  <!-- Profile image -->
+  <a
+    class="nav-link dropdown-toggle py-0"
+    href="#"
+    id="navbarUserMenu"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <img
+      id="userPhotoNav"
+      src="{% static "cannlytics_console/images/account/default.png" %}"
+      alt="Settings"
+      title="Settings"
+      width="40"
+      height="40"
+      class="rounded-circle"
+      style="vertical-align:unset;"
+    >
+  </a>
+
+  <!-- Dropdown menu -->
+  <ul
+    class="dropdown-menu dropdown-menu-end shadow mx-2"
+    aria-labelledby="navbarUserMenu"
+  >
+    <div class="d-flex px-3 py-1">
+
+      <!-- Profile menu image -->
+      <img
+        id="userPhotoMenu"
+        src="{% static "cannlytics_console/images/account/default.png" %}"
+        alt="Settings"
+        title="Settings"
+        width="75"
+        height="75"
+        class="rounded-circle"
+        style="vertical-align:unset;"
+      >
+
+      <!-- Profile name and email -->
+      <div class="d-flex flex-column justify-content-center ps-2">
+        <h3 id="userName" class="mb-0 fs-3"></h3>
+        <h5 id="userEmail" class="mb-0 fs-5 text-secondary"></h5>
+      </div>
+
+      <!-- Sign-up / sign-in for anonymous users -->
+      <!-- Optional: Sign-up in dialog -->
+      <div id="anonymous-signup" class="d-flex align-items-center ps-2">
+        <a
+          class="btn btn-sm bg-gradient-orange text-white text-no-wrap me-1"
+          href="/account/sign-up/"
+        >
+          Sign up
+        </a>
+        <a
+          class="btn btn-sm bg-gradient-green text-white text-no-wrap ms-1"
+          href="/account/login/"
+        >
+          Sign in
+        </a>
+      </div>
+
+    </div>
+    <li><hr class="dropdown-divider"></li>
+
+    <!-- Account -->
+    <li><a class="dropdown-item" href="/settings/account">Your account</a></li>
+
+    <!-- Change theme -->
+    <li>
+      <a
+        class="dropdown-item app-action d-flex justify-content-between"
+        onClick="cannlytics.theme.changeTheme();"
+      >
+        <span>Change theme</span>
+        {% icon "sunset" class="light-only ms-2" %}
+        {% icon "sunrise" class="dark-only ms-2" %}
+      </a>
+    </li>
+
+    <!-- Invite a user -->
+    <li><a class="dropdown-item" href="/settings/invite">Invite user</a></li>
+
+    <!-- Send feedback -->
+    <li><a class="dropdown-item" href="/help/feedback">Send feedback</a></li>
+
+    <!-- Sign out-->
+    <li><button class="dropdown-item" onClick="cannlytics.app.signOut();">Sign Out</button></li>
+
+  </ul><!-- End of dropdown menu -->
+</li>
+</html>

@@ -1,80 +1,92 @@
 <!doctype html>
 <!-- Console Navigation -->
 <!-- Created 11/27/2020 -->
-{% load static %}
-
+{% load static icon %}
 <html>
-  <!-- sticky-top shadow -->
   <header
     id="console-header"
     class="navbar navbar-expand flex-md-nowrap border-bottom p-0"
   >
 
+    <!-- Menu toggle -->
+    <a
+      class="nav-link navbar-toggle d-flex d-md-none ps-3 py-0"
+      href="#"
+      id="navbarNotificationMenu"
+      role="button"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#sidebarMenu"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      {% icon "menu" class="text-dark" %}
+    </a>
+
     <!-- Logo -->
-    <div class="navbar-brand d-flex align-items-center col-md-3 col-lg-2 mr-0 pl-2 px-md-3">
+    <div class="navbar-brand d-none d-md-flex align-items-center col-md-3 col-lg-2 mr-0 ps-2 px-md-3">
+      <img
+        src="{% static 'cannlytics_console/images/logos/cannlytics_logo_with_text_light.png' %}"
+        style="height:30px;"
+        class="pe-2"
+        id="organizationPhoto"
+        class="light-only"
+      >
+      <img
+        src="{% static 'cannlytics_console/images/logos/cannlytics_logo_with_text_dark.png' %}"
+        style="height:30px;"
+        class="pe-2"
+        id="organizationPhoto"
+        class="dark-only"
+      >
+    </div>
+
+    <!-- Organization Choice -->
+    <!-- TODO: Dynamically render up to 3 of user's organizations -->
+    <!-- TODO: Show organization if already created -->
+    <div class="d-flex flex-grow-1">
       <div class="dropdown">
         <a
-          class="dropdown-toggle d-flex align-items-center text-dark"
+          class="dropdown-toggle d-flex align-items-center btn btn-light text-dark"
           href="#"
           id="navbarLabChoice"
           role="button"
-          data-toggle="dropdown"
+          data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <img
-            src="{{ navbar.default_logo_url }}"
-            style="height:30px;"
-            class="pr-2"
-            id="userPhoto"
-          >
-          <span
-            id="userOrganization"
-            class="brand-font fs-5 d-none d-md-flex"
-          >
-            Cannlytics
+          <span id="userOrganization" class="brand-font fs-6">
+            {% if not welcomed %}
+              {% icon "alert-circle" class="text-primary me-1" height="16" width="16" %}
+                Set your organization
+            {% endif %}
           </span>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-left"
           aria-labelledby="navbarLabChoice"
         >
-          <!-- TODO: Dynamically render up to 3 of user's organizations -->
           <li>
             <a
               class="dropdown-item"
               href="/settings/organizations"
             >
-              Your Organizations
+              Start or join an organization
             </a>
           </li>
         </ul>
       </div>
-      <a
-        class="nav-link navbar-toggle d-flex d-md-none pl-3 py-0"
-        href="#"
-        id="navbarNotificationMenu"
-        role="button"
-        type="button"
-        data-toggle="collapse"
-        data-target="#sidebarMenu"
-        aria-controls="sidebarMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span data-feather="menu"></span>
-      </a>
     </div>
 
     <!-- Search -->
-    <!-- https://bbbootstrap.com/snippets/bootstrap-5-search-bar-microphone-icon-inside-12725910 -->
-    <form id="console-search" class="d-flex flex-grow-1 nav-search-form px-sm-3" role="search">
+    {% comment %} <form id="console-search" class="d-flex flex-grow-1 nav-search-form px-sm-3" role="search">
       <input type="text" class="nav-search-input form-control" placeholder="Search" aria-label="Search" name="q">
       <button class="nav-search-button btn btn-default p-0" type="submit"
         style="transform:translateX(-32px);width:0;"
       >
-        <span data-feather="search"></span>
+        {% icon "search" height="16" width="16" %}
       </button>
-    </form>
+    </form> {% endcomment %}
 
     <!-- Options -->
     <ul id="console-options" class="navbar-nav">
@@ -88,13 +100,13 @@
           href="#"
           id="navbarNotificationMenu"
           role="button"
-          data-toggle="dropdown"
+          data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <span data-feather="bell"></span>
+          {% icon "bell" %}
         </a>
         <ul
-          class="dropdown-menu dropdown-menu-right mx-2 my-0 py-0"
+          class="dropdown-menu dropdown-menu-end mx-2 my-0 py-0"
           aria-labelledby="navbarNotificationMenu"
           style="border-bottom:none;"
         >
@@ -116,65 +128,18 @@
 
       <!-- TODO: e-lab notebook -->
       <!-- Easily log / journal laboratory activities -->
-      <li class="nav-item">
+      {% comment %} <li class="nav-item d-flex align-items-center">
         <a
           class="nav-link py-0"
           href="#"
           role="button"
         >
-          <!-- TODO: Show default photo if photo doesn't load -->
-          <span data-feather="book-open"></span>
+          {% icon "book-open" class="text-dark" %}
         </a>
-      </li>
+      </li> {% endcomment %}
 
       <!-- User Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle py-0" href="#" id="navbarUserMenu" role="button" data-toggle="dropdown" aria-expanded="false">
-          <!-- TODO: Show default photo if photo doesn't load -->
-          <span data-feather="more-vertical"></span>
-          {% comment %} <svg fill="#ccc" width="1.25rem" height="1.25rem" viewBox="0 0 16 16" class="bi bi-person-circle nav-icon" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-          </svg> {% endcomment %}
-          {% comment %} {% if user.photo_url %}
-            <img
-              src="{{ user.photo_url }}"
-              alt="Settings"
-              title="Settings"
-              width="40"
-              height="40"
-              class="rounded-circle"
-              style="vertical-align:unset;"
-            >
-          {% else %}
-            <svg width="1.75rem" height="1.75rem" viewBox="0 0 16 16" class="bi bi-person-circle nav-icon" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-              <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-              <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-            </svg>
-          {% endif %} {% endcomment %}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right mx-2" aria-labelledby="navbarUserMenu">
-          <div class="px-3 py-1"><!-- TODO: Make display name / email standout -->
-            <h5 id="userName"></h5>
-            <h6 id="userEmail"></h6>
-          </div>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="/settings/account">Your account</a></li>
-          <li>
-            <a class="dropdown-item app-action d-flex justify-content-between" onClick="cannlytics.changeTheme();">
-              <span>Change theme</span>
-              <span class="light-only" data-feather="sunset"></span>
-              <span class="dark-only" data-feather="sunrise"></span>
-            </a>
-          </li>
-          <li><a class="dropdown-item" href="/settings/invite">Invite user</a></li>
-          <li><a class="dropdown-item" href="/help/feedback">Send feedback</a></li>
-          {% comment %} <li><hr class="dropdown-divider"></li> {% endcomment %}
-          <li><button class="dropdown-item" onClick="cannlytics.signOut();">Sign Out</button></li>
-        </ul>
-      </li>
+      {% include "./user_menu.html" %}
 
     </ul>
 

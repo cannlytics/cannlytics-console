@@ -10,29 +10,20 @@
  * https://www.npmjs.com/package/idb
  */
 
-// import { Clients } from './clients.js'
-// import { Results } from './results.js'
-// import { Settings } from './settings.js'
-
-import { sendFeedback, signOut } from './firebase.js';
-
+import { app } from './app/app.js';
 import { analysis } from './analysis/analysis.js'
 import { dashboard } from './dashboard/dashboard.js';
 import { intake } from './intake/intake.js';
-import { initializeConsole } from './console/console.js';
 import { logistics } from './logistics/logistics.js';
 import { settings } from './settings/settings.js';
-import { changeTheme, setInitialTheme } from './settings/theme.js';
+import { theme } from './settings/theme.js';
 
 export {
+  app,
   analysis,
   dashboard,
   intake,
   logistics,
   settings,
-  changeTheme,
-  initializeConsole,
-  sendFeedback,
-  setInitialTheme,
-  signOut,
+  theme,
 }

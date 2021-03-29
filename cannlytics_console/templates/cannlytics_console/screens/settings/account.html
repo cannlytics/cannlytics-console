@@ -4,6 +4,7 @@
 <!-- URL: settings/account -->
 <!-- Created 12/9/2020 -->
 {% extends "cannlytics_console/console.html" %}
+{% load icon %}
 {% block console_body %}
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
@@ -24,14 +25,14 @@
         <img
           src="{{ navbar.default_logo_url }}"
           style="height:200px;"
-          class="pr-1"
+          class="pe-1"
           id="userPhoto"
         >
         <button
           class="btn btn-sm position-absolute text-dark"
           onclick="cannlytics.settings.uploadAccountPhoto()"
         >
-          <span data-feather="image"></span>
+          {% icon "image" %}
         </button>
       </div>
 
@@ -105,7 +106,7 @@
           aria-current="true"
         >
           {{ item.title }}
-          <span data-feather="chevron-right"></span>
+          {% icon "chevron-right" %}
         </a>
       {% endfor %}
     </div>

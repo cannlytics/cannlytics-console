@@ -69,7 +69,7 @@ function resetPassword() {
   var auth = firebase.auth();
   var email = document.getElementById("input_email").value;
   auth.sendPasswordResetEmail(email).then(function() {
-    window.location.href = '/account/password-reset-done';
+    window.location.href = '/account/password-reset-done/';
   }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;

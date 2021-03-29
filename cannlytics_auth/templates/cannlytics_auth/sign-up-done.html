@@ -5,20 +5,22 @@
   {% extends "cannlytics_auth/base_login.html" %}
   {% block title %} Reset Password Sent | Cannlytics {% endblock %}
   {% block login_form %}
-    <div class="text-center">
-      <p class="h5 font-weight-light serif text-center mb-4">
+    <div class="text-left">
+      <p class="h6 double-line text-left mb-4">
         Congratulations, you're signed up.
         We have sent you an email to confirm your email address.
-        Please click the link in the email and you can directly login!
+        Please click the link in the email and you can login directly!
       </p>
-      <p><small>(If you don't see the email, please check your spam box as well.)</small></p>
-      <a
-        class="btn btn-success"
-        type="button"
-        href="{% url 'index' %}"
-      >
-        Go to the console
-      </a>
+      <div class="text-center">
+        <a
+          class="btn bg-gradient-green text-white"
+          style="width: 191px;"
+          type="button"
+          href="{% url 'index' %}"
+        >
+          Go to the console
+        </a>
+      </div>
     </div>
   {% endblock %}
 </html>

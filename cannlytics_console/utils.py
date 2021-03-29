@@ -4,9 +4,11 @@ Created: 11/26/2020
 """
 from django.utils.crypto import get_random_string
 
+
 #----------------------------------------------#
 # Render helpers
 #----------------------------------------------#
+
 
 def get_page(request, default=""):
     page = "/".join(request.path.split("/")[2:]).rstrip("/")
@@ -18,6 +20,7 @@ def get_page(request, default=""):
 #----------------------------------------------#
 # Authentication helpers
 #----------------------------------------------#
+
 
 def generate_secret_key(env_file_name):
     """ Generate a Django secret key. """

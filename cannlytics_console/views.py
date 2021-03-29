@@ -2,53 +2,32 @@
 Console Views | Cannlytics
 Created: 12/18/2020
 """
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.template.base import Template
-from django.views.generic.base import ContextMixin, TemplateView
-from . import state # Optional: Get from Firestore?
+from django.views.generic.base import TemplateView
+from .mixins import BaseMixin
 
 BASE = "cannlytics_console"
-
-class BaseMixin(ContextMixin):
-
-    def get_screen_material(self, context):
-        """ Get screen-specific text. """
-        parts = ["screen", "section", "unit"]
-        for part in parts:
-            key = self.kwargs.get(part, "")
-            context[part] = key
-            material = state.material.get(key)
-            if material is not None:
-                context[key] = material
-        return context
-
-    def get_context_data(self, **kwargs):
-        """ Get context that is used on all pages. """
-        context = super(BaseMixin, self).get_context_data(**kwargs)
-        context["navbar"] = state.layout["navbar"]
-        context["sidebar"] = state.layout["sidebar"]
-        context = self.get_screen_material(context)
-        return context
 
 
 class ConsoleView(BaseMixin, TemplateView):
 
     def get_template_names(self):
-        """ Get the screen template. """
+        """Get the screen's template based on the URL."""
         screen = self.kwargs.get("screen", "dashboard")
-        section = self.kwargs.get("section", "")
-        unit = self.kwargs.get("unit", "")
-        if unit:
-            return [f"{BASE}/screens/{screen}/{unit}.html"]
-        elif section:
-            return [f"{BASE}/screens/{screen}/{section}.html"]
-        else:
-            return[f"{BASE}/screens/{screen}/{screen}.html"]
+        section = self.kwargs.get("section", screen)
+        unit = self.kwargs.get("unit", section)
+        return [
+            f"{BASE}/screens/{screen}/{unit}.html",
+            f"{BASE}/screens/{screen}/{section}.html",
+            f"{BASE}/screens/{screen}/{screen}.html",
+            f"{BASE}/screens/general/{screen}/{screen}-{section}.html",
+            f"{BASE}/screens/general/{screen}/{section}.html",
+        ]
 
     def get_context_data(self, **kwargs):
-        """ Get the screen context data. """
+        """Get the screen context data."""
         context = super().get_context_data(**kwargs)
         return context
+
 
 
 class OrganizationView(BaseMixin, TemplateView):
@@ -64,11 +43,10 @@ class OrganizationView(BaseMixin, TemplateView):
             {"title": "Organizations", "url": "/settings/organizations"},
             {"title": organization.title(), "active": True}
         ]
-        context = self.get_screen_material(context)
+        # context = self.get_screen_material(context)
         return context
     
     # TODO: Create organization on post
-
 
     # def get_user_material(self, context):
     #     """ FIXME: Get user-specific fields based on custom claims. """
@@ -80,3 +58,4 @@ class OrganizationView(BaseMixin, TemplateView):
     #     #         context[claim] = state.restricted[claim]
     #     # context["user"] = user
     #     # return context
+

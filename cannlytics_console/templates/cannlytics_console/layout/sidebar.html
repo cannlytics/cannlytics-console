@@ -3,7 +3,7 @@
   <!-- Console Sidebar -->
   <!-- TODO: Make minimizable -->
 
-  {% load static %}
+  {% load static icon %}
 
   <nav
     id="sidebarMenu"
@@ -11,18 +11,20 @@
   >
     <div class="pt-3">
 
+      <!-- TODO: Show different index for labs|producers|retailers|consumers -->
+
       <!-- Main Index -->
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-4 mb-2 text-muted">
         <span>Main</span>
       </h6>
       <ul class="nav flex-column">
-        {% for item in sidebar.index %}
+        {% for item in sidebar.lab_index %}
           <li class="nav-item px-2 mb-1">
             <a
               class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
               href="{{ item.url }}"
             >
-              <span class="mr-2" data-feather="{{ item.icon }}"></span>
+              {% icon item.icon class="me-2" height="16" width="16" %}
               {{ item.title }}
             </a>
           </li>
@@ -41,7 +43,7 @@
               class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
               href="{{ item.url }}"
             >
-              <span class="mr-2" data-feather="{{ item.icon }}"></span>
+              {% icon item.icon class="me-2" height="16" width="16" %}
               {{ item.title }}
             </a>
           </li>
@@ -61,7 +63,7 @@
                 class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
                 href="{{ item.url }}"
               >
-                <span class="mr-2" data-feather="{{ item.icon }}"></span>
+                {% icon item.icon class="me-2" height="16" width="16" %}
                 {{ item.title }}
               </a>
             </li>
@@ -76,7 +78,7 @@
         href="https://cannlytics.com/support"
         target="_blank"
       >
-        <span class="mr-2" data-feather="life-buoy"></span>
+        {% icon "life-buoy" class="me-2" height="16" width="16" %}
         Get support
       </a>
     </div>

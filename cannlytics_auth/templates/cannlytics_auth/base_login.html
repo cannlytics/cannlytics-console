@@ -5,61 +5,80 @@
 {% extends "cannlytics_console/base.html" %}
 {% load static %}
 {% block title %}Console | Cannlytics{% endblock %}
-{% block custom_css %}
+{% block page_css %}
   <link href="{% static 'cannlytics_auth/css/login.css' %}?{% now "U" %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block page %}
 
-  <!-- Template -->
-  <div class="login">
-    <form class="form-login mx-auto">
-      {% csrf_token %}
+  <!-- Theme Toggle -->
+  <script src="{% static 'cannlytics_auth/js/theme.js'%}"></script>
+  <script>setInitialTheme();</script>
+  {% include "cannlytics_auth/components/theme_toggle.html" %}
+  
+  <!-- Auth template -->
+  <div class="login py-0" style="height:100vh">
+    <div class="d-flex w-100 h-100">
 
-      <!-- Title -->
-      <div class="text-center mb-4">
-        <img src="{% static 'cannlytics_auth/images/logos/cannlytics_calyx_detailed.svg' %}?{% now "U" %}"
-          class="mb-3"
-          style="height:6rem;"
+      <!-- Decorative background -->
+      <div
+        
+        class="col-7 d-none d-lg-flex justify-content-center align-items-center bg-decorative"
+      >
+        <div id="particles-js" class="h-100 col-7 position-absolute"></div>
+        <img src="{% static 'cannlytics_auth/images/chemist.png' %}"
+          style="height:20rem; max-height:100%; max-width:100%;"
+          class="floating"
         >
-        <h1 class="h1 mb-3 brand-title text-uppercase font-weight-normal">
-          Cannlytics
-        </h1>
       </div>
 
-      <!-- Form -->
-      {% block login_form %}{% endblock %}
+      <!-- Form section -->
+      <div class="col col-lg-5">
+        <form class="form-login px-5 py-5 mx-auto" style="max-width:540px;">
+          {% csrf_token %}
 
-    </form>
+          <!-- Logo -->
+          <div class="text-center mb-3 mb-sm-4">
+            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_text_light.png' %}"
+              style="max-height:3rem; max-width:100%;"
+              class="light-only"
+            >
+            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_text_dark.png' %}"
+              style="max-height:3rem; max-width:100%;"
+              class="dark-only"
+            >
+          </div>
 
-  </div>
+          <!-- Form -->
+          {% block login_form %}{% endblock %}
 
-  <!-- DEMO -->
-  <div class="w-100 text-center text-dark">
-    <a href="/" class="text-dark fw-bold underline">
-      Explore the demo!
-    </a>
-  </div>
+            <!-- Privacy policy and terms of service -->
+            <div class="text-center text-dark mt-5">
+              <a href="https://cannlytics.com/privacy-policy" class="text-dark">
+                <small>Privacy Policy</small>
+              </a> |
+              <a href="https://cannlytics.com/terms-of-service" class="text-dark">
+                <small>Terms of Service</small>
+              </a>
+            </div>
 
-  <!-- Privacy policy and terms of service -->
-  <div class="w-100 text-center text-dark">
-    <a href="https://cannlytics.com/privacy-policy" class="text-dark">
-      <small>Privacy Policy</small>
-    </a> |
-    {% comment %} <a href="{% url 'index' %}" class="mx-3" title="Go to the Cannlytics homepage.">🏡</a> {% endcomment %}
-    <a href="https://cannlytics.com/terms-of-service" class="text-dark">
-      <small>Terms of Service</small>
-    </a>
-  </div>
+        </form>
+      </div><!-- End of form section -->
+
+    </div>
+  </div><!-- End of auth template -->
+
+  <!-- Error toast -->
+  {% include "cannlytics_auth/components/error_toast.html" %}
 
 {% endblock %}
 
 <!-- Authentication JavaScript -->
-{% block custom_js %}
-  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-  {% comment %} <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script> {% endcomment %}
-  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+{% block page_js %}
   <script src="{% static 'cannlytics_auth/js/auth.js'%}?{% now 'U' %}"></script>
-{% endblock custom_js %}
+  <script src="{% static 'cannlytics_auth/js/particles.js'%}"></script>
+  <script>
+    particlesJS.load('particles-js', '{% static "cannlytics_auth/js/particles.json"%}');
+  </script>
+{% endblock page_js %}
 
 </html>

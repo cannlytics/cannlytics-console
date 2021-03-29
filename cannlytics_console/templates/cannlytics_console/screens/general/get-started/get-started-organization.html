@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+<!-- Get Started Page - Organization | Cannlytics Console -->
+<!-- Created 2/20/2021 -->
+{% extends "./get-started.html" %}
+{% load static icon %}
+{% block unit %}
+
+  <!-- Header -->
+  <div class="mt-5">
+    <a
+      class="btn btn-sm btn-light text-dark position-absolute end-0 me-5"
+      href="/get-started/support/"
+    >
+      Skip
+    </a>
+    <h1 class="fs-2">Your first organization</h1>
+    <p class="fs-6 text-secondary">Get setup with an organization.<p>
+  </div>
+
+  <!-- Start or create an organization -->
+  <div class="col-md-6 d-flex justify-content-between align-items-center mt-5 mb-3">
+    <h1 class="h3 mb-0">2. Join or create an organization</h1>
+    <button
+      id="cancel-organization-choice"
+      class="btn btn-sm btn-light text-dark d-none"
+      onclick="cannlytics.dashboard.showOrganizationForm()"
+    >
+      Cancel
+    </button>
+  </div>
+
+  <!-- Start or create an organization choice -->
+  <div id="organization-choice" class="row row-cols-1 row-cols-lg-3 g-4 mt-3 mb-5">
+    <div class="col-6 col--4 my-3">
+      <div
+        class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
+        style="max-width: 375px;"
+      >
+        <a
+          class="card-block stretched-link text-decoration-none app-action"
+          onclick="cannlytics.dashboard.showOrganizationForm('join')"
+        >
+          <div class="card-body">
+            <h5 class="card-title text-dark fs-5">Join an organization</h5>
+            <p class="card-text text-secondary fs-5">
+              <small>Request to join an existing organization owned by someone else.</small>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-6 col--4 my-3">
+      <div
+        class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
+        style="max-width: 375px;"
+      >
+        <a
+          class="card-block stretched-link text-decoration-none app-action"
+          onclick="cannlytics.dashboard.showOrganizationForm('create')"
+        >
+          <div class="card-body">
+            <h5 class="card-title text-dark fs-5">Create an organization</h5>
+            <p class="card-text text-secondary fs-5">
+              <small>Start a new organization. You will be the owner and
+              can invite team members.</small>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request to join an organization form -->
+  <form id="join-organization-form" class="col-md-6 mb-5 d-none">
+    <p class="card-text fs-5 mb-3">
+      <small>Request to join an existing organization owned by someone else.
+      The owner of the organization will receive an email with the choice to
+      onboard you onto the organization's team.</small>
+    </p>
+    <div class="input-group my-3">
+      <input
+        type="text"
+        id="join-organization-input"
+        class="form-control"
+        placeholder="Organization name"
+        aria-label="Organization name"
+        aria-describedby="join-organization-button"
+      >
+      <button
+        id="join-organization-button"
+        class="btn btn-outline-secondary"
+        type="button"
+        onclick="cannlytics.dashboard.joinOrganizationRequest()"
+      >
+        Request to join
+      </button>
+    </div>
+  </form>
+
+
+  <!-- Organization form d-none -->
+  <form id="create-organization-form" class="mb-3">
+    <div class="row">
+    <!-- Organization image -->
+    <div class="col-md-6 text-center py-3 mb-3 p-md-0 order-md-2">
+      <p class="text-left fs-5 mb-3">
+        <small>Choose an image for your organizatio, up to 5MB.</small>
+      </p>
+      <img
+        src="{% static 'cannlytics_console/images/account/default.png' %}"
+        style="height:200px;"
+        class="pe-1"
+        id="org-photo-url"
+      >
+      <input
+        id="selectPhotoUrl"
+        type="file"
+        accept="image/*"
+        class="visually-hidden"
+        multiple
+      >
+      <button
+        class="btn btn-sm position-absolute text-dark"
+        onclick="cannlytics.dashboard.choosePhoto()"
+        type="button"
+      >
+        {% icon "image" %}
+      </button>
+    </div>
+
+    <!-- Organization fields -->
+    <div class="col-md-6">
+        {% for item in get_started.organization.fields %}        
+          <div class="row mb-3">
+
+            <!-- Field label -->
+            <label
+              for="input-{{ item.key }}"
+              class="col-sm-3 col-form-label col-form-label-sm"
+            >
+              {{ item.title }}
+            </label>
+
+            <!-- Field input -->
+            <div class="col-sm-9">
+              <input
+                type="{{ item.type }}"
+                class="form-control form-control-sm"
+                id="input-{{ item.key }}"
+                spellcheck="false"
+                name="{{ item.key }}"
+              >
+            </div>
+
+          </div>
+        {% endfor %}
+        
+    </div><!-- End of organization fields -->
+    </div>
+
+    <!-- Add licenses -->
+    <div class="my-4">
+      <p class="text-left fs-5 mb-3">
+        <small>Add all of your organization's licenses.</small>
+      </p>
+
+      <!-- TODO: Dynamically Add license inputs -->
+      <ol class="bold-list">
+      <li>
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label for="license-1" class="form-label">License</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="license-1"
+            >
+          </div>
+          <div class="col-md-3">
+            <label for="license-type-1" class="form-label">License Type</label>
+            <select
+              class="form-select form-select-sm"
+              aria-label="License type"
+              id="license-type-1"
+            >
+              <option selected></option>
+              <!-- TODO: Dynamic license types-->
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="license-type-other-1" class="form-label">Please specify</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="license-type-other-1"
+            >
+          </div>
+        </div>
+        </li>
+      </ol>
+
+      <!-- Add license button -->
+      <a
+        class="nav-link text-secondary app-action mt-3"
+        onclick="cannlytics.dashboard.addLicenseInput()"
+      >
+        {% icon 'plus' hegiht="16px" width="16px" %} Add a license
+      </a>
+
+    </div>
+
+    <!-- Add team members -->
+    <div class="my-4">
+      <p class="text-left fs-5 mb-3" style="max-width:540px;">
+        <small>Add your organization's team members.
+        <code>CTRL + click</code> to select multiple permissions.
+        <code>Staff</code> permissions are required for most organization operations.
+        </small>
+      </p>
+
+      <!-- TODO: Dynamically Add team member inputs -->
+      <ol class="bold-list">
+      <li>
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label for="team-member-name-1" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="team-member-name-1"
+            >
+          </div>
+          <div class="col-md-3">
+            <label for="team-member-email-1" class="form-label">Email</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="team-member-email-1"
+            >
+          </div>
+          <div class="col-md-3">
+            <label for="team-member-position-1" class="form-label">Position</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="team-member-position-1"
+            >
+          </div>
+          <div class="col-md-3">
+            <label for="team-member-permissions-1" class="form-label">Permissions</label>
+            <select
+              class="form-select form-select-sm"
+              aria-label="License type"
+              id="team-member-permissions-1"
+              multiple
+            >
+              <!-- TODO: Dynamic permission types-->
+              <option selected value="staff">Staff</option>
+              <option value="admin">Admin</option>
+              <option value="qa">QA</option>
+              <option value="billing">Billing</option>
+              <option value="scheduling">Scheduling</option>
+            </select>
+          </div>
+        </div>
+        </li>
+      </ol>
+
+      <!-- Add license button -->
+      <a
+        class="nav-link text-secondary app-action mt-3"
+        onclick="cannlytics.dashboard.addLicenseInput()"
+      >
+        {% icon 'plus' hegiht="16px" width="16px" %} Add a license
+      </a>
+
+    </div>
+
+  </form><!-- End of organization form -->
+
+  <!-- Options -->
+  <div class="mb-5">
+    <a
+      class="btn btn-secondary btn-sm"
+      href="/{% if request.GET.from %}get-started/profile/?type={{ request.GET.from }}{% endif %}"
+    >
+      Back
+    </a>
+    <a
+      class="btn bg-gradient-green text-white btn-sm"
+      onclick="cannlytics.dashboard.saveOrganization();"
+    >
+      Next
+    </a>
+  </div>
+
+{% endblock %}
+{% block console_js %}
+  <script>
+    cannlytics.dashboard.initializeGetStarted('organization');
+  </script>
+{% endblock console_js %}
+</html>
