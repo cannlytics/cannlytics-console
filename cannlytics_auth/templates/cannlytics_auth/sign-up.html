@@ -15,7 +15,7 @@
     <div class="mb-3 row">
       <label
         for="login-email"
-        class="col-sm-2 col-form-label"
+        class="col-sm-2 col-form-label fs-6"
       >
         Email
       </label>
@@ -35,7 +35,7 @@
     <div class="mb-3 row">
       <label
         for="login-password"
-        class="col-sm-2 col-form-label"
+        class="col-sm-2 col-form-label fs-6"
       >
         Password
       </label>
@@ -53,7 +53,7 @@
     <!-- Agree to terms of use -->
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="" id="login-terms-accepted">
-      <label class="form-check-label" for="login-terms-accepted">
+      <label class="form-check-label fs-6" for="login-terms-accepted">
         Do you agree to our 
         <a href="https://cannlytics.com/terms-of-service/" target="_blank">terms of service</a>
         and that you have read our
@@ -67,9 +67,9 @@
     <div class="d-flex justify-content-between w-100 mt-4">
       <div class="d-flex align-items-center">
         <p class="text-center h6 font-weight-light mb-0">
-          <small>
-            <a class="text-dark" href="{% url 'cannlytics_auth:index' page='login' %}"><b>&larr; Login</b></a>
-          </small>
+          <a class="text-dark fs-6" href="{% url 'cannlytics_auth:index' page='login' %}">
+            <b>&larr; Login</b>
+          </a>
         </p>
       </div>
       <div>

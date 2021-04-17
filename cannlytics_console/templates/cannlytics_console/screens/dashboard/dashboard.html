@@ -7,43 +7,47 @@
 {% load static %}
   <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-    <!-- Welcome message (Only show to new users) -->
-    <div class="mt-5">
-      <h1 class="fs-2">{{ dashboard.welcome_message.title }}</h1>
-      <p class="fs-6 text-secondary">{{ dashboard.welcome_message.message }}<p>
-    </div>
+    <div class="mx-5">
 
-    <!-- Get started cards -->
-    <h1 class="fs-5 mb-0 lh-base mt-4 mb-3">Get started with Cannlytics</h1>
-    <div class="row row-cols-1 row-cols-lg-3 g-4 mb-5">
-      {% for item in dashboard.organization_choices %}
-        <div class="col-6 col--4 my-3">
-          <div
-            class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
-            style="max-width: 375px;"
-          >
-            <a
-              class="card-block stretched-link text-decoration-none"
-              href="/get-started/profile/?type={{ item.type }}"
+      <!-- Welcome message (Only show to new users) -->
+      <div class="mt-5">
+        <h1 class="fs-2">{{ dashboard.welcome_message.title }}</h1>
+        <p class="fs-6 text-secondary">{{ dashboard.welcome_message.message }}<p>
+      </div>
+
+      <!-- Get started cards -->
+      <h1 class="fs-5 mb-0 lh-base mt-4 mb-3">Get started with Cannlytics</h1>
+      <div class="row row-cols-1 row-cols-lg-3 g-4 mb-5">
+        {% for item in dashboard.organization_choices %}
+          <div class="col-6 col--4 my-3">
+            <div
+              class="card h-100 bg-transparent border-secondary shadow-hover rounded-3 px-0 py-2"
+              style="max-width: 375px;"
             >
-              <div class="card-body">
-                <h5 class="card-title text-dark fs-5">{{ item.title }}</h5>
-                <p class="card-text text-secondary fs-5 mb-4">
-                  <small>{{ item.description }}</small>
-                </p>
-              </div>
-              <div class="card-footer no-border">
-                <a
-                  class="text-danger fs-6 pt-3"
-                  href="/get-started/profile/?type={{ item.type }}"
-                >
-                  {{ item.action }} &rarr;
-                </a>
-              </div>
-            </a>
+              <a
+                class="card-block stretched-link text-decoration-none"
+                href="/get-started/profile/?type={{ item.type }}"
+              >
+                <div class="card-body">
+                  <h5 class="card-title text-dark fs-5">{{ item.title }}</h5>
+                  <p class="card-text text-secondary fs-5 mb-4">
+                    <small>{{ item.description }}</small>
+                  </p>
+                </div>
+                <div class="card-footer no-border">
+                  <a
+                    class="text-danger fs-6 pt-3"
+                    href="/get-started/profile/?type={{ item.type }}"
+                  >
+                    {{ item.action }} &rarr;
+                  </a>
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+
     </div>
 
 

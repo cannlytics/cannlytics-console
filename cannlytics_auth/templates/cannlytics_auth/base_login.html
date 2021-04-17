@@ -16,7 +16,7 @@
   {% include "cannlytics_auth/components/theme_toggle.html" %}
   
   <!-- Auth template -->
-  <div class="login py-0" style="height:100vh">
+  <div class="login py-0" style="min-height:100vh; height:100vh">
     <div class="d-flex w-100 h-100">
 
       <!-- Decorative background -->
@@ -38,12 +38,12 @@
 
           <!-- Logo -->
           <div class="text-center mb-3 mb-sm-4">
-            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_text_light.png' %}"
-              style="max-height:3rem; max-width:100%;"
+            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_phrase.png' %}"
+              style="max-height:6rem; max-width:100%;"
               class="light-only"
             >
-            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_text_dark.png' %}"
-              style="max-height:3rem; max-width:100%;"
+            <img src="{% static 'cannlytics_auth/images/logos/cannlytics_logo_with_phrase_dark.png' %}"
+              style="max-height:6rem; max-width:100%;"
               class="dark-only"
             >
           </div>
@@ -51,15 +51,17 @@
           <!-- Form -->
           {% block login_form %}{% endblock %}
 
-            <!-- Privacy policy and terms of service -->
-            <div class="text-center text-dark mt-5">
-              <a href="https://cannlytics.com/privacy-policy" class="text-dark">
-                <small>Privacy Policy</small>
-              </a> |
-              <a href="https://cannlytics.com/terms-of-service" class="text-dark">
-                <small>Terms of Service</small>
-              </a>
-            </div>
+          <!-- Privacy policy and terms of service -->
+          <div class="text-center text-dark" style="margin-top:6rem;">
+
+            <!-- Policies -->
+            <a href="https://cannlytics.com/privacy-policy" class="text-dark fs-6">
+              Privacy Policy
+            </a> |
+            <a href="https://cannlytics.com/terms-of-service" class="text-dark fs-6">
+              Terms of Service
+            </a>
+          </div>
 
         </form>
       </div><!-- End of form section -->
@@ -74,9 +76,9 @@
 
 <!-- Authentication JavaScript -->
 {% block page_js %}
-  <script src="{% static 'cannlytics_auth/js/auth.js'%}?{% now 'U' %}"></script>
-  <script src="{% static 'cannlytics_auth/js/particles.js'%}"></script>
-  <script>
+  <script src="{% static 'cannlytics_auth/js/auth.js' %}" type="text/javascript"></script>
+  <script src="{% static 'cannlytics_auth/js/particles.js' %}" type="text/javascript"></script>
+  <script type="text/javascript">
     particlesJS.load('particles-js', '{% static "cannlytics_auth/js/particles.json"%}');
   </script>
 {% endblock page_js %}

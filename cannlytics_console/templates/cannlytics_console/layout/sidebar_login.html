@@ -1,0 +1,141 @@
+<!doctype>
+<html>
+  <!-- Sidebar Login | Cannlytics Console -->
+  <!-- TODO: Make minimizable -->
+
+  {% load static icon %}
+
+  <!-- Style -->
+  <style>
+    #google-signin {
+      background: url({% static 'cannlytics_console/images/logos/signin-assets/btn_google_signin_dark_normal_web@2x.png' %});
+      width: 191px;
+      height: 46px;
+      background-size: contain;
+    }
+    #google-signin:hover {
+      background: url({% static 'cannlytics_console/images/logos/signin-assets/btn_google_signin_dark_focus_web@2x.png' %});
+      width: 191px;
+      height: 46px;
+      background-size: contain;
+    }
+    #google-signin:active {
+      background: url({% static 'cannlytics_console/images/logos/signin-assets/btn_google_signin_dark_pressed_web@2x.png' %});
+      width: 191px;
+      height: 46px;
+      background-size: contain;
+    }
+  </style>
+
+  <nav
+    id="sidebar-menu"
+    class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse"
+  >
+    <div class="pt-3 px-3">
+
+      <!-- Main Index -->
+
+      <p class="pb-3"><small>Already have an account?</small></p>
+      <a
+        class="w-100 btn btn-success mt-3"
+        type="button"
+        href="/account/login/"
+      >
+        Sign In
+      </a>
+
+
+          {% comment %} <!-- Email Field -->
+          <div class="fieldWrapper">
+            <div class="form-label-group">
+              <input
+                name="email"
+                type="email"
+                id="login-email"
+                class="form-control"
+                placeholder="Email address"
+                required
+                autofocus
+                spellcheck="false"
+              >
+              <label for="login-email">Email address</label>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="fieldWrapper">
+            <div class="form-label-group">
+              <input
+                name="password"
+                type="password"
+                id="login-password"
+                class="form-control"
+                placeholder="Password"
+                required
+                autofocus
+              >
+              <label for="login-password">Password</label>
+            </div>
+          </div>
+
+          <!-- Options -->
+          <div class="d-flex justify-content-between">
+
+            <!-- Reset Password -->
+            <a
+              href="/account/password-reset/"
+              class="text-dark"
+            >
+              Lost password?
+            </a>
+          
+          </div><!-- End of Options -->
+
+          <!-- Sign In -->
+          <button
+            class="w-100 btn btn-success mt-3"
+            type="button"
+            onclick="cannlytics.auth.signIn()"
+          >
+            Sign In
+          </button>
+
+          <!-- Or -->
+          <div class="text-dark text-center my-3">
+            &mdash;&nbsp;or&nbsp;&mdash;
+          </div>
+
+          <!-- Google Sign In -->
+          <div class="d-grid gap-2 justify-content-center">
+            <a id="google-signin" class="app-action" onclick="cannlytics.auth.googleSignIn()"></a>
+          </div>
+          <img style="display:none;" src="{% static 'cannlytics_console/images/logos/signin-assets/btn_google_signin_dark_focus_web@2x.png' %}"/>
+          <img style="display:none;" src="{% static 'cannlytics_console/images/logos/signin-assets/btn_google_signin_dark_pressed_web@2x.png' %}"/> {% endcomment %}
+
+          <!-- Sign Up -->
+          <!--<p class="text-dark text-center h6 font-weight-light mt-5">
+            <small>New to Cannlytics?
+              <a
+                class="text-dark"
+                href="https://console.cannlytics.com/account/sign-up/"
+              >
+                <b>Sign up!</b>
+              </a>
+            </small>
+          </p>-->
+
+    <!-- Bottom option -->
+    <div class="w-100 text-center mt-5 mb-3 position-absolute bottom-0" style="left:0;">
+      <a
+        class="h6 btn btn-sm btn-outline-primary"
+        href="https://cannlytics.com/support"
+        target="_blank"
+      >
+        {% icon "life-buoy" class="me-2" height="16" width="16" %}
+        Get support
+      </a>
+    </div>
+
+    </div>
+  </nav>
+</html>

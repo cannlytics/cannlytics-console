@@ -32,7 +32,7 @@
   <div class="mb-3 row">
     <label
       for="login-email"
-      class="col-sm-2 col-form-label pe-2"
+      class="col-sm-2 col-form-label pe-2 fs-6"
     >
       Email
     </label>
@@ -52,7 +52,7 @@
   <div class="mb-3 row">
     <label
       for="login-password"
-      class="col-sm-2 col-form-label pe-2"
+      class="col-sm-2 col-form-label pe-2 fs-6"
     >
       Password
     </label>
@@ -69,24 +69,21 @@
   <!-- Reset password or sign up -->
   <div class="d-flex justify-content-between w-100">
     <div class="d-flex align-items-center">
-      <small>
-        <a
-          href="{% url 'cannlytics_auth:index' page='password-reset' %}"
-          class="text-dark"
-        >
-          Lost your password? Get a new one &rarr;
-        </a>
-      </small>
+      <a
+        href="{% url 'cannlytics_auth:index' page='password-reset' %}"
+        class="text-dark fs-6"
+      >
+        Lost your password? Get a new one &rarr;
+      </a>
     </div>
-    <div class="d-flex align-items-center">
-      <p class="text-center h6 font-weight-light mb-0">
-        <small>
-          <a class="text-dark" href="{% url 'cannlytics_auth:index' page='sign-up' %}">
-            <b>Sign up &rarr;</b>
-          </a>
-        </small>
-      </p>
-    </div>
+    <button
+      class="ms-1 btn bg-gradient-green text-white"
+      style="max-width:250px;"
+      type="button"
+      onclick="signIn()"
+    >
+      Sign In
+    </button>
   </div>
 
   <!-- Remember Me FIXME: custom checkbox color -->
@@ -100,12 +97,12 @@
   </div> {% endcomment %}
 
   <!-- Sign In -->
-  <div class="d-flex justify-content-end w-100 mt-4">
+  {% comment %} <div class="d-flex justify-content-end w-100 mt-4"> {% endcomment %}
   <!-- Optional: Loading indicator -->
   {% comment %} <button class="btn bg-gradient-green text-white" type="button" disabled>
     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
   </button> {% endcomment %}
-    <button
+    {% comment %} <button
       class="ms-1 btn bg-gradient-green text-white"
       style="max-width:250px;"
       type="button"
@@ -113,7 +110,7 @@
     >
       Sign In
     </button>
-  </div>
+  </div> {% endcomment %}
 
   <!-- Or -->
   <div class="text-dark text-center my-3">
@@ -126,6 +123,21 @@
   </div>
   <img style="display:none;" src="{% static 'cannlytics_auth/images/logos/signin-assets/btn_google_signin_dark_focus_web@2x.png' %}"/>
   <img style="display:none;" src="{% static 'cannlytics_auth/images/logos/signin-assets/btn_google_signin_dark_pressed_web@2x.png' %}"/>
+
+
+  <!-- Sign up -->
+  <div class="d-flex align-items-center justify-content-center" style="margin-top:6rem;">
+    <p class="text-center h6 font-weight-light">
+        Are you new to Cannlytics?
+        <a class="text-dark" href="{% url 'cannlytics_auth:index' page='sign-up' %}">
+          <b>Sign up</b>
+        </a>
+        or
+        <a class="text-dark" href="/">
+          <b>try the demo ✨</b>
+        </a>
+    </p>
+  </div>
 
 {% endblock %}
 </html>
