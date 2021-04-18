@@ -5,7 +5,7 @@
  * Created: 12/3/2020
  */
 import { auth, changePhotoURL, storageErrors } from '../firebase.js';
-import { authRequest, hasClass, showNotification } from '../utils.js';
+import { authRequest, hasClass, Password, showNotification } from '../utils.js';
 
 export const dashboard = {
 
@@ -15,10 +15,10 @@ export const dashboard = {
      * Initializes the get started forms.
      */
     if (stage === 'profile') {
-      authRequest('/api/users/').then((data) => initializeGetStartedProfileUI(data));
+      authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
     }
     if (stage === 'organization') {
-      authRequest('/api/organizations/').then((data) => initializeGetStartedOrganizationUI(data));
+      authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
     }
   },
 
@@ -32,7 +32,7 @@ export const dashboard = {
       showNotification('Organization required', 'Enter an organization name.', { type: 'error' });
       return;
     }
-    authRequest('/api/organizations/join/', { organization, join: true }).then((response) => {
+    authRequest('/api/organizations/join', { organization, join: true }).then((response) => {
       if (response.success) {
         showNotification('Organization request sent', response.message, { type: 'success' });
       } else {
@@ -66,7 +66,7 @@ export const dashboard = {
       const item = elements.item(i);
       data[item.name] = item.value;
     }
-    authRequest('/api/organizations/', data).then((response) => {
+    authRequest('/api/organizations', data).then((response) => {
       console.log('Saved org:', response);
       // TODO:
       // if (response.success) {
@@ -80,7 +80,7 @@ export const dashboard = {
 
   saveUserData(type) {
     /*
-     * Save's a user's data.
+     * Save's a user's data. FIXME: Kind of broken
      */
     const user = auth.currentUser;
     const elements = document.getElementById('userForm').elements;
@@ -89,15 +89,21 @@ export const dashboard = {
       const item = elements.item(i);
       if (item.name) data[item.name] = item.value;
     }
-    if (data.email !== user.email) {
-      user.updateEmail(data.email);
+    if (user === null) {
+      signUp(data.email).then(() => {
+        document.location.href = `/get-started/organization/?from=${type}`;
+      })
+    } else {
+      if (data.email !== user.email) {
+        user.updateEmail(data.email);
+      }
+      if (data.name !== user.displayName) {
+        user.updateProfile({ displayName: data.name });
+      }
+      authRequest('/api/users', data).then(() => {
+        document.location.href = `/get-started/organization/?from=${type}`;
+      });
     }
-    if (data.name !== user.displayName) {
-      user.updateProfile({ displayName: data.name });
-    }
-    authRequest('/api/users/', data).then(() => {
-      document.location.href = `/get-started/organization/?from=${type}`;
-    });
   },
 
 
@@ -112,7 +118,7 @@ export const dashboard = {
         tier = cards[i].id.replace('tier', '');
       }
     }
-    authRequest('/api/users/', { support: tier }).then(() => {
+    authRequest('/api/users', { support: tier }).then(() => {
       document.location.href = '/';
     });
   },
@@ -171,12 +177,37 @@ export const dashboard = {
  * Internal Functions
  */
 
+function signUp(email) {
+  /*
+   * Sign up a user.
+   */
+  return new Promise((resolve) => {
+    var password = Password.generate(32);
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+      })
+      .catch((error) => {
+        showNotification('Sign up error', error.message, { type: 'error' });
+      });
+  });
+  // var termsAccepted = document.getElementById('login-terms-accepted').checked;
+  // if (!termsAccepted) {
+  //   showError(
+  //     'Terms not accepted',
+  //     'Please agree with our terms of service and read our privacy policy to create an account.'
+  //   );
+  //   return;
+  // }
+  // var password = document.getElementById('login-password').value;
+}
+
 
 function uploadUserPhoto() {
   if (this.files.length) {
     showNotification('Uploading photo', 'Uploading your profile picture...', { type: 'wait' });
     changePhotoURL(this.files[0]).then((downloadURL) => {
-      authRequest('/api/users/', { photo_url: downloadURL });
+      authRequest('/api/users', { photo_url: downloadURL });
       document.getElementById('user-photo-url').src = downloadURL;
       document.getElementById('userPhotoNav').src = downloadURL;
       document.getElementById('userPhotoMenu').src = downloadURL;
@@ -194,7 +225,7 @@ function uploadOrgPhoto() {
     
     // TODO:
     // changePhotoURL(this.files[0]).then((downloadURL) => {
-    //   authRequest('/api/users/', { photo_url: downloadURL });
+    //   authRequest('/api/users', { photo_url: downloadURL });
     //   document.getElementById('user-photo-url').src = downloadURL;
     //   document.getElementById('userPhotoNav').src = downloadURL;
     //   document.getElementById('userPhotoMenu').src = downloadURL;
@@ -216,6 +247,7 @@ function initializeGetStartedProfileUI(data) {
   // Set the user's photo.
   try {
     if (data.photo_url) document.getElementById('user-photo-url').src = data.photo_url;
+
   } catch (error) {}
 
 

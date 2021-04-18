@@ -25,7 +25,7 @@ try {
 var auth = firebase.auth();
 auth.onAuthStateChanged((user) => {
   if (user) {
-    authRequest('/api/login/')
+    authRequest('/api/login')
       .then(function() {
         window.location.href = '/';
       }).catch(function(error) {

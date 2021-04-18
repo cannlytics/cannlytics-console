@@ -30,3 +30,16 @@ def generate_secret_key(env_file_name):
     env_file.write("SECRET_KEY = '{}'\n".format(generated_secret_key))
     env_file.close()
 
+
+#----------------------------------------------#
+# Constants
+#----------------------------------------------#
+
+ROLES = [
+    {'title': 'Analyst', 'key': 'analyst'},
+    {'title': 'Client', 'key': 'client'},
+    {'title': 'Transporter', 'key': 'transporter'},
+    {'title': 'Manager', 'key': 'manager'},
+    {'title': 'Finance', 'key': 'finance'},
+    {'title': 'Stakeholder', 'key': 'stakeholder'},
+]

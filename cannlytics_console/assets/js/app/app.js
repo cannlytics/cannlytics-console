@@ -15,11 +15,12 @@ export const app = {
     * Initialize the console.
     */
     auth.onAuthStateChanged((user) => {
+      console.log('Detected user:', user)
       if (user) {
         // console.log(user.metadata.creationTime);
         // console.log(user.metadata.lastSignInTime);
         initializeUserUI(user);
-        authRequest('/api/authenticate/');
+        authRequest('/api/authenticate');
       }
     });
   },

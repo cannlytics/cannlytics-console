@@ -32,8 +32,11 @@
       <div class="row">
         
         <!-- Sidebar -->
-        <!-- TODO: Toggle between different sidebars -->
-        {% include "cannlytics_console/layout/sidebar_login.html" with screen=screen sidebar=sidebar only %}
+        {% if user %}
+          {% include "cannlytics_console/layout/sidebar.html" with screen=screen sidebar=sidebar only %}
+        {% else %}
+          {% include "cannlytics_console/layout/sidebar_login.html" with screen=screen sidebar=sidebar only %}
+        {% endif %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}

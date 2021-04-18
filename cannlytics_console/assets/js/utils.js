@@ -1,14 +1,16 @@
-/**
+/*
  * utils.js | Cannlytics Console
  * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
  * Author: Keegan Skeate <contact@cannlytics.com>
  * Created: 2/21/2021
  */
+
 import { getUserToken } from './firebase.js';
 
-/*
- * Auth helpers.
- */
+
+/*---------------------------------------------------------------------
+ Auth Helpers
+ --------------------------------------------------------------------*/
 
 
 export const authRequest = (endpoint, data) => new Promise((resolve, reject) => {
@@ -57,6 +59,54 @@ export function getCookie(name) {
 }
 
 
+export const Password = {
+  /*
+   * Class use to generate random passwords.
+   * Usage: Password.generate(32)
+   */
+ 
+  _pattern : /[a-zA-Z0-9_\-\+\.]/,
+  
+  
+  _getRandomByte : function() {
+    // http://caniuse.com/#feat=getrandomvalues
+    if (window.crypto && window.crypto.getRandomValues) {
+      var result = new Uint8Array(1);
+      window.crypto.getRandomValues(result);
+      return result[0];
+    }
+    else if (window.msCrypto && window.msCrypto.getRandomValues)  {
+      var result = new Uint8Array(1);
+      window.msCrypto.getRandomValues(result);
+      return result[0];
+    }
+    else {
+      return Math.floor(Math.random() * 256);
+    }
+  },
+  
+  generate : function(length) {
+    return Array.apply(null, {'length': length})
+      .map(function() {
+        var result;
+        while(true)  {
+          result = String.fromCharCode(this._getRandomByte());
+          if (this._pattern.test(result)) {
+            return result;
+          }
+        }        
+      }, this)
+      .join('');  
+  }    
+    
+};
+
+
+/*---------------------------------------------------------------------
+ UI Helpers
+ --------------------------------------------------------------------*/
+
+
 export function hasClass(element, className) {
   /*
    * Check if an element has a class.
@@ -64,10 +114,6 @@ export function hasClass(element, className) {
   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
 }
 
-
-/*
- * UI Helpers
- */
 
 
 export function showNotification(title, message, options) {

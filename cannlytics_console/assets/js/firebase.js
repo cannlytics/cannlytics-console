@@ -95,7 +95,7 @@ function signOut() {
         'Content-Type': 'text/plain',
         'Authorization': `Bearer ${idToken}`,
       });
-      fetch('/api/logout/', { headers }).then(() => {
+      fetch('/api/logout', { headers }).then(() => {
         firebase.auth().signOut().then(() => {
           document.location.href = '/account/logout/';
         }).catch((error) => {
