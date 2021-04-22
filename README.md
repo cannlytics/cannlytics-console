@@ -18,9 +18,6 @@ Cannlytics is a modern cannabis-testing engine made with love, tried-and-true, a
 - [Resources](#resources)
 - [License](#license)
 
-https://www.django-rest-framework.org/topics/api-clients/
-https://www.ag-grid.com/javascript-grid/getting-started/
-
 ## Introduction <a name="introduction"></a>
 
 Cannlytics is a healthy mix of user friendly interfaces and software that you can use in your cannabis-testing lab. Users do not have to have any advanced knowledge and can jump in at any point. There are many advanced features that people with background in the web stack, Python, or your favorite programming language can jump right into.

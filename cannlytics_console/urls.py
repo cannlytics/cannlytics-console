@@ -3,12 +3,12 @@ URLs | Cannlytics
 Created: 4/18/2020
 Resources: https://docs.djangoproject.com/en/3.2/topics/http/urls/
 """
+
+# External imports
 from django.urls import include, path
 
-from cannlytics_api.api import (
-    authenticate, login, logout, organizations, join_organization, users
-)
-from . import views
+# Internal imports
+from cannlytics_console import views
 
 app_name = 'cannlytics_console' # pylint: disable=invalid-name
 urlpatterns = [

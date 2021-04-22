@@ -12,6 +12,7 @@ References:
 # Standard imports
 import os
 import re
+import sys
 
 # External imports
 import environ
@@ -26,6 +27,8 @@ ROOT_URLCONF = 'cannlytics_console.urls'
 SETTINGS_NAME = 'cannlytics_console_settings'
 WSGI_APPLICATION = 'cannlytics_console.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# sys.path.insert(0, os.path.join(BASE_DIR))
 
 # ------------------------------------------------------------#
 # Environment variables.
