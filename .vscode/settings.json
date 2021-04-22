@@ -13,7 +13,7 @@
   },
   "files.exclude": {
     "**/__pycache__": true,
-    "**/__init__.py": true,
+    "**/__init__.py": false,
   },
   "git.enabled": true,
   "git.enableSmartCommit": true,
@@ -22,9 +22,20 @@
   "git.decorations.enabled": false,
   "git.ignoreLimitWarning": true,
   "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--disable=W0614"
+  ],
   "[python]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 4  
+    "editor.tabSize": 4,
+    "editor.rulers": [72]
+  },
+  "[javascript]": {
+    "editor.rulers": [
+      {
+        "column": 80,
+      }
+    ]
   },
   "todo-tree.highlights.customHighlight": {
     "TODO": {
@@ -72,12 +83,14 @@
     "keychain",
     "lims",
     "linkedin",
+    "metrc",
     "noinput",
     "octicons",
     "plex",
     "popperjs",
     "postgres",
     "projectnum",
+    "pylint",
     "roadmap",
     "robohash",
     "runserver",
@@ -89,6 +102,7 @@
     "subcollection",
     "subcollections",
     "timegrid",
+    "unfinish",
     "urandom",
     "uuid",
     "uuidv"

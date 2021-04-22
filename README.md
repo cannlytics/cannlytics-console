@@ -18,12 +18,22 @@ Cannlytics is a modern cannabis-testing engine made with love, tried-and-true, a
 - [Resources](#resources)
 - [License](#license)
 
+https://www.django-rest-framework.org/topics/api-clients/
+https://www.ag-grid.com/javascript-grid/getting-started/
+
 ## Introduction <a name="introduction"></a>
 
 Cannlytics is a healthy mix of user friendly interfaces and software that you can use in your cannabis-testing lab. Users do not have to have any advanced knowledge and can jump in at any point. There are many advanced features that people with background in the web stack, Python, or your favorite programming language can jump right into.
 
 The Cannlytics Website provides people with information about Cannlytics. The Cannlytics Engine is a mobile, desktop, and web app that provides administrators, laboratory staff, laboratory clients, and client integrators to interact with laboratory information.
 
+## Architecture
+
+The `cannlytics` package is the core module implementing cannabis analytics logic. The `cannlytics` module handles database interactions, file management, authentication and authorization, traceability, data importing and exporting, and the logic for all workflows, such as certificate creation, item transfers, and publishing results.
+
+The `cannlytics_api` is the interface between the user's application and the cannabis analytics logic of `cannlytics`.
+
+The `cannlytics_console` is the user application where user's can interface with the infrastructure, such as the database, and utilize the cannabis analytics logic.
 
 ## Features <a name="features"></a>
 
@@ -67,7 +77,6 @@ The Cannlytics Website provides people with information about Cannlytics. The Ca
 * Cannlytics Assistant (bot)
 * Users can chose their own UTC time.
 
-
 ## Contributing <a name="contributing"></a>
 
 Contributions are always welcome! You are encouraged to submit issues, functionality, and features that you want to be addressed. See [the contributing guide](/contributing.md) to get started. Anyone is welcome to contribute anything. Currently, the Cannlytics Console would love:
@@ -76,7 +85,6 @@ Contributions are always welcome! You are encouraged to submit issues, functiona
 * More code;
 * More documentation;
 * Ideas.
-
 
 ## Installation <a name="installation"></a>
 
@@ -105,7 +113,6 @@ A good place to begin is to clone the repository and get a lay of the architectu
 ```shell
 git clone https://github.com/cannlytics/cannlytics_website.git
 ```
-
 ## Architecture <a name="architecture"></a>
 
 The Cannlytics Website is built with [Python] using the [Django] framework. The Cannlytics Website runs on [Cloud Run] and is hosted with [Firebase Hosting]. The Cannlytics Website utilizes [Firebase Authentication], an optional SQL database, a [Firestore] NoSQL database for real-time data management, and [Firebase Storage] for file storage. The Cannlytics Engine has a user interface that is built with [Flutter] and [Dart] with a backend powered by [Python].
@@ -138,7 +145,6 @@ Resources:
   [Futter]: https://flutter.dev/docs
   [Python]: https://www.python.org/
 
-
 ## Authentication <a name="authentication"></a>
 
 When you are ready to begin working, then you will need to setup your authorization.
@@ -148,11 +154,9 @@ Resources:
 * [Firebase Custom Authentication System with Django](https://medium.com/@gabriel_gamil/firebase-custom-authentication-system-with-django-c411009ddb44)
 * [Django with Google Firebase](https://hackanons.com/2018/03/python-django-with-google-firebase-getting-started-intro-basic-configuration-firebase-authentication-part1.html)
 
-
 ## Development <a name="development"></a>
 
 See [the development guide](https://cannlytics.com/dev) for a full-guide. Development can happen in many avenues. Principally, clone the repository, create a fork, work on your desired problem, and finally create a pull request for your changes.
-
 
 ## Data <a name="data"></a>
 
@@ -162,13 +166,11 @@ Resources:
 
 * [Django Database API](https://docs.djangoproject.com/en/3.1/topics/db/queries/)
 
-
 ## Storage <a name="storage"></a>
 
 Cannlytics utilizes Firebase Storage / Google Cloud Storage for most storage solutions.
 
 * [Serving static files on App Engine](https://cloud.google.com/appengine/docs/standard/python3/serving-static-files)
-
 
 ## Bugs <a name="bugs"></a>
 
@@ -181,7 +183,6 @@ See [bugs](https://cannlytics.com/bugs) for a full list of bugs and issues that 
 * [Error: Firebase Hosting Base Rewrite Not Working](https://stackoverflow.com/questions/44871075/redirect-firebase-hosting-root-to-a-cloud-function-is-not-working)
 
   > **Solution** - In order to use a rewrite at the root in Firebase Hosting, you must not include an `index.html` file in the public folder.
-
 
 ## Testing <a name="testing"></a>
 
@@ -198,7 +199,6 @@ docker build . --tag gcr.io/cannlytics/cannlytics-website
 gcloud auth configure-docker
 docker push gcr.io/cannlytics/cannlytics-website
 ```
-
 
 ## Publishing <a name="publishing"></a>
 
@@ -226,7 +226,6 @@ This step provides access to this containerized app from a [Firebase Hosting](ht
 
 `firebase deploy --only hosting:production`
 
-
 ## Administration <a name="administration"></a>
 
 *Admin Site*
@@ -242,8 +241,6 @@ Helpful resources:
 * [Authentication](https://cloud.google.com/run/docs/authenticating/public)
 * [Google Cloud Authentication](https://google-auth.readthedocs.io/en/latest/user-guide.html)
 
-
-
 ## Resources <a name="resources"></a>
 
 * [Django Philosophy](https://docs.djangoproject.com/en/3.1/misc/design-philosophies)
@@ -258,8 +255,17 @@ Helpful resources:
 
 ## License <a name="license"></a>
 
-This application is released under the [MIT license](LICENSE.md). You can use the code for any purpose, including commercial projects.
+**Cannlytics Console** Copyright (C) 2020-2021 Cannlytics and Cannlytics Contributors.
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-Made with 💖 by Cannlytics.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.

@@ -3,9 +3,9 @@
 # run 'pip freeze > requirements.txt' in the terminal to overwrite this file.
 
 cannlytics==0.0.2
-dj_static
-django>=3.1.6
-django-crispy-forms
+dj_static==0.0.6
+django==3.2
+django-crispy-forms==1.11.2
 django-environ==0.4.5
 django-feather==0.2.6
 django-livereload-server
@@ -18,4 +18,4 @@ Markdown==3.2.2
 markdown-markup-emoji==0.2.2 # FIXME: Not working
 python-decouple==3.3
 psycopg2-binary==2.8.5
-xhtml2pdf
+xhtml2pdf==0.2.5

@@ -12,7 +12,6 @@ import { getUserToken } from './firebase.js';
  Auth Helpers
  --------------------------------------------------------------------*/
 
-
 export const authRequest = (endpoint, data) => new Promise((resolve, reject) => {
   /*
    * Make an authorized GET or POST request.
@@ -106,14 +105,12 @@ export const Password = {
  UI Helpers
  --------------------------------------------------------------------*/
 
-
 export function hasClass(element, className) {
   /*
    * Check if an element has a class.
    */
   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
 }
-
 
 
 export function showNotification(title, message, options) {

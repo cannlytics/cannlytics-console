@@ -12,15 +12,36 @@ with the hope of better-maintained code.
 Optional: Turn into models and save in database.
 """
 
-
 data = {}
-
 
 docs = {}
 
-
 material = {
     "dashboard": {
+        "cards": [
+            {
+                "path": "analyses",
+                "title": "Analyses",
+                "description": "Manage analyses.",
+                "image_path": "cannlytics_console/images/illustrations/chemistry_scientist.svg",
+            },
+            # Analyses *Lab*
+            # Areas (Facilities | Locations)
+            # Clients
+            # Batches
+            # Samples
+            # Lab Results
+            # Staff
+            # Transfers (Transfers | Transfer Templates)
+            # Inventory (Items | Packages)
+            # Intruments *Lab*
+            # Invoices
+            # Settings
+            # Stats
+            # Traceability (logs)
+            # Plants, Harvests *Cultivator*
+            # Sales (Transactions | Receipts) *Cultivator* *Processor* *Retailer*
+        ],
         "welcome_message": {
             "title": "Welcome to your laboratory platform 🚀",
             "message": "Get started with lab testing or analyzing your lab results.",

@@ -11,6 +11,7 @@
  */
 
 import { app } from './app/app.js';
+import { auth } from './auth/auth.js';
 import { analysis } from './analysis/analysis.js'
 import { dashboard } from './dashboard/dashboard.js';
 import { intake } from './intake/intake.js';
@@ -20,6 +21,7 @@ import { theme } from './settings/theme.js';
 
 export {
   app,
+  auth,
   analysis,
   dashboard,
   intake,

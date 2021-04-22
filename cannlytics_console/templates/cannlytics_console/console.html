@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <!-- Cannlytics Console -->
-  <!-- Created 11/26/2020 | Thanksgiving Day -->
+  <!-- Created 11/26/2020 | Thanksgiving -->
   {% extends "cannlytics_console/base.html" %}
   {% load static %}
 
@@ -12,7 +12,9 @@
 
   <!-- Console header -->
   {% block page_css %}
-    <link href="{% static 'cannlytics_console/css/console.css'%}?{% now "U" %}" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     {% block console_css %}{% endblock console_css %}
   {% endblock %}
 
@@ -24,18 +26,27 @@
       cannlytics.theme.setInitialTheme();
     </script>
 
-    <!-- Navbar -->
-    {% include "cannlytics_console/layout/navbar.html" with navbar=navbar only %}
+    <!-- Top Navigation -->
+    {% include "cannlytics_console/layout/top_navigation.html" with navbar=navbar only %}
 
     <!-- Console -->
     <div class="container-fluid">
       <div class="row">
         
-        <!-- Sidebar -->
+        <!-- Side Navigation -->
         {% if user %}
-          {% include "cannlytics_console/layout/sidebar.html" with screen=screen sidebar=sidebar only %}
+          {% include "cannlytics_console/layout/side_navigation.html" with
+            screen=screen
+            sidebar=sidebar
+            user=user
+            only
+          %}
         {% else %}
-          {% include "cannlytics_console/layout/sidebar_login.html" with screen=screen sidebar=sidebar only %}
+          {% include "cannlytics_console/layout/side_navigation_login.html" with
+            screen=screen
+            sidebar=sidebar
+            only
+          %}
         {% endif %}
 
         <!-- Dynamic Body -->
@@ -45,7 +56,7 @@
     </div>
 
     <!-- Notifications -->
-    {% include "./components/notification_toast.html" %}
+    {% include "./components/notifications/notification_toast.html" %}
 
   {% endblock %}
 

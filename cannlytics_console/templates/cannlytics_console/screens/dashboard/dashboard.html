@@ -1,53 +1,87 @@
 <!doctype html>
 <html>
 <!-- Cannlytics Console -->
-<!-- Created 11/26/2020 Thanksgiving Day -->
+<!-- Created 11/26/2020 Thanksgiving -->
 {% extends "cannlytics_console/console.html" %}
 {% block console_body %}
 {% load static %}
   <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
+    <!-- Show main dashboard given a user -->
     {% if user %}
+      <div class="row">
 
-    <div class="row">
+      <!-- Dashboard cards -->
+      <!-- Cards -->
+      <div class="row row-cols-2 justify-content-md-start">
+        {% for item in dashboard.cards %}
+          <div class="col-4 my-3 mx-2 my-3"><!-- mx-2 my-3 -->
+            <a href="./{{ item.path }}">
+              <div
+                class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
+                style="max-width: 375px;"
+              >
+                <div class="row g-0">
+                  <div class="col-md-4 align-items-center justify-content-center d-flex py-3">
+                    <img
+                        class="mb-2"
+                        src="{% static item.image_path %}"
+                        width="60px"
+                      >
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body bg-transparent">
+                      <h5 class="card-title text-dark fs-4 fw-bold mb-0">{{ item.title }}</h5>
+                      <p class="card-text text-secondary fs-6 large-line">
+                        <small class="serif">{{ item.description }}</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div><!-- End of cards -->
+      
 
-      <!-- Simple timesries -->
-      <div class="col">
-        {% include "cannlytics_console/screens/dashboard/dashboard_timeseries.html" %}
+        <!-- Simple timesries -->
+        {% comment %} <div class="col">
+          {% include "cannlytics_console/screens/dashboard/dashboard_timeseries.html" %}
+        </div> {% endcomment %}
+
+        <!-- Simple Team table -->
+        {% comment %} <div class="col">
+          {% include "cannlytics_console/screens/dashboard/dashboard_team_table.html" %}
+        </div> {% endcomment %}
+
       </div>
 
-      <!-- Simple Team table -->
-      <div class="col">
-        {% include "cannlytics_console/screens/dashboard/dashboard_team_table.html" %}
-      </div>
+      <!-- Simplified dashboard tables -->
+      {% comment %} <div class="row">
 
-    </div>
+        <!-- Simple analyses table -->
+        <div class="col">
+          {% include "cannlytics_console/screens/dashboard/dashboard_analyses_table.html" %}
+        </div>
 
-    <!-- Simplified dashboard tables -->
-    <div class="row">
+        <!-- Simple instruments table -->
+        <div class="col">
+          {% include "cannlytics_console/screens/dashboard/dashboard_instruments_table.html" %}
+        </div>
 
-      <!-- Simple analyses table -->
-      <div class="col">
-        {% include "cannlytics_console/screens/dashboard/dashboard_analyses_table.html" %}
-      </div>
+      </div> {% endcomment %}
 
-      <!-- Simple instruments table -->
-      <div class="col">
-        {% include "cannlytics_console/screens/dashboard/dashboard_instruments_table.html" %}
-      </div>
+      <!-- Simple clients table -->
+      {% comment %} {% include "cannlytics_console/screens/dashboard/dashboard_clients_table.html" %} {% endcomment %}
 
-    </div>
+      <!-- Simple calendar -->
+      {% comment %} {% include "cannlytics_console/screens/dashboard/dashboard_calendar.html" %} {% endcomment %}
 
-    <!-- Simple clients table -->
-    {% include "cannlytics_console/screens/dashboard/dashboard_clients_table.html" %}
+      <!-- Simple reports table -->
+      {% comment %} {% include "cannlytics_console/screens/dashboard/dashboard_reports_table.html" %} {% endcomment %}
 
-    <!-- Simple calendar -->
-    {% include "cannlytics_console/screens/dashboard/dashboard_calendar.html" %}
-
-    <!-- Simple reports table -->
-    {% include "cannlytics_console/screens/dashboard/dashboard_reports_table.html" %}
-
-
+    <!-- Show new user message -->
     {% else %}
     <div class="mx-5">
 
@@ -88,9 +122,9 @@
             </div>
           </div>
         {% endfor %}
-      </div>
+      </div><!-- End of getting-started cards -->
 
-    </div>
+    </div><!-- End of new user message -->
     {% endif %}
 
   </main>

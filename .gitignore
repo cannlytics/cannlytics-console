@@ -65,3 +65,6 @@ typings/
 
 # Ignore any SQL database
 *.sqlite3
+
+# Ignore Webpack hashes
+cannlytics_console\static\cannlytics_console\webpack-stats.json

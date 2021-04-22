@@ -10,18 +10,16 @@
     "productName": "Cannlytics Console"
   },
   "scripts": {
-    "dev": "webpack-dev-server --env development",
+    "webpack": "webpack-dev-server --env development",
     "livereload": "python manage.py livereload",
-    "runserver": "python manage.py runserver",
+    "dev": "python manage.py runserver",
     "build": "webpack --env production",
-    "start": "npm run open && npm run serve && npm run open && npm run runserver && npm run livereload",
     "collectstatic": "python manage.py collectstatic --noinput",
     "publish": "npm run container && npm run cloud && npm run deploy",
     "container": "npm run collectstatic && gcloud builds submit --tag gcr.io/cannlytics/cannlytics-console",
     "cloud": "gcloud run deploy cannlytics-console --image gcr.io/cannlytics/cannlytics-console --region us-central1 --allow-unauthenticated --platform managed",
     "deploy": "firebase deploy --project cannlytics --only hosting:production",
-    "lint": "python manage.py check",
-    "open": "start cmd.exe /k"
+    "lint": "python manage.py check"
   },
   "dependencies": {
     "@popperjs/core": "^2.5.3",
@@ -54,6 +52,7 @@
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
     "webpack": "^4.44.1",
+    "webpack-bundle-tracker": "^1.0.0-alpha.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^2.5.2"
