@@ -16,10 +16,9 @@ try:
 except ImportError:
     pass
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cannlytics_console.settings")
+os.environ.setdefault(
+    'DJANGO_SETTINGS_MODULE',
+    'cannlytics_console.settings'
+)
 
-# Use dj-static if installed.
-try:
-    application = Cling(get_wsgi_application())
-except:
-    application = get_wsgi_application()
+application = Cling(get_wsgi_application())

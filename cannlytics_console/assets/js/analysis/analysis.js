@@ -5,7 +5,7 @@
  * Created: 12/3/2020
  */
 // import Chart from 'chart.js';
-import "chartjs-chart-box-and-violin-plot/build/Chart.BoxPlot.js";
+// import "chartjs-chart-box-and-violin-plot/build/Chart.BoxPlot.js";
 
 function randomValues(count, min, max) {
   const delta = max - min;

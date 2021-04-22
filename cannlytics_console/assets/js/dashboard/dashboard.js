@@ -1,176 +1,311 @@
 /**
- * Cannlytics Console (v1.0.0): dashboard.js
+ * dashboard.js | Cannlytics Console
  * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
  * Author: Keegan Skeate
  * Created: 12/3/2020
  */
-// import { Chart } from "frappe-charts/dist/frappe-charts.min.esm";
-// import { Chart as fChart } from "frappe-charts/dist/frappe-charts.esm.js";
-// import "frappe-charts/dist/frappe-charts.min.css";
-
+import { auth, changePhotoURL, storageErrors } from '../firebase.js';
+import { authRequest, hasClass, Password, showNotification } from '../utils.js';
 
 export const dashboard = {
 
-  initialize() {
-    // this.drawGraphs();
-    // this.drawHeatmap();
-    this.drawTimeseries();
-  },
 
-  drawHeatmap() {
-    console.log('Drawing heatmap');
-    // Optional: Get beginning and end of year. (6-month if mobile)
-    let data = {
-      dataPoints: {
-        "1604188800": 113, // TODO: Get daily samples received.
-      },
-      start: new Date(new Date().getFullYear(), 0, 1),
-      end: new Date(new Date().getFullYear(), 12, 31),
+  initializeGetStarted(stage) {
+    /*
+     * Initializes the get started forms.
+     */
+    if (stage === 'profile') {
+      authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
     }
-    let chart = new frappe.Chart("#heatmap", {
-      type: 'heatmap',
-      data: data,
-      radius: 5,
-      discreteDomains: 1,
-      colors: ['#ebedf0', '#c0ddf9', '#73b3f3', '#3886e1', '#17459e'],
+    if (stage === 'organization') {
+      authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
+    }
+  },
+
+
+  joinOrganizationRequest() {
+    /*
+     * Send the owner of an organization a request for a user to join.
+     */
+    const organization = document.getElementById('join-organization-input').value;
+    if (!organization) {
+      showNotification('Organization required', 'Enter an organization name.', { type: 'error' });
+      return;
+    }
+    authRequest('/api/organizations/join', { organization, join: true }).then((response) => {
+      if (response.success) {
+        showNotification('Organization request sent', response.message, { type: 'success' });
+      } else {
+        showNotification('Organization request failed', response.message, { type: 'error' });
+      }
     });
   },
 
-  drawGraphs() {
-    var ctx = document.getElementById('graph-samples-received-matrix');
-    var graph = new Chart(ctx, {
-      type: 'matrix',
-      data: {
-        datasets: [{
-            label: 'My Matrix',
-            data: [
-                { x: 1, y: 1, v: 11 },
-                { x: 2, y: 2, v: 22 },
-                { x: 3, y: 3, v: 33 }
-            ],
-            backgroundColor: function(ctx) {
-                var value = ctx.dataset.data[ctx.dataIndex].v;
-                var alpha = (value - 5) / 40;
-                return Color('green').alpha(alpha).rgbString();
-            },
-            width: function(ctx) {
-                var a = ctx.chart.chartArea;
-                return (a.right - a.left) / 3.5;
-            },
-            height: function(ctx) {
-                var a = ctx.chart.chartArea;
-                return (a.bottom - a.top) / 3.5;
-            }
-        }]
-      },
+
+  selectSupportTier(tier) {
+    /*
+     * Add selected indicator to support choices.
+     */
+    const cards = document.getElementsByClassName('support-card');
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].classList.remove('border-success');
+      if (cards[i].id === `tier${tier}`) {
+        cards[i].classList.add('border-success');
+      }
+    }
+  },
+
+
+  saveOrganization() {
+    /*
+     * Save's a user's organization choice.
+     */
+    const elements = document.getElementById('create-organization-form').elements;
+    const data = {};
+    for (let i = 0 ; i < elements.length ; i++) {
+      const item = elements.item(i);
+      data[item.name] = item.value;
+    }
+    authRequest('/api/organizations', data).then((response) => {
+      console.log('Saved org:', response);
+      // TODO:
+      // if (response.success) {
+      //   showNotification('Organization request sent', response.message, { type: 'success' });
+      // } else {
+      //   showNotification('Organization request failed', response.message, { type: 'error' });
+      // }
     });
   },
 
-  drawTimeseries() {
-    console.log('Drawing timeseries!');
-    // TODO: Get data dynamically
-    new frappe.Chart("#timeseries", {
-      // or DOM element
-      data: {
-        labels: [
-          "Mon.",
-          "Tue.",
-          "Wed.",
-          "Thu.",
-          "Fri.",
-          "Sat.",
-          "Sun.",
-        ],
+
+  saveUserData(type) {
+    /*
+     * Save's a user's data. FIXME: Kind of broken
+     */
+    const user = auth.currentUser;
+    const elements = document.getElementById('userForm').elements;
+    const data = { type };
+    for (let i = 0 ; i < elements.length ; i++) {
+      const item = elements.item(i);
+      if (item.name) data[item.name] = item.value;
+    }
+    if (user === null) {
+      signUp(data.email).then(() => {
+        document.location.href = `/get-started/organization/?from=${type}`;
+      })
+    } else {
+      if (data.email !== user.email) {
+        user.updateEmail(data.email);
+      }
+      if (data.name !== user.displayName) {
+        user.updateProfile({ displayName: data.name });
+      }
+      authRequest('/api/users', data).then(() => {
+        document.location.href = `/get-started/organization/?from=${type}`;
+      });
+    }
+  },
+
+
+  saveSupport() {
+    /*
+     * Save's a user's support option.
+     */
+    let tier = 'Free';
+    const cards = document.getElementsByClassName('support-card');
+    for (let i = 0; i < cards.length; i++) {
+      if (hasClass(cards[i], 'border-success')) {
+        tier = cards[i].id.replace('tier', '');
+      }
+    }
+    authRequest('/api/users', { support: tier }).then(() => {
+      document.location.href = '/';
+    });
+  },
+
+
+  showOrganizationForm(type) {
+    /*
+     * Show either the join or create organization forms or neither.
+     */
+    document.getElementById('organization-choice').classList.add('d-none');
+    document.getElementById('cancel-organization-choice').classList.remove('d-none');
+    if (type === 'join') {
+      document.getElementById('join-organization-form').classList.remove('d-none');
+    } else if (type === 'create') {
+      document.getElementById('create-organization-form').classList.remove('d-none');
+    } else {
+      document.getElementById('join-organization-form').classList.add('d-none');
+      document.getElementById('create-organization-form').classList.add('d-none');
+      document.getElementById('organization-choice').classList.remove('d-none');
+      document.getElementById('cancel-organization-choice').classList.add('d-none');
+    }
+  },
+
+
+  chooseUserPhoto() {
+    /*
+     * Choose a file to upload.
+     */
+    const fileSelect = document.getElementById('userPhotoUrl');
+    fileSelect.click();
+  },
+
+
+  choosePhoto() {
+    /*
+     * Choose a file to upload.
+     */
+    const fileSelect = document.getElementById('selectPhotoUrl');
+    fileSelect.click();
+  },
+
+
+  addLicenseInput() {
+    /*
+     * Adds a license input field to the UI.
+     */
+    console.log('Adding license input...');
     
-        datasets: [
-          {
-            name: "Samples",
-            chartType: "bar",
-            values: [25, 40, 30, 35, 8, 52, 17, 3]
-          },
-          {
-            name: "Projects",
-            chartType: "bar",
-            values: [25, 50, 10, 15, 18, 32, 27, 14]
-          },
-          {
-            name: "Clients",
-            chartType: "line",
-            values: [15, 20, 5, 20, 58, 12, 25, 37]
-          }
-        ],
-        yMarkers: [
-          { label: "Capacity", value: 70, options: { labelPos: "left" } },
-        ],
-        // yRegions: [
-        //   { label: "Region", start: -10, end: 50, options: { labelPos: "right" } }
-        // ]
-      },
-    
-      // title: "My Awesome Chart",
-      type: "axis-mixed", // or 'bar', 'line', 'pie', 'percentage'
-      height: 300,
-      colors: ['#ebedf0', '#c0ddf9', '#73b3f3', '#3886e1', '#17459e'],
-      axisOptions: {
-        xAxisMode: "tick",
-        xIsSeries: true
-      },
-      barOptions: {
-        stacked: false,
-        spaceRatio: 0.5
-      },
-    });
+  }
 
-    // var ctx = document.getElementById('timeseries').getContext('2d');;
-    // var myChart = new Chart(ctx, {
-    //   type: 'bar',
-    //   data: {
-    //     labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    //     datasets: [
-    //       {
-    //         label: 'In-transit',
-    //         backgroundColor: "#caf270",
-    //         data: [12, 59, 5, 56, 58,12, 59],
-    //       },
-    //       {
-    //         label: 'Started',
-    //         backgroundColor: "#45c490",
-    //         data: [12, 59, 5, 56, 58,12, 59],
-    //       },
-    //       {
-    //         label: 'Complete',
-    //         backgroundColor: "#008d93",
-    //         data: [12, 59, 5, 56, 58,12, 5],
-    //       },
-    //     ],
-    //   },
-    //   options: {
-    //       tooltips: {
-    //         displayColors: true,
-    //         callbacks:{
-    //           mode: 'x',
-    //         },
-    //       },
-    //       scales: {
-    //         xAxes: [{
-    //           stacked: true,
-    //           gridLines: {
-    //             display: false,
-    //           }
-    //         }],
-    //         yAxes: [{
-    //           stacked: true,
-    //           ticks: {
-    //             beginAtZero: true,
-    //           },
-    //           type: 'linear',
-    //         }]
-    //       },
-    //       responsive: true,
-    //       maintainAspectRatio: false,
-    //       legend: { position: 'top' },
-    //     }
-    //   });
-  },
 
 }
+
+
+/*
+ * Internal Functions
+ */
+
+function signUp(email) {
+  /*
+   * Sign up a user.
+   */
+  return new Promise((resolve) => {
+    var password = Password.generate(32);
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+      })
+      .catch((error) => {
+        showNotification('Sign up error', error.message, { type: 'error' });
+      });
+  });
+  // var termsAccepted = document.getElementById('login-terms-accepted').checked;
+  // if (!termsAccepted) {
+  //   showError(
+  //     'Terms not accepted',
+  //     'Please agree with our terms of service and read our privacy policy to create an account.'
+  //   );
+  //   return;
+  // }
+  // var password = document.getElementById('login-password').value;
+}
+
+
+function uploadUserPhoto() {
+  if (this.files.length) {
+    showNotification('Uploading photo', 'Uploading your profile picture...', { type: 'wait' });
+    changePhotoURL(this.files[0]).then((downloadURL) => {
+      authRequest('/api/users', { photo_url: downloadURL });
+      document.getElementById('user-photo-url').src = downloadURL;
+      document.getElementById('userPhotoNav').src = downloadURL;
+      document.getElementById('userPhotoMenu').src = downloadURL;
+      showNotification('Uploading photo complete', 'Successfully uploaded your profile picture.', { type: 'success' });
+    }).catch((error) => {
+      showNotification('Photo Change Error', storageErrors[error.code], { type: 'error' });
+    });
+  }
+}
+
+
+function uploadOrgPhoto() {
+  if (this.files.length) {
+    showNotification('Uploading photo', 'Uploading your organization picture...', { type: 'wait' });
+    
+    // TODO:
+    // changePhotoURL(this.files[0]).then((downloadURL) => {
+    //   authRequest('/api/users', { photo_url: downloadURL });
+    //   document.getElementById('user-photo-url').src = downloadURL;
+    //   document.getElementById('userPhotoNav').src = downloadURL;
+    //   document.getElementById('userPhotoMenu').src = downloadURL;
+    //   showNotification('Uploading photo complete', 'Successfully uploaded your profile picture.', { type: 'success' });
+    // }).catch((error) => {
+    //   showNotification('Photo Change Error', storageErrors[error.code], { type: 'error' });
+    // });
+  }
+}
+
+
+/*
+ * UI Management
+ */
+
+
+function initializeGetStartedProfileUI(data) {
+
+  // Set the user's photo.
+  try {
+    if (data.photo_url) document.getElementById('user-photo-url').src = data.photo_url;
+
+  } catch (error) {}
+
+
+  // Populate form.
+  const { elements } = document.querySelector('form')
+  for (const [ key, value ] of Object.entries(data)) {
+    const field = elements.namedItem(key)
+    try {
+      field && (field.value = value);
+    } catch(error) {}
+  }
+
+  // Attach functionality.
+  const fileElem = document.getElementById('userPhotoUrl');
+  fileElem.addEventListener('change', uploadUserPhoto, false);
+
+}
+
+
+function initializeGetStartedOrganizationUI(data) {
+
+  // TODO: Set the organization's photo.
+  // try {
+  //   if (data.photo_url) document.getElementById('user-photo-url').src = data.photo_url;
+  // } catch (error) {}
+
+
+  // Populate form.
+  const { elements } = document.querySelector('form')
+  for (const [ key, value ] of Object.entries(data)) {
+    const field = elements.namedItem(key)
+    try {
+      field && (field.value = value);
+    } catch(error) {}
+  }
+
+  // Attach functionality.
+  const fileElem = document.getElementById('selectPhotoUrl');
+  fileElem.addEventListener('change', uploadOrgPhoto, false);
+
+}
+
+
+
+
+
+// SCRAP
+
+// getUserData() {
+//   /*
+//    * Stream the user's data.
+//    */
+//   return new Promise((resolve) => {
+//     const uid = auth.currentUser.uid;
+//     db.collection('users').doc(uid).onSnapshot((doc) => {
+//       const data = doc.data();
+//       console.log("User data:", data);
+//       resolve(data);
+//     });
+//   });
+// },

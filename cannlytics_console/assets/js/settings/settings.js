@@ -5,16 +5,18 @@
  * Created: 12/3/2020
  */
 import { auth, db } from '../firebase.js';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 // const id = uuidv4();
 import { accountSettings } from './account.js';
 
 const coreSettings = {
 
+
   newOrganization() {
-    const id = uuidv4();
-    console.log('New org ID:', id);
+    // const id = uuidv4();
+    console.log('TODO: Create new org');
   },
+
 
   addOrganization(data) {
     /* 
@@ -23,6 +25,7 @@ const coreSettings = {
     const collection = db.collection('organizations');
     return collection.add(data);
   },
+
 
   getOrganizations() {
     /* 
@@ -54,6 +57,7 @@ const coreSettings = {
   //  });
   },
 
+
   archiveOrganizations() {
     /* 
     * Archive one of a user's organizations.
@@ -66,6 +70,7 @@ const coreSettings = {
       });
   },
 
+
   updateOrganization() {
     /* 
     * Update a user's organizations.
@@ -73,12 +78,43 @@ const coreSettings = {
 
   },
 
+
   logAction() {
     /* 
     * Record time and user of any activity.
     */
 
   },
+
+
+  sendFeedback() {
+    /*
+     * Send feedback through Firestore-triggered Google Cloud Function.
+     */
+    sessionStorage.getItem('user', {}); // TODO: Get user data.
+    const message = document.getElementById('feedback-message').value;
+    const timestamp = Date.now().toString(); // TODO: Use ISO time instead.
+    const code = Math.random().toString(36).slice(-3);
+    const data = {
+      name: user.name,
+      email: user.email,
+      organization: user.organization,
+      body: message,
+      from: 'contact@cannlytics.com',
+      reply: 'contact@cannlytics.com',
+      recipients: ['contact@cannlytics.com'],
+      subject: 'New Cannlytics Console feedback!',
+      promo: code,
+    };
+    db.collection('users').doc(user.uid).collection('feedback')
+      .doc(timestamp)
+      .set(data).then(() => {
+        // TODO: Show toast: "Thank you for your feedback! ** Save code ${code} for 1 free hour of support."
+      }).catch((error) => {
+        // Handle error
+      });
+  }
+
 
 };
 

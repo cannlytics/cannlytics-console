@@ -1,107 +1,216 @@
 /**
- * firebase.js | Cannlytics Console (v1.0.0)
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
- * Author: Keegan Skeate
+ * firebase.js | Cannlytics Website
  * Created: 12/22/2020
  */
-import * as firebase from 'firebase/app';
-import 'firebase/analytics';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/performance';
-import 'firebase/storage';
 
-// Initialize Firebase.
-// TODO: Don't save config to github?
-firebase.initializeApp();
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+});
 
-// Define frequently used Firebase modules.
-const analytics = firebase.analytics();
+// Core modules
 const auth = firebase.auth();
 const db = firebase.firestore();
-const performance = firebase.performance();
 const storage = firebase.storage();
-
-// Define useful Firebase objects.
-const { currentUser } = auth;
 const { firestore } = firebase;
+const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 
-const getUserData = (uid) => new Promise((resolve) => {
-  /*
-   * Get a user's data from Firestore.
-   */
-  db.collection('users').doc(uid).get().then((doc) => {
-    resolve(doc.data());
-  });
+/*
+ * Auth interface
+ */
+
+
+const changePhotoURL = (file) => new Promise((resolve, reject) => {
+  /* 
+  * Upload an image to Firebase Storage to use for a user's photo URL,
+  * listening for state changes, errors, and the completion of the upload.
+  */
+  const uid = auth.currentUser.uid;
+  const storageRef = storage.ref();
+  const metadata = { contentType: 'image/jpeg' };
+  const fileName = `users/${uid}/user_photos/${file.name}`;
+  const uploadTask = storageRef.child(fileName).put(file, metadata);
+  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          break;
+      }
+    }, 
+    (error) => {
+      reject(error);
+    },
+    () => {
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        auth.currentUser.updateProfile({ photoURL: downloadURL });
+        resolve(downloadURL);
+      });
+    }
+  );
 });
 
 
-// function initializeUserUI(user) {
-//   /*
-//    * Setup user's UI based on their preferences and claims.
-//    */
-//   // const user = sessionStorage.getItem('user', {})
-//   const organization = user.organization || 'Cannlytics';
-//   document.getElementById('userEmail').textContent = user.email;
-//   document.getElementById('userName').textContent = user.name || 'Cannlytics User';
-//   if (user.photoURL) document.getElementById('userPhoto').src = user.photoURL;
-//   document.getElementById('userOrganization').textContent = organization;
-//   document.title = `${document.title.split('|')[0]} | ${organization}`;
-// }
+const getUserToken = (refresh=false) => new Promise((resolve, reject) => {
+  /*
+   * Get an auth token for a given user.
+   */
+  if (!auth.currentUser) {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        user.getIdToken(refresh).then((idToken) => {
+          resolve(idToken)
+        }).catch((error) => {
+          reject(error);
+        });
+      }
+    });
+  } else {
+    auth.currentUser.getIdToken(refresh).then((idToken) => {
+      resolve(idToken)
+    }).catch((error) => {
+      reject(error);
+    });
+  }
+});
 
 
 function signOut() {
   /*
    * Sign a user out of Firebase and clear the session.
    */
-  const uid = sessionStorage.getItem('user', {}).uid; 
-  sessionStorage.clear();
-  db.collection('users').doc(uid).update({
-    sign_out_at: new Date().toISOString(),
-  });
-  auth.signOut();
+  try {
+    firebase.auth().currentUser.getIdToken().then((idToken) => {
+      const headers = new Headers({
+        'Content-Type': 'text/plain',
+        'Authorization': `Bearer ${idToken}`,
+      });
+      fetch('/api/logout', { headers }).then(() => {
+        firebase.auth().signOut().then(() => {
+          document.location.href = '/account/logout/';
+        }).catch((error) => {
+          document.location.href = '/account/logout/';
+        }); 
+      });
+    })
+  } catch(error) {
+    document.location.href = '/account/logout/';
+  }
 }
 
 
-function sendFeedback() {
+/*
+ * Firestore interface
+ */
+
+
+const getCollection = (
+  path,
+  limit=null,
+  orderBy=null,
+  desc=false,
+  filters=[],
+) => new Promise((resolve) => {
   /*
-   * Send feedback through Firestore-triggered Google Cloud Function.
+   * Get documents from a collection in Firestore.
    */
-  sessionStorage.getItem('user', {}); // TODO: Get user data.
-  const message = document.getElementById('feedback-message').value;
-  const timestamp = Date.now().toString(); // TODO: Use ISO time instead.
-  const code = Math.random().toString(36).slice(-3);
-  const data = {
-    name: user.name,
-    email: user.email,
-    organization: user.organization,
-    body: message,
-    from: 'contact@cannlytics.com',
-    reply: 'contact@cannlytics.com',
-    recipients: ['contact@cannlytics.com'],
-    subject: 'New Cannlytics Console feedback!',
-    promo: code,
-  };
-  db.collection('users').doc(user.uid).collection('feedback')
-    .doc(timestamp)
-    .set(data).then(() => {
-      // TODO: Show toast: "Thank you for your feedback! ** Save code ${code} for 1 free hour of support."
-    }).catch((error) => {
-      // Handle error
+  let ref = getReference(path);
+  filters.forEach((filter) => {
+    ref = ref.where(filter.key, filter.operation, filter.value);
+  });
+  if (orderBy && desc) ref = ref.orderBy(orderBy, 'desc');
+  else if (orderBy) ref = ref.orderBy(orderBy);
+  if (limit) ref = ref.limit(limit);
+  ref.get().then((snapshot) => {
+    const docs = [];
+    snapshot.forEach((doc) => {
+      docs.push(doc.data());
     });
-}
+    resolve(docs);
+  }).catch((error) => {
+    console.log('Error getting documents: ', error);
+  });
+});
+
+
+const getDocument = (path) => new Promise((resolve) => {
+  /*
+   * Get a document from Firestore.
+   */
+  const ref = getReference(path);
+  ref.get().then((doc) => {
+    resolve(doc.data());
+  });
+});
+
+
+const getReference = (path) => {
+  /*
+   * Create a collection or a document Firestore reference.
+   */
+  let ref = db;
+  const parts = path.split('/');
+  parts.forEach((part, index) => {
+    if (index % 2) ref = ref.doc(part);
+    else ref = ref.collection(part);
+  });
+  return ref;
+};
+
+
+const updateDocument = (path, data) => new Promise((resolve) => {
+  /*
+   * Update or create a document in Firestore.
+   */
+  const ref = getReference(path);
+  ref.set(data, { merge: true }).then((doc) => {
+    resolve(doc.data());
+  });
+});
+
+
+/*
+ * Storage interface
+ */
+
+
+const storageErrors = {
+  'storage/unknown':	'An unknown error occurred.',
+  'storage/object-not-found':	'No file exists at the desired reference.',
+  'storage/bucket-not-found':	'Improper storage configuration.',
+  'storage/project-not-found':	'Project is not configured for Cloud Storage.',
+  'storage/quota-exceeded':	"Your storage quota has been exceeded. If you're on the free tier, upgrade to a paid plan. If you're on a paid plan, reach out to Cannlytics support.",
+  'storage/unauthenticated':	'Unauthenticated, please authenticate and try again.',
+  'storage/unauthorized':	"You are not authorized to perform the desired action, check your privileges to ensure that they are correct.",
+  'storage/retry-limit-exceeded':	"The operation took too long to complete. Please try uploading again.",
+  'storage/invalid-checksum':	"There is an error with the file. Please try uploading again.",
+  'storage/canceled':	'Operation canceled.',
+  'storage/invalid-url': "Invalid URL name.",
+  'storage/cannot-slice-blob': "Your local file may have changed. Please try uploading again after verifying that the file hasn't changed.",
+  'storage/server-file-wrong-size':	"Your file is too large. Please try uploading a different file.",
+};
 
 
 export {
-  analytics,
   auth,
-  currentUser,
   db,
   firestore,
-  performance,
-  storage,
-  getUserData,
+  storageErrors,
+  GoogleAuthProvider,
+  changePhotoURL,
+  getUserToken,
   signOut,
-  sendFeedback,
+  getDocument,
+  updateDocument,
+  getCollection,
 };

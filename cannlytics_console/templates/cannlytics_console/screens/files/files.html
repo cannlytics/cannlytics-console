@@ -3,6 +3,7 @@
 <!-- Files -->
 <!-- Created 12/18/2020 -->
 {% extends "cannlytics_console/console.html" %}
+{% load icon %}
 {% block console_body %}
 
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -19,7 +20,7 @@
           <a
             class="h6 my-3 dropdown-toggle text-dark"
             id="dropdownSamplesTable"
-            data-toggle="dropdown"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
             role="button"
             href="#"
@@ -52,13 +53,13 @@
               class="nav-search-button btn btn-sm btn-default p-0"
               style="transform:translateX(-32px);width:0;"
             >
-              <span data-feather="search"></span>
+              {% icon "search" %}
             </button>
           </form>
           <div class="dropdown">
             <button
               type="button"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
               aria-expanded="false"
               id="dropdown-time-projects"
               class="btn btn-sm btn-outline-secondary dropdown-toggle"

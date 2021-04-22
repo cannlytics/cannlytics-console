@@ -5,33 +5,50 @@
  * Created: 12/6/2020
  */
 
-export function changeTheme() {
-  var theme = localStorage.getItem('theme');
-  if (!theme) {
-    var hours = new Date().getHours();
-    var dayTime = hours > 6 && hours < 20;
-    theme = dayTime ? 'light' : 'dark';
-  }
-  var newTheme = (theme === 'light') ? 'dark' : 'light';
-  setTheme(newTheme);
-  localStorage.setItem('theme', newTheme);
-}
 
-export function setInitialTheme () {
-  if (typeof(Storage) !== 'undefined') {
+export const theme = {
+
+
+  changeTheme() {
+    /*
+     * Change the UI theme.
+     */
     var theme = localStorage.getItem('theme');
     if (!theme) {
       var hours = new Date().getHours();
       var dayTime = hours > 6 && hours < 20;
-      if (!dayTime) setTheme('dark');
-      return;
+      theme = dayTime ? 'light' : 'dark';
     }
-    setTheme(theme);
-    localStorage.setItem('theme', theme);
-  }
-};
+    var newTheme = (theme === 'light') ? 'dark' : 'light';
+    toggleTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  },
 
-function setTheme(theme) {
+
+  setInitialTheme () {
+    /*
+     * Set th initial UI theme.
+     */
+    if (typeof(Storage) !== 'undefined') {
+      var theme = localStorage.getItem('theme');
+      if (!theme) {
+        var hours = new Date().getHours();
+        var dayTime = hours > 6 && hours < 20;
+        if (!dayTime) toggleTheme('dark');
+        return;
+      }
+      toggleTheme(theme);
+      localStorage.setItem('theme', theme);
+    }
+  },
+
+}
+
+
+function toggleTheme(theme) {
+  /*
+   * Toggle the UI theme.
+   */
   if (theme === 'light') {
     document.body.className = 'base';
   } else if (! hasClass(document.body, 'dark')) {
@@ -39,6 +56,8 @@ function setTheme(theme) {
   }
 }
 
+
 function hasClass(element, className) {
   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
 }
+

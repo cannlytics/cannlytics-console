@@ -1,25 +1,21 @@
 <!doctype html>
 <html>
   <!-- Cannlytics Console -->
-  <!-- Created 11/26/2020 | Thanksgiving Day -->
+  <!-- Created 11/26/2020 | Thanksgiving -->
   {% extends "cannlytics_console/base.html" %}
   {% load static %}
 
   <!-- Title -->
-  {% block title %}{{ screen|title }} | Cannlytics{% endblock %}
+  {% block title %}
+    {% if screen %}{{ screen|title }}{% else %}Dashboard{% endif %} | Cannlytics
+  {% endblock %}
 
   <!-- Console header -->
-  {% block custom_css %}
-
-    <!-- Console style -->
-    <link href="{% static 'cannlytics_console/css/console.css'%}?{% now "U" %}" rel="stylesheet" type="text/css">
-
-    <!-- Screen-specific style -->
+  {% block page_css %}
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     {% block console_css %}{% endblock console_css %}
-
-    <!-- Console bundled JavaScript -->
-    <script src="{% static 'cannlytics_console/js/bundle.js'%}?{% now "U" %}"></script>
-
   {% endblock %}
 
   <!-- Console Template -->
@@ -27,18 +23,31 @@
 
     <!-- Set the theme after the body, but before the page, loads. -->
     <script>
-      cannlytics.setInitialTheme();
+      cannlytics.theme.setInitialTheme();
     </script>
 
-    <!-- Navbar -->
-    {% include "cannlytics_console/layout/navbar.html" with navbar=navbar only %}
+    <!-- Top Navigation -->
+    {% include "cannlytics_console/layout/top_navigation.html" with navbar=navbar only %}
 
     <!-- Console -->
     <div class="container-fluid">
       <div class="row">
         
-        <!-- Sidebar -->
-        {% include "cannlytics_console/layout/sidebar.html" with screen=screen sidebar=sidebar only %}
+        <!-- Side Navigation -->
+        {% if user %}
+          {% include "cannlytics_console/layout/side_navigation.html" with
+            screen=screen
+            sidebar=sidebar
+            user=user
+            only
+          %}
+        {% else %}
+          {% include "cannlytics_console/layout/side_navigation_login.html" with
+            screen=screen
+            sidebar=sidebar
+            only
+          %}
+        {% endif %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}
@@ -46,19 +55,19 @@
       </div>
     </div>
 
+    <!-- Notifications -->
+    {% include "./components/notifications/notification_toast.html" %}
+
   {% endblock %}
 
   <!-- Console JavaScript -->
-  {% block custom_js %}
-
-    <!-- Feather.js Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-
-    <!-- Initialization -->
-    <script>cannlytics.initializeConsole();</script>
+  {% block page_js %}
+    <script>
+      cannlytics.app.initialize();
+    </script>
 
     <!-- Screen-specific JavaScript -->
     {% block console_js %}{% endblock console_js %}
 
-  {% endblock custom_js %}
+  {% endblock page_js %}
 </html>

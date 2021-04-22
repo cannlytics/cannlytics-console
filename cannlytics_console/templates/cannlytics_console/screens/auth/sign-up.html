@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <!-- Sign Up Page -->
+  <!-- Created 2/13/2021 -->
+  {% extends "./base_login.html" %}
+
+  {% block login_form %}
+
+    <!-- Message -->
+    <p class="font-weight-light mb-4 text-center h6">
+      Choose a secure email and password.
+    </p>
+
+    <!-- Email -->
+    <div class="mb-3 row">
+      <label
+        for="login-email"
+        class="col-sm-2 col-form-label fs-6"
+      >
+        Email
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="email"
+          class="form-control"
+          id="login-email"
+          required
+          autofocus
+          spellcheck="false"
+        >
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3 row">
+      <label
+        for="login-password"
+        class="col-sm-2 col-form-label fs-6"
+      >
+        Password
+      </label>
+      <div class="col-sm-10">
+        <input
+          autocomplete="new-password"
+          type="password"
+          class="form-control"
+          id="login-password"
+          required
+        >
+      </div>
+    </div>
+
+    <!-- Agree to terms of use -->
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="login-terms-accepted">
+      <label class="form-check-label fs-6" for="login-terms-accepted">
+        Do you agree to our 
+        <a href="https://cannlytics.com/terms-of-service/" target="_blank">terms of service</a>
+        and that you have read our
+        <a href="https://cannlytics.com/privacy-policy/" target="_blank">privacy policy</a>,
+        including our
+        <a href="https://cannlytics.com/privacy-policy/#cookies" target="_blank">cookie use</a>?
+      </label>
+    </div>
+
+    <!-- Back to login or sign up -->
+    <div class="d-flex justify-content-between w-100 mt-4">
+      <div class="d-flex align-items-center">
+        <p class="text-center h6 font-weight-light mb-0">
+          <a class="text-dark fs-6" href="{% url 'cannlytics_auth:index' page='login' %}">
+            <b>&larr; Login</b>
+          </a>
+        </p>
+      </div>
+      <div>
+        <button
+          class="ms-1 btn bg-gradient-green text-white"
+          style="max-width:250px;"
+          type="button"
+          onclick="cannlytics.auth.signUp()"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+
+  {% endblock %}
+</html>
