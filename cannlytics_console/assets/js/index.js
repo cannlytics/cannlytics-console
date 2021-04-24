@@ -10,6 +10,7 @@
  * https://www.npmjs.com/package/idb
  */
 
+import { api } from './api/api.js';
 import { app } from './app/app.js';
 import { auth } from './auth/auth.js';
 import { analysis } from './analysis/analysis.js'
@@ -20,6 +21,7 @@ import { settings } from './settings/settings.js';
 import { theme } from './settings/theme.js';
 
 export {
+  api,
   app,
   auth,
   analysis,

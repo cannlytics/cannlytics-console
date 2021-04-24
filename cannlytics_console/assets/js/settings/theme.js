@@ -49,11 +49,20 @@ function toggleTheme(theme) {
   /*
    * Toggle the UI theme.
    */
+  let currentTableClass = 'ag-theme-alpine';
+  let newTableClass = 'ag-theme-alpine-dark';
   if (theme === 'light') {
     document.body.className = 'base';
-  } else if (! hasClass(document.body, 'dark')) {
+    currentTableClass = 'ag-theme-alpine-dark';
+    newTableClass = 'ag-theme-alpine';
+  } else if (!hasClass(document.body, 'dark')) {
     document.body.className += ' dark';
   }
+  // Toggle Ag-Grid theme.
+  // FIXME: Incorrectly light if dark initially.
+  let tables = document.getElementsByClassName(currentTableClass);
+  [...tables].forEach( x => x.classList.add(newTableClass) );
+  [...tables].forEach( x => x.classList.remove(currentTableClass) );
 }
 
 

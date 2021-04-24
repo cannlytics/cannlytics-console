@@ -82,31 +82,31 @@ var cannlytics =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./cannlytics_console/assets/css/cannlytics.scss":
-/*!*******************************************************!*\
-  !*** ./cannlytics_console/assets/css/cannlytics.scss ***!
-  \*******************************************************/
+/***/ "./cannlytics_console/assets/css/console.scss":
+/*!****************************************************!*\
+  !*** ./cannlytics_console/assets/css/console.scss ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/cannlytics-018630eeb36eafc1a601b2d47fdbb280.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/cannlytics.scss?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/console-64ef7faf5a62b5d7866e871237808ce1.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/console.scss?");
 
 /***/ }),
 
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./cannlytics_console/assets/css/cannlytics.scss ***!
-  \*************************************************************/
+/***/ 1:
+/*!**********************************************************!*\
+  !*** multi ./cannlytics_console/assets/css/console.scss ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! ./cannlytics_console/assets/css/cannlytics.scss */\"./cannlytics_console/assets/css/cannlytics.scss\");\n\n\n//# sourceURL=webpack://cannlytics/multi_./cannlytics_console/assets/css/cannlytics.scss?");
+eval("module.exports = __webpack_require__(/*! ./cannlytics_console/assets/css/console.scss */\"./cannlytics_console/assets/css/console.scss\");\n\n\n//# sourceURL=webpack://cannlytics/multi_./cannlytics_console/assets/css/console.scss?");
 
 /***/ })
 

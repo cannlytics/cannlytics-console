@@ -2,13 +2,26 @@
 <html>
   <!-- Footer | Cannlytics Console -->
   <!-- Created 4/22/2021 -->
+  {% load icon %}
 
-  <footer class="text-muted pb-5">
+  <footer class="text-muted pb-4">
     <div class="container mx-0 px-0">
-      <p class="float-end mb-1">
-        <a href="https://cannlytics.com/docs" target="_blank">Read the docs</a>
+      {% comment %} <p class="float-end mb-1">
+        <a href="https://cannlytics.com/docs" target="_blank">
+          {% icon "book-open" %}
+        </a>
+      </p> {% endcomment %}
+      <p class="mb-1 fs-6 text-small">
+        <small>Copyright &copy; Cannlytics 2021</small>
+        -
+        <a class="text-secondary fs-6" href="https://cannlytics.com/privacy-policy" target="_blank">
+          <small>Privacy Policy</small>
+          </a>
+          -
+          <a class="text-secondary fs-6" href="https://cannlytics.com/terms-of-service" target="_blank">
+          <small>Terms of Service</small>
+          </a>
       </p>
-      <p class="mb-1 fs-6">Copyright &copy; Cannlytics 2021</p>
       {% comment %} <p class="mb-0 fs-6">New to Cannlytics? <a href="https://cannlytics.com/docs" target="_blank">Read the docs</a>
       or take a <a href="https://cannlytics.com/docs/getting-started/introduction/">quickstart</a>.</p>
     </div> {% endcomment %}

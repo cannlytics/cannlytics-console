@@ -414,6 +414,10 @@ body.dark .list-group-item-action:hover {
   Tables
 -------------------------------------------------- */
 
+.ag-icon {
+  font-family: 'agGridAlpine' !important;
+}
+
 /* Dark tables */
 body.dark .card-header {
   border-bottom-color: rgba(255, 255, 255,.125);

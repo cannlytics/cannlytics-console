@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<!-- Areas -->
+<!-- Created 4/24/2021 -->
+{% extends "cannlytics_console/console.html" %}
+{% load icon %}
+{% block console_body %}
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- Header-->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="fs-5 mb-0 lh-base">Areas</h1>
+    </div>
+
+    <!-- Body -->
+    <div class="col">
+
+      <!-- Table -->
+      <div
+        id="areas-table"
+        class="ag-theme-alpine"
+        style="height: 600px; width:500px;"
+      ></div>
+
+    </div><!-- End of body -->
+
+  </main>
+
+  <!-- JavaScript -->
+  <script type="text/javascript" charset="utf-8">
+    // specify the columns
+    const columnDefs = [
+      { field: "make", sortable: true, filter: true },
+      { field: "model", sortable: true, filter: true },
+      { field: "price", sortable: true, filter: true }
+    ];
+
+    // specify the data
+    const rowData = [
+      { make: "Toyota", model: "Celica", price: 35000 },
+      { make: "Ford", model: "Mondeo", price: 32000 },
+    ];
+
+    // let the grid know which columns and what data to use
+    const gridOptions = {
+      columnDefs: columnDefs,
+    };
+
+    // lookup the container we want the Grid to use
+    const eGridDiv = document.querySelector('#areas-table');
+
+    // create the grid passing in the div to use together with the columns & data we want to use
+    new agGrid.Grid(eGridDiv, gridOptions);
+
+    // TODO: Get data with the API
+    gridOptions.api.setRowData(rowData);
+
+  </script>
+
+{% endblock console_body %}
+</html>
