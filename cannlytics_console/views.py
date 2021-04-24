@@ -23,7 +23,7 @@ BASE = 'cannlytics_console'
 #-----------------------------------------------------------------------
 
 class ConsoleView(TemplateView):
-    """Main view used for most console screens."""
+    """Main view used for most console pages."""
 
     login_url = '/account/sign-in'
     redirect_field_name = 'redirect_to'
@@ -34,11 +34,12 @@ class ConsoleView(TemplateView):
         section = self.kwargs.get('section', screen)
         unit = self.kwargs.get('unit', section)
         return [
-            f'{BASE}/screens/{screen}/{unit}.html',
-            f'{BASE}/screens/{screen}/{section}.html',
-            f'{BASE}/screens/{screen}/{screen}.html',
-            f'{BASE}/screens/general/{screen}/{screen}-{section}.html',
-            f'{BASE}/screens/general/{screen}/{section}.html',
+            f'{BASE}/pages/{screen}/{unit}.html',
+            f'{BASE}/pages/{screen}/{section}.html',
+            f'{BASE}/pages/{screen}/{screen}-{section}.html',
+            f'{BASE}/pages/{screen}/{screen}.html',
+            f'{BASE}/pages/general/{screen}/{screen}-{section}.html',
+            f'{BASE}/pages/general/{screen}/{section}.html',
         ]
 
     def get_context_data(self, **kwargs):
@@ -62,7 +63,7 @@ class LoginView(TemplateView):
 
     def get_template_names(self):
         page = self.kwargs.get('page', 'login')
-        return [f'{BASE}/screens/auth/{page}.html']
+        return [f'{BASE}/pages/account/{page}.html']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -118,7 +119,7 @@ class LoginView(TemplateView):
 class OrganizationView(TemplateView):
     """View used for managing organizations."""
 
-    template_name = f'{BASE}/screens/settings/organization.html'
+    template_name = f'{BASE}/pages/settings/organization.html'
 
     def get_context_data(self, **kwargs):
         """ Get the screen context data. """
@@ -147,7 +148,7 @@ class OrganizationView(TemplateView):
 #     context = get_screen_specific_state(kwargs, context)
 #     context = get_screen_specific_data(kwargs, context)
 #     context = get_user_specific_state(uid, context)
-#     template = f'{BASE}/screens/dashboard/dashboard.html'
+#     template = f'{BASE}/pages/dashboard/dashboard.html'
 #     return render(request, template, context)
 
 #-----------------------------------------------------------------------
@@ -157,7 +158,7 @@ class OrganizationView(TemplateView):
 # from django.contrib.auth.mixins import LoginRequiredMixin
 
 # class ConsoleView(LoginRequiredMixin, TemplateView):
-#     """Main view used for most console screens."""
+#     """Main view used for most console pages."""
 
 #     login_url = '/account/sign-in'
 #     redirect_field_name = 'redirect_to'

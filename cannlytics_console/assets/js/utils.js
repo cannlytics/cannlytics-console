@@ -5,6 +5,9 @@
  * Created: 2/21/2021
  */
 
+// import { v4 as uuidv4 } from 'uuid';
+// const id = uuidv4();
+
 import { getUserToken } from './firebase.js';
 
 
@@ -120,6 +123,7 @@ export function showNotification(title, message, options) {
   const toastEl = document.getElementById('notification-toast');
   document.getElementById('notification-title').textContent = title;
   document.getElementById('notification-message').textContent = message;
+  toastEl.classList.remove('d-none');
   if (options.type) {
     const types = ['error', 'success', 'wait'];
     types.forEach((type) => {

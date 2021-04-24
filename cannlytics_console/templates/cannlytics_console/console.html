@@ -13,8 +13,8 @@
   <!-- Console header -->
   {% block page_css %}
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     {% block console_css %}{% endblock console_css %}
   {% endblock %}
 
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Notifications -->
-    {% include "./components/notifications/notification_toast.html" %}
+    {% include "cannlytics_console/components/notifications/notification_toast.html" %}
 
   {% endblock %}
 

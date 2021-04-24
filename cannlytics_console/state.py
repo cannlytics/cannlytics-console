@@ -20,25 +20,83 @@ material = {
     "dashboard": {
         "cards": [
             {
-                "path": "analyses",
-                "title": "Analyses",
+                "path": "analysis",
+                "title": "Analysis",
                 "description": "Manage analyses.",
-                "image_path": "cannlytics_console/images/illustrations/chemistry_scientist.svg",
+                "image_path": "cannlytics_console/images/icons/multi-tone/certificate-flask.png",
             },
-            # Analyses *Lab*
-            # Areas (Facilities | Locations)
-            # Clients
-            # Batches
-            # Samples
-            # Lab Results
-            # Staff
-            # Transfers (Transfers | Transfer Templates)
-            # Inventory (Items | Packages)
-            # Intruments *Lab*
-            # Invoices
-            # Settings
-            # Stats
-            # Traceability (logs)
+            {
+                "path": "areas",
+                "title": "Areas",
+                "description": "Manage facilities and locations.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/lab.png",
+            },
+            {
+                "path": "clients",
+                "title": "Clients",
+                "description": "Manage laboratory clients.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/clients.png",
+            },
+            {
+                "path": "instruments",
+                "title": "Instruments",
+                "description": "Manage laboratory instruments.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/instrument.png",
+            },
+            {
+                "path": "inventory",
+                "title": "Inventory",
+                "description": "Manage inventory, items, packages, and more.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/records.png",
+            },
+            {
+                "path": "invoices",
+                "title": "Invoices",
+                "description": "Manage laboratory invoices.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/documents.png",
+            },
+            {
+                "path": "samples",
+                "title": "Samples",
+                "description": "Manage laboratory samples.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/vials.png",
+            },
+            {
+                "path": "results",
+                "title": "Results",
+                "description": "Manage laboratory results.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/certificate.png",
+            },
+            {
+                "path": "staff",
+                "title": "Staff",
+                "description": "Manage laboratory staff.",
+                "image_path": "cannlytics_console/images/icons/two-tone/two_tone_client_folder.png",
+            },
+            {
+                "path": "transfers",
+                "title": "Transfers",
+                "description": "Manage sample transfers.",
+                "image_path": "cannlytics_console/images/icons/two-tone/two_tone_clock.png",
+            },
+            {
+                "path": "stats",
+                "title": "Statistics",
+                "description": "Manage laboratory statistics.",
+                "image_path": "cannlytics_console/images/icons/two-tone/two_tone_graph.png",
+            },
+            {
+                "path": "traceability",
+                "title": "Traceability",
+                "description": "Manage traceability integration and view audit logs.",
+                "image_path": "cannlytics_console/images/icons/multi-tone/certificate-access.png",
+            },
+            {
+                "path": "settings",
+                "title": "Settings",
+                "description": "Manage your user and organization settings.",
+                "image_path": "cannlytics_console/images/icons/two-tone/two_tone_gears.png",
+            },
             # Plants, Harvests *Cultivator*
             # Sales (Transactions | Receipts) *Cultivator* *Processor* *Retailer*
         ],
@@ -218,25 +276,84 @@ material = {
 layout = {
     "sidebar": {
         "lab_index": [
-            {"title": "Dashboard", "url": "/", "icon": "home", "slug": ""},
+            {
+                "title": "Dashboard",
+                "url": "/",
+                "icon": "grid",
+                "slug": "",
+            },
             {
                 "title": "Analysis",
                 "url": "/analysis",
-                "icon": "clipboard",
+                "icon": "edit",
                 "slug": "analysis",
             },
+            # {
+            #     "title": "Areas",
+            #     "url": "/areas",
+            #     "icon": "grid",
+            #     "slug": "areas",
+            # },
             {
                 "title": "Clients",
                 "url": "/clients/records",
                 "icon": "users",
                 "slug": "clients",
             },
-            {"title": "Intake", "url": "/intake", "icon": "log-in", "slug": "intake"},
             {
-                "title": "Logistics",
+                "title": "Instruments",
+                "url": "/instruments",
+                "icon": "server",
+                "slug": "instruments"
+            },
+            {
+                "title": "Intake",
+                "url": "/intake",
+                "icon": "log-in",
+                "slug": "intake"
+            },
+            {
+                "title": "Inventory",
+                "url": "/inventory",
+                "icon": "archive",
+                "slug": "inventory"
+            },
+            {
+                "title": "Invoices",
+                "url": "/invoices",
+                "icon": "credit-card",
+                "slug": "invoices"
+            },
+            
+            {
+                "title": "Samples",
+                "url": "/samples",
+                "icon": "edit-2",
+                "slug": "samples",
+            },
+            {
+                "title": "Results",
+                "url": "/results",
+                "icon": "award",
+                "slug": "results",
+            },
+            # {
+            #     "title": "Stats",
+            #     "url": "/stats",
+            #     "icon": "activity",
+            #     "slug": "stats",
+            # },
+            {
+                "title": "Transfers",
                 "url": "/logistics/calendar",
-                "icon": "map",
-                "slug": "logistics",
+                "icon": "navigation",
+                "slug": "transfers",
+            },
+            {
+                "title": "Traceability",
+                "url": "/traceability",
+                "icon": "share-2",
+                "slug": "traceability",
             },
             {
                 "title": "Settings",
@@ -244,7 +361,12 @@ layout = {
                 "icon": "settings",
                 "slug": "settings",
             },
-            {"title": "Help", "url": "/help", "icon": "help-circle", "slug": "help"},
+            {
+                "title": "Help",
+                "url": "/help",
+                "icon": "help-circle",
+                "slug": "help",
+            },
         ],
         "producer_index": [
             {"title": "Dashboard", "slug": "dashboard", "icon": "home", "url": "/"},

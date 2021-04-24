@@ -19,6 +19,11 @@ export const app = {
       if (user) {
         initializeUserUI(user);
         // authRequest('/api/authenticate');
+        // TODO: Get user's organizations from Firestore through the API!
+        console.log('Getting user organizations...');
+        // authRequest('/api/organizations').then((data) => {
+        //   console.log('User organizations:', data);
+        // });
       }
     });
   },

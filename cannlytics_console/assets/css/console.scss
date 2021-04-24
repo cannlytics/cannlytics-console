@@ -56,6 +56,22 @@ body {
 .custom-close-button:active {
     transform: scale(0.99);
 }
+.btn-outline-orange {
+  border-color: #FF9500;
+  color: #1a1a1a;
+}
+.btn-outline-orange:hover {
+  background: #FF9500;
+  color: #1a1a1a;
+}
+body.dark .btn-outline-orange {
+  border-color: #ffa600;
+  color: #ffa600;
+}
+body.dark .btn-outline-orange:hover {
+  background: #FF9500;
+  color: #1a1a1a;
+}
 
 /*--------------------------------------------------------------------------
   Images and icons
@@ -336,14 +352,6 @@ main .action {
 }
 body.dark main .action {
   color: #50fa7b !important;
-}
-body.dark .btn-outline-primary {
-  border-color: #50fa7b;
-  color: #50fa7b;
-}
-body.dark .btn-outline-primary:hover {
-  background: #50fa7b;
-  color: #1a1a1a;
 }
 /* TODO: Style primary buttons */
 body.dark .btn-light {
