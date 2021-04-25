@@ -34,6 +34,11 @@ urlpatterns = [
     path('authenticate', auth.authenticate),
     path('login', auth.login),
     path('logout', auth.logout),
+    path('areas', views.organizations),
+    path('areas/', include([
+        path('', views.organizations),
+        path('<uuid:area_id>/', views.organizations),
+    ])),
     path('labs/', include([
         path('', views.labs),
         path('<uuid:org_id>/', views.lab),
