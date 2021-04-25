@@ -17,61 +17,10 @@ export const api = {
   Areas
   ----------------------------------------------------------------------------*/
  
-  // getAreas(params) {
-  //   /*
-  //    * Get facilities and locations from Firestore/Metrc.
-  //    */
-  //   return new Promise((resolve, reject) => {
-  //     authRequest('/api/areas', { params })
-  //       .then((data) => { resolve(data); })
-  //       .catch((error) => { reject(error); });
-  //   });
-  // },
-  getAreas: function(params) {
-    /*
-     * Get facilities and locations from Firestore/Metrc.
-     */
-    console.log('Getting areas...');
-    return authRequest('http://127.0.0.1:8000/api/areas');
-    // return new Promise(function(resolve, reject) {
-    //   authRequest('/api/areas', { params })
-    //     .then((data) => { resolve(data); })
-    //     .catch((error) => { reject(error); });
-    // });
-  },
-
-
-  createArea(data) {
-    /*
-     * Create a location in Firestore and Metrc.
-     */
-    return new Promise((resolve, reject) => {
-      authRequest('/api/areas', data)
-        .then((data) => { resolve(data); })
-        .catch((error) => { reject(error); });
-    });
-  },
-
-
-  updateArea(data) {
-    /*
-     * Update a location in Firestore and Metrc.
-     */
-    return createArea(data);
-  },
-
-
-  deleteArea(data) {
-    /*
-     * Delete a location in Firestore and Metrc.
-     */
-    return new Promise((resolve, reject) => {
-      authRequest('/api/areas', data, { delete: true })
-        .then((data) => { resolve(data); })
-        .catch((error) => { reject(error); });
-    });
-  },
-
+  getAreas: (params) => authRequest('/api/areas', null, { params }),
+  createArea: (data) => authRequest('/api/areas', data),
+  updateArea: (data) => authRequest('/api/areas', data),
+  deleteArea: (data) => authRequest('/api/areas', data, { delete: true }),
 
   /*----------------------------------------------------------------------------
   Inventory

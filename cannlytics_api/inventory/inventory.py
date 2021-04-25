@@ -39,9 +39,13 @@ def areas(request, format=None):
     """Get or update information about a areas / locations."""
 
     if request.method == 'GET':
+
+        # TODO: Get areas from Metrc
+
+
         # limit = request.query_params.get('limit', None)
         # order_by = request.query_params.get('order_by', 'state')
-        # # TODO: Get any filters from dict(request.query_params)
+        # # Optional: Get any filters from dict(request.query_params)
         # labs = get_collection('labs', order_by=order_by, limit=limit, filters=[])
         return Response([{'make': "Subaru", 'model': "WRX", 'price': 21000}])
     

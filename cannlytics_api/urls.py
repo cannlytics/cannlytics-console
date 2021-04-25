@@ -20,17 +20,16 @@ from cannlytics_api.auth import auth
 # https://stackoverflow.com/questions/46163838/how-can-i-make-a-trailing-slash-optional-on-a-django-rest-framework-simplerouter
 # router = routers.SimpleRouter(trailing_slash=False)
 
-app_name = 'cannlytics_api'
+app_name = 'cannlytics_api' # pylint: disable=invalid-name
 urlpatterns = [
     path('', views.index, name='index'),
     path('authenticate/', auth.authenticate),
     path('login/', auth.login),
     path('logout/', auth.logout),
-    path('areas/', inventory.areas),
-    # path('areas/', include([
-    #     path('', views.areas),
-    #     path('<uuid:area_id>/', views.areas),
-    # ])),
+    path('areas/', include([
+        path('', inventory.areas),
+        path('<uuid:area_id>/', inventory.areas),
+    ])),
     path('/labs/', include([
         path('', views.labs),
         path('<uuid:org_id>/', views.lab),
