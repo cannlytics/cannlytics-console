@@ -1,8 +1,8 @@
 /**
- * Cannlytics Console (v1.0.0): theme.js
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Theme JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/6/2020
+ * Updated: 4/24/2021
  */
 
 
@@ -56,16 +56,16 @@ export const theme = {
      */
     let currentTableClass = 'ag-theme-alpine';
     let newTableClass = 'ag-theme-alpine-dark';
-    console.log(theme);
     if (theme === 'light') {
       document.body.className = 'base';
       currentTableClass = 'ag-theme-alpine-dark';
       newTableClass = 'ag-theme-alpine';
-    } else { // if (!hasClass(document.body, 'dark')) 
-      document.body.className += ' dark';
+    } else {
+      // if (!hasClass(document.body, 'dark')) 
+      // document.body.className += ' dark';
+      document.body.classList.add('dark');
     }
     // Toggle Ag-Grid theme.
-    // FIXME: Incorrectly light if dark initially.
     let tables = document.getElementsByClassName(currentTableClass);
     [...tables].forEach( x => x.classList.add(newTableClass) );
     [...tables].forEach( x => x.classList.remove(currentTableClass) );
@@ -74,7 +74,7 @@ export const theme = {
 
 }
 
-function hasClass(element, className) {
-  return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-}
+// function hasClass(element, className) {
+//   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+// }
 

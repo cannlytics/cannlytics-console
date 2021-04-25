@@ -66,8 +66,8 @@
 
   <!-- Console JavaScript -->
   {% block page_js %}
-    <script src="{% static 'rest_framework/js/coreapi-0.1.1.js' %}"></script>
-    <script src="{% url 'api-docs:schema-js' %}"></script>
+    {% comment %} <script src="{% static 'rest_framework/js/coreapi-0.1.1.js' %}"></script>
+    <script src="{% url 'api-docs:schema-js' %}"></script> {% endcomment %}
     <script>
       cannlytics.app.initialize();
     </script>

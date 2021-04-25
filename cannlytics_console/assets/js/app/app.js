@@ -18,9 +18,9 @@ export const app = {
       console.log('Detected user:', user)
       if (user) {
         initializeUserUI(user);
-        // authRequest('/api/authenticate');
+        // authRequest('/api/authenticate/');
         // TODO: Get user's organizations from Firestore through the API!
-        console.log('Getting user organizations...');
+        // console.log('Getting user organizations...');
         // authRequest('/api/organizations').then((data) => {
         //   console.log('User organizations:', data);
         // });

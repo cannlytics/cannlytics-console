@@ -1,12 +1,19 @@
 /**
- * Cannlytics Console (v1.0.0): settings.js
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Settings JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/3/2020
+ * Updated: 4/25/2021
  */
 import { auth, db } from '../firebase.js';
 import { accountSettings } from './account.js';
 import { showNotification } from '../utils.js';
+
+
+export const settings = {
+  ...coreSettings,
+  ...accountSettings,
+};
+
 
 const coreSettings = {
 
@@ -118,5 +125,3 @@ const coreSettings = {
 
 };
 
-
-export const settings = { ...coreSettings, ...accountSettings };

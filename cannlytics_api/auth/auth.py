@@ -1,6 +1,7 @@
 """
 Views | Cannlytics API
 Created: 1/22/2021
+Updated: 4/25/2021
 
 API to interface with cannabis analytics.
 """
@@ -9,6 +10,7 @@ API to interface with cannabis analytics.
 from firebase_admin import auth
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # Internal imports
 from cannlytics.firebase import (
@@ -16,18 +18,21 @@ from cannlytics.firebase import (
     update_document,
 )
 
+
+@api_view(['GET', 'POST'])
 def authenticate(request):
     """Identify the user's Firebase account using an ID token."""
-    try:
-        authorization = request.headers['Authorization']
-        token = authorization.split(' ')[1]
-        claims = auth.verify_id_token(token)
-        uid = claims['uid']
-        request.session['uid'] = uid
-        # Optional: Save user's custom claims in a session?
-        return Response(claims, content_type='application/json')
-    except:
-         return Response({'success': False}, content_type='application/json', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # try:
+    authorization = request.headers['Authorization']
+    token = authorization.split(' ')[1]
+    claims = auth.verify_id_token(token)
+    uid = claims['uid']
+    request.session['uid'] = uid
+    # Optional: Save user's custom claims in a session?
+    return Response(claims, content_type='application/json')
+    # except:
+    #     #  return Response({'success': False}, content_type='application/json', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     return Response({'success': False}, content_type='application/json')
 
 
 def login(request):

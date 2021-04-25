@@ -13,33 +13,25 @@ from rest_framework import routers
 
 # Internal imports
 from cannlytics_api import views
+from cannlytics_api.inventory import inventory
 from cannlytics_api.auth import auth
-
-# TODO: Handle 404's
-
-# TODO: Build out additional endpoints
-# /regulations
-# /instruments
-# /analytes
-# /instruments
-# /lab_results
 
 # Change URLs to not end in a trailing slash.
 # https://stackoverflow.com/questions/46163838/how-can-i-make-a-trailing-slash-optional-on-a-django-rest-framework-simplerouter
-router = routers.SimpleRouter(trailing_slash=False)
+# router = routers.SimpleRouter(trailing_slash=False)
 
 app_name = 'cannlytics_api'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('authenticate', auth.authenticate),
-    path('login', auth.login),
-    path('logout', auth.logout),
-    path('areas', views.organizations),
-    path('areas/', include([
-        path('', views.organizations),
-        path('<uuid:area_id>/', views.organizations),
-    ])),
-    path('labs/', include([
+    path('authenticate/', auth.authenticate),
+    path('login/', auth.login),
+    path('logout/', auth.logout),
+    path('areas/', inventory.areas),
+    # path('areas/', include([
+    #     path('', views.areas),
+    #     path('<uuid:area_id>/', views.areas),
+    # ])),
+    path('/labs/', include([
         path('', views.labs),
         path('<uuid:org_id>/', views.lab),
         path('<uuid:org_id>/analyses/', views.lab_analyses),
@@ -55,6 +47,15 @@ urlpatterns = [
         path('<uuid:uid>/', views.users),
     ])),
 ]
+
+# TODO: Handle 404's
+
+# TODO: Build out additional endpoints
+# /regulations
+# /instruments
+# /analytes
+# /instruments
+# /lab_results
 
 # Add optional format suffixes to the URLs,
 # so users can explicitely specify a formatm e.g. .json.

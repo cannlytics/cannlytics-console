@@ -153,7 +153,7 @@ export const auth = {
     var password = document.getElementById('login-password').value;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        authRequest('/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+        authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
       })
       .catch((error) => {
         showNotification('Sign up error', error.message, { type: 'error' });

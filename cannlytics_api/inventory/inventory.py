@@ -30,6 +30,25 @@ def inventory(request, format=None):
         # )
 
 
+#----------------------------------------------#
+# Areas endpoints
+#----------------------------------------------#
+
+@api_view(['GET', 'POST'])
+def areas(request, format=None):
+    """Get or update information about a areas / locations."""
+
+    if request.method == 'GET':
+        # limit = request.query_params.get('limit', None)
+        # order_by = request.query_params.get('order_by', 'state')
+        # # TODO: Get any filters from dict(request.query_params)
+        # labs = get_collection('labs', order_by=order_by, limit=limit, filters=[])
+        return Response([{'make': "Subaru", 'model': "WRX", 'price': 21000}])
+    
+    else:
+        return Response({'data': []})
+
+
 @api_view(['GET', 'POST'])
 def locations(request, format=None):
     """Get, create, or update locations."""

@@ -60,7 +60,7 @@ if PRODUCTION:
 # ------------------------------------------------------------#
 INSTALLED_APPS = [
     'cannlytics',
-    'cannlytics_api',
+    'cannlytics_api.apps.CannlyticsAPIConfig',
     'cannlytics_console',
     'crispy_forms',
     'django.contrib.admin',
@@ -258,7 +258,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # ------------------------------------------------------------#
 
 # Remove trailing slash from URLs.
-APPEND_SLASH = False
+# APPEND_SLASH = False
 
 # Allow Django template tags to span multiple lines.
 # https://stackoverflow.com/questions/49110044/django-template-tag-on-multiple-line

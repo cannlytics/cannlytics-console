@@ -32,7 +32,7 @@ export const api = {
      * Get facilities and locations from Firestore/Metrc.
      */
     console.log('Getting areas...');
-    return authRequest('/api/areas', { params });
+    return authRequest('http://127.0.0.1:8000/api/areas');
     // return new Promise(function(resolve, reject) {
     //   authRequest('/api/areas', { params })
     //     .then((data) => { resolve(data); })

@@ -8,6 +8,7 @@
 // import { v4 as uuidv4 } from 'uuid';
 // const id = uuidv4();
 
+// import Cookies from 'js-cookie'
 import { getUserToken } from './firebase.js';
 
 
@@ -21,16 +22,17 @@ export const authRequest = (endpoint, data, options) => new Promise((resolve, re
    */
   getUserToken().then((idToken) => {
     const csrftoken = getCookie('csrftoken');
+    console.log(csrftoken);
     const headerAuth = new Headers({
-      'Content-Type': 'text/plain',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`,
       'X-CSRFToken': csrftoken,
     });
-    const headers = { headerAuth, mode: 'same-origin' };
-    if (data) {
-      headers.method = 'POST';
-      headers.body = JSON.stringify(data);
-    }
+    const headers = { headerAuth, mode: 'same-origin', method: 'GET' };
+    // if (data) {
+    //   headers.method = 'POST';
+    //   headers.body = JSON.stringify(data);
+    // }
     if (options) {
       if (options.delete) {
         headers.method = 'DELETE';
