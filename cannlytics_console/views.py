@@ -45,10 +45,11 @@ class ConsoleView(TemplateView):
     def get_context_data(self, **kwargs):
         """Get context that is used on all pages."""
         context = super().get_context_data(**kwargs)
+        uid = self.request.session.get('uid', '')
         context['sidebar'] = layout['sidebar']
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
-        context = get_user_specific_state(self.request, context)
+        context = get_user_specific_state(uid, context)
         return context
 
 
@@ -69,6 +70,7 @@ class LoginView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
+# FIXME: Touch up session logic.
 # def signIn(request):
 #     return render(request,"Login.html")
 # def home(request):

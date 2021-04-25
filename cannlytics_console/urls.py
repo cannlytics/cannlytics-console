@@ -6,6 +6,7 @@ Resources: https://docs.djangoproject.com/en/3.2/topics/http/urls/
 
 # External imports
 from django.urls import include, path
+from rest_framework.documentation import include_docs_urls
 
 # Internal imports
 from cannlytics_console import views
@@ -15,6 +16,7 @@ urlpatterns = [
     path('', views.ConsoleView.as_view(), name='index'),
     path('account/<slug:page>', views.LoginView.as_view(), name='auth'),
     path('api', include('cannlytics_api.urls'), name='api'),
+    path('docs/', include_docs_urls(title='Cannlytics API'), name='api-docs'),
     path('settings/organizations/<slug:name>', views.OrganizationView.as_view()),
     path('<slug:screen>', views.ConsoleView.as_view()),
     path('<slug:screen>/<slug:section>', views.ConsoleView.as_view()),

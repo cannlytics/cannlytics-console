@@ -7,6 +7,7 @@ API to interface with cannabis analytics.
 
 # External imports
 from firebase_admin import auth
+from rest_framework import status
 from rest_framework.response import Response
 
 # Internal imports

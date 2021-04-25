@@ -17,15 +17,27 @@ export const api = {
   Areas
   ----------------------------------------------------------------------------*/
  
-  getAreas(params) {
+  // getAreas(params) {
+  //   /*
+  //    * Get facilities and locations from Firestore/Metrc.
+  //    */
+  //   return new Promise((resolve, reject) => {
+  //     authRequest('/api/areas', { params })
+  //       .then((data) => { resolve(data); })
+  //       .catch((error) => { reject(error); });
+  //   });
+  // },
+  getAreas: function(params) {
     /*
      * Get facilities and locations from Firestore/Metrc.
      */
-    return new Promise((resolve, reject) => {
-      authRequest('/api/areas', { params })
-        .then((data) => { resolve(data); })
-        .catch((error) => { reject(error); });
-    });
+    console.log('Getting areas...');
+    return authRequest('/api/areas', { params });
+    // return new Promise(function(resolve, reject) {
+    //   authRequest('/api/areas', { params })
+    //     .then((data) => { resolve(data); })
+    //     .catch((error) => { reject(error); });
+    // });
   },
 
 

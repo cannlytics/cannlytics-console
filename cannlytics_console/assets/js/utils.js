@@ -31,12 +31,14 @@ export const authRequest = (endpoint, data, options) => new Promise((resolve, re
       headers.method = 'POST';
       headers.body = JSON.stringify(data);
     }
-    if (options.delete) {
-      headers.method = 'DELETE';
-    }
-    if (options.params) {
-      endpoint = new URL(endpoint)
-      endpoint.search = new URLSearchParams(options.params).toString();
+    if (options) {
+      if (options.delete) {
+        headers.method = 'DELETE';
+      }
+      if (options.params) {
+        endpoint = new URL(endpoint)
+        endpoint.search = new URLSearchParams(options.params).toString();
+      }
     }
     fetch(endpoint, headers)
       .then(response => response.json())

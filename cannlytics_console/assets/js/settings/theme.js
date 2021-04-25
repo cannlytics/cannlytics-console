@@ -20,7 +20,7 @@ export const theme = {
       theme = dayTime ? 'light' : 'dark';
     }
     var newTheme = (theme === 'light') ? 'dark' : 'light';
-    toggleTheme(newTheme);
+    this.toggleTheme(newTheme);
     localStorage.setItem('theme', newTheme);
   },
 
@@ -34,37 +34,45 @@ export const theme = {
       if (!theme) {
         var hours = new Date().getHours();
         var dayTime = hours > 6 && hours < 20;
-        if (!dayTime) toggleTheme('dark');
+        if (!dayTime) this.toggleTheme('dark');
         return;
       }
-      toggleTheme(theme);
+      this.toggleTheme(theme);
       localStorage.setItem('theme', theme);
     }
   },
 
-}
+  getTheme() {
+    /*
+     * Get the current theme.
+     */
+    return (document.body.classList.contains('dark')) ? 'dark' : 'light';
+  },
 
 
-function toggleTheme(theme) {
-  /*
-   * Toggle the UI theme.
-   */
-  let currentTableClass = 'ag-theme-alpine';
-  let newTableClass = 'ag-theme-alpine-dark';
-  if (theme === 'light') {
-    document.body.className = 'base';
-    currentTableClass = 'ag-theme-alpine-dark';
-    newTableClass = 'ag-theme-alpine';
-  } else if (!hasClass(document.body, 'dark')) {
-    document.body.className += ' dark';
+  toggleTheme(theme) {
+    /*
+     * Toggle the UI theme.
+     */
+    let currentTableClass = 'ag-theme-alpine';
+    let newTableClass = 'ag-theme-alpine-dark';
+    console.log(theme);
+    if (theme === 'light') {
+      document.body.className = 'base';
+      currentTableClass = 'ag-theme-alpine-dark';
+      newTableClass = 'ag-theme-alpine';
+    } else { // if (!hasClass(document.body, 'dark')) 
+      document.body.className += ' dark';
+    }
+    // Toggle Ag-Grid theme.
+    // FIXME: Incorrectly light if dark initially.
+    let tables = document.getElementsByClassName(currentTableClass);
+    [...tables].forEach( x => x.classList.add(newTableClass) );
+    [...tables].forEach( x => x.classList.remove(currentTableClass) );
   }
-  // Toggle Ag-Grid theme.
-  // FIXME: Incorrectly light if dark initially.
-  let tables = document.getElementsByClassName(currentTableClass);
-  [...tables].forEach( x => x.classList.add(newTableClass) );
-  [...tables].forEach( x => x.classList.remove(currentTableClass) );
-}
 
+
+}
 
 function hasClass(element, className) {
   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;

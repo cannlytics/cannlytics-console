@@ -3,6 +3,7 @@
 # run 'pip freeze > requirements.txt' in the terminal to overwrite this file.
 
 cannlytics==0.0.2
+coreapi
 dj_static==0.0.6
 django==3.2
 django-crispy-forms==1.11.2

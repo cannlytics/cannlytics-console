@@ -19,43 +19,63 @@
       <div
         id="areas-table"
         class="ag-theme-alpine"
-        style="height: 600px; width:500px;"
+        style="height: 400px; width:100%%;"
       ></div>
 
     </div><!-- End of body -->
 
   </main>
 
+{% endblock console_body %}
+
+{% block console_js %}
+
   <!-- JavaScript -->
   <script type="text/javascript" charset="utf-8">
-    // specify the columns
+
+    // TODO: Specify the columns.
     const columnDefs = [
-      { field: "make", sortable: true, filter: true },
-      { field: "model", sortable: true, filter: true },
-      { field: "price", sortable: true, filter: true }
+      { field: "make", sortable: true, filter: true, editable: true, checkboxSelection: true }, // , checkboxSelection: true
+      { field: "model", sortable: true, filter: true, editable: true },
+      { field: "price", sortable: true, filter: true, editable: true }
     ];
 
-    // specify the data
-    const rowData = [
+    // TODO: Get the data.
+    {% comment %} const rowData = [
       { make: "Toyota", model: "Celica", price: 35000 },
       { make: "Ford", model: "Mondeo", price: 32000 },
-    ];
+    ]; {% endcomment %}
 
-    // let the grid know which columns and what data to use
+    // Specify the table options.
     const gridOptions = {
       columnDefs: columnDefs,
+      pagination: true,
+      rowSelection: 'multiple',
+      suppressRowClickSelection: false,
+      // singleClickEdit: true,
+      onRowClicked: event => console.log('A row was clicked'),
+      onGridReady: event => cannlytics.theme.toggleTheme(cannlytics.theme.getTheme()),
     };
 
-    // lookup the container we want the Grid to use
-    const eGridDiv = document.querySelector('#areas-table');
+    // Get the data and render the table.
+    console.log(cannlytics.api);
+    cannlytics.api.getAreas().then((data) => {
+      console.log('Areas:', data);
+      const eGridDiv = document.querySelector('#areas-table');
+      new agGrid.Grid(eGridDiv, gridOptions);
+      gridOptions.api.setRowData(rowData);
+    })
+    .catch((error) => {
+      console.log('Error:', error);
+    });
 
-    // create the grid passing in the div to use together with the columns & data we want to use
-    new agGrid.Grid(eGridDiv, gridOptions);
-
-    // TODO: Get data with the API
-    gridOptions.api.setRowData(rowData);
+    // TODO: Attach export functionality
+    //function exportTableData() {
+    //  gridOptions.api.exportDataAsCsv();
+    //}
 
   </script>
 
-{% endblock console_body %}
+{% endblock console_js %}
+
 </html>
