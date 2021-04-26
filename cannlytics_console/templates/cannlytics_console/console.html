@@ -12,13 +12,10 @@
 
   <!-- Console header -->
   {% block page_css %}
-    {% comment %} <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css"> {% endcomment %}
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine-dark.css">
+    <script src="{% static 'cannlytics_console/plugins/ag-grid/ag-grid-community.min.noStyle.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-grid.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-theme-alpine.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-theme-alpine-dark.min.css'%}">
     {% block console_css %}{% endblock console_css %}
   {% endblock %}
 
@@ -66,8 +63,6 @@
 
   <!-- Console JavaScript -->
   {% block page_js %}
-    {% comment %} <script src="{% static 'rest_framework/js/coreapi-0.1.1.js' %}"></script>
-    <script src="{% url 'api-docs:schema-js' %}"></script> {% endcomment %}
     <script>
       cannlytics.app.initialize();
     </script>

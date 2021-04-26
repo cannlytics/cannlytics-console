@@ -333,3 +333,13 @@ def lab_analyses(request, org_id, format=None):
     elif request.method == 'POST':
         # TODO: Create an analysis.
         return Response({ 'data': 'Under construction'}, content_type='application/json')
+
+#----------------------------------------------#
+# Informational Endpoints
+#----------------------------------------------#
+
+@api_view(['GET'])
+def regulations(request, format=None):
+    """Get regulation information."""
+    message = f'Get information about regulations on a state-by-state basis.'
+    return Response({'message': message}, content_type='application/json')

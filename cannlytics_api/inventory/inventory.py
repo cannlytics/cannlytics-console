@@ -29,7 +29,6 @@ def inventory(request, format=None):
         #     status=status.HTTP_400_BAD_REQUEST
         # )
 
-
 #----------------------------------------------#
 # Areas endpoints
 #----------------------------------------------#
@@ -40,119 +39,53 @@ def areas(request, format=None):
 
     if request.method == 'GET':
 
-        # TODO: Get areas from Metrc
+        # TODO: Authenticate the user
 
+        # TODO: Initialize Metrc client.
 
+        # TODO: Get areas from Metrc.
+
+        # # View the location using GET /locations/v1/{id}
+        # cultivation_uid = '10705'
+        # traced_location = cultivator.get_locations(uid=cultivation_uid)  
+
+        # # Optional: Get any filters from dict(request.query_params)
         # limit = request.query_params.get('limit', None)
         # order_by = request.query_params.get('order_by', 'state')
-        # # Optional: Get any filters from dict(request.query_params)
         # labs = get_collection('labs', order_by=order_by, limit=limit, filters=[])
         return Response([{'make': "Subaru", 'model': "WRX", 'price': 21000}])
     
-    else:
+    elif request.method == 'POST':
+
+        # TODO: Either create or update the area.
+
+            # # Create a new location using: POST /locations/v1/create
+            # cultivation_name = 'MediGrow'
+            # cultivation_original_name = 'medi grow'
+            # cultivator.create_locations([
+            #     cultivation_original_name,
+            #     'Harvest Location',
+            #     'Plant Location',
+            #     'Warehouse',
+            # ])
+            
+            # # Get created location
+            # cultivation= None
+            # locations = track.get_locations(action='active', license_number=cultivator.license_number)
+            # for location in locations:
+            #     if location.name == cultivation_original_name:
+            #         cultivation = location
+
+            # # Update the name of the location using: POST /locations/v1/update
+            # cultivator.update_locations([cultivation.uid], [cultivation_name])
+
         return Response({'data': []})
 
+    elif request.method == 'Delete':
 
-@api_view(['GET', 'POST'])
-def locations(request, format=None):
-    """Get, create, or update locations."""
+        # TODO: Archive the area data and delete from Metrc.
 
-    if request.method == 'GET':
-        return Response({'error': 'not_implemented'}, content_type='application/json')
-
-    elif request.method == 'POST':
-
-        return Response({'error': 'not_implemented'}, content_type='application/json')
-
-        # Return an error if no author is specified.
-        # error_message = 'Unknown error, please notify <support@cannlytics.com>'
-        # return Response(
-        #     {'error': error_message},
-        #     content_type='application/json',
-        #     status=status.HTTP_400_BAD_REQUEST
-        # )
-
-
-@api_view(['GET', 'POST'])
-def facilities(request, format=None):
-    """Get, create, or update facilities."""
-
-    if request.method == 'GET':
-        return Response({'error': 'not_implemented'}, content_type='application/json')
-
-    elif request.method == 'POST':
-
-        return Response({'error': 'not_implemented'}, content_type='application/json')
-
-        # Return an error if no author is specified.
-        # error_message = 'Unknown error, please notify <support@cannlytics.com>'
-        # return Response(
-        #     {'error': error_message},
-        #     content_type='application/json',
-        #     status=status.HTTP_400_BAD_REQUEST
-        # )
-
-    #------------------------------------------------------------------
-    # Facilities
-    #------------------------------------------------------------------
-
-    # Unless facilities are not set, then get the facilities from Metrc.
-    # Get facilities, with permissions set by the state for each facility type.
-    # facilities = track.get_facilities()
-
-    # # Define primary cultivator, lab, and retailer for tests.
-    # # cultivator, lab, retailer = None, None, None
-    # for facility in facilities:
-    #     license_type = facility.license_type
-    #     if cultivator is None and license_type == 'Grower':
-    #         cultivator = facility
-    #     elif lab is None and license_type == 'Testing Laboratory':
-    #         lab = facility
-    #     elif retailer is None and license_type == 'Dispensary':
-    #         retailer = facility
-
-    #     # Save facility to Firestore.
-    #     license_number = facility.license_number
-    #     ref = f'tests/metrc/organizations/1/facilities/{license_number}'
-    #     data = clean_nested_dictionary(facility.to_dict())
-    #     data['license_number'] = license_number
-    #     fb.update_document(ref, data)
-    
-    # # Get facilities from Firestore.
-    # ref = 'tests/metrc/organizations/1/facilities'
-    # cultivator = Facility.from_fb(track, f'{ref}/4b-X0002')
-    # retailer = Facility.from_fb(track, f'{ref}/3c-X0002')
-    # processor = Facility.from_fb(track, f'{ref}/5b-X0002')
-    # lab = Facility.from_fb(track, f'{ref}/6a-X0001')
-    # transporter = Facility.from_fb(track, f'{ref}/406-X0001')
-
-    # #------------------------------------------------------------------
-    # # Locations ✓
-    # #------------------------------------------------------------------
-
-    # # Create a new location using: POST /locations/v1/create
-    # cultivation_name = 'MediGrow'
-    # cultivation_original_name = 'medi grow'
-    # cultivator.create_locations([
-    #     cultivation_original_name,
-    #     'Harvest Location',
-    #     'Plant Location',
-    #     'Warehouse',
-    # ])
-    
-    # # Get created location
-    # cultivation= None
-    # locations = track.get_locations(action='active', license_number=cultivator.license_number)
-    # for location in locations:
-    #     if location.name == cultivation_original_name:
-    #         cultivation = location
-
-    # # Update the name of the location using: POST /locations/v1/update
-    # cultivator.update_locations([cultivation.uid], [cultivation_name])
-
-    # # View the location using GET /locations/v1/{id}
-    # cultivation_uid = '10705'
-    # traced_location = cultivator.get_locations(uid=cultivation_uid)
+        return Response({'data': []})
 
 
     #------------------------------------------------------------------

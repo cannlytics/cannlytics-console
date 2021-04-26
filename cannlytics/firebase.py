@@ -28,7 +28,7 @@ Example:
     db = initialize_firebase()
 
 """
-
+import ulid
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
@@ -38,7 +38,7 @@ from firebase_admin import auth, firestore, initialize_app, storage
 from google.cloud.firestore import ArrayUnion, ArrayRemove, Increment
 from google.cloud.firestore_v1.collection import CollectionReference
 from pandas import notnull, read_csv, read_excel, DataFrame, Series
-from uuid import uuid4
+# from uuid import uuid4
 
 # ------------------------------------------------------------#
 # Firestore
@@ -274,6 +274,27 @@ def export_data(db, ref, data_file):
         output.to_excel(data_file)
 
 
+def create_id():
+    """Generate a universal ID."""
+    return ulid.new().str.lower()
+
+
+def create_id_from_datetime(dt):
+    """Create an ID from an existing datetime.
+    Args:
+        dt (datetime): The time to timestamp the ID.
+    """
+    return ulid.from_timestamp(dt)
+
+
+def get_id_timestamp(uid):
+    """Get the datetime that an ID was created.
+    Args:
+        uid (str): A unique ID string.
+    """
+    return ulid.from_str(uid).timestamp().datetime
+
+
 # ------------------------------------------------------------#
 # Authentication
 # ------------------------------------------------------------#
@@ -298,7 +319,8 @@ def create_account(name, email, notification=True):
     photo_url = f'https://robohash.org/{email}?set=set5'
     try:
         user = auth.create_user(
-            uid=str(uuid4()),
+            # uid=str(uuid4()),
+            uid=create_id(),
             email=email,
             email_verified=False,
             password=password,

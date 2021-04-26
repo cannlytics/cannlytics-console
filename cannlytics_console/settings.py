@@ -60,7 +60,8 @@ if PRODUCTION:
 # ------------------------------------------------------------#
 INSTALLED_APPS = [
     'cannlytics',
-    'cannlytics_api.apps.CannlyticsAPIConfig',
+    # 'cannlytics_api.apps.CannlyticsAPIConfig',
+    'cannlytics_api',
     'cannlytics_console',
     'crispy_forms',
     'django.contrib.admin',
