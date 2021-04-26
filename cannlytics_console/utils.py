@@ -90,6 +90,7 @@ def get_user_specific_state(uid, context):
         context (dict): The context updated with any user-specific state.
     """
     context['uid'] = uid
+    context['organization'] = {}
     print('User session:', uid)
     if not uid:
         return context
@@ -111,6 +112,7 @@ def get_user_specific_data(uid, context):
         context (dict): The context updated with any user-specific state.
     """
     context['user'] = get_user(uid)
+    print('User Django side:', context['user'])
     # FIXME: Implement
     # context['organizations'] = get_user_organizations(uid)
     context['organizations'] = []

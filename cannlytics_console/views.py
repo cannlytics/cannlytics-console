@@ -14,6 +14,7 @@ from cannlytics_console.utils import (
     get_screen_specific_data,
     get_screen_specific_state,
     get_user_specific_state,
+    get_user_specific_data,
 )
 
 BASE = 'cannlytics_console'
@@ -50,6 +51,7 @@ class ConsoleView(TemplateView):
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
         context = get_user_specific_state(uid, context)
+        context = get_user_specific_data(uid, context)
         return context
 
 
@@ -69,49 +71,6 @@ class LoginView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-# FIXME: Touch up session logic.
-# def signIn(request):
-#     return render(request,"Login.html")
-# def home(request):
-#     return render(request,"Home.html")
-  
-# def postsignIn(request):
-#     email=request.POST.get('email')
-#     pasw=request.POST.get('pass')
-#     try:
-#         # if there is no error then signin the user with given email and password
-#         user=authe.sign_in_with_email_and_password(email,pasw)
-#     except:
-#         message="Invalid Credentials!!Please ChecK your Data"
-#         return render(request,"Login.html",{"message":message})
-#     session_id=user['idToken']
-#     request.session['uid']=str(session_id)
-#     return render(request,"Home.html",{"email":email})
-  
-# def logout(request):
-#     try:
-#         del request.session['uid']
-#     except:
-#         pass
-#     return render(request,"Login.html")
-  
-# def signUp(request):
-#     return render(request,"Registration.html")
-  
-# def postsignUp(request):
-#      email = request.POST.get('email')
-#      passs = request.POST.get('pass')
-#      name = request.POST.get('name')
-#      try:
-#         # creating a user with the given email and password
-#         user=authe.create_user_with_email_and_password(email,passs)
-#         uid = user['localId']
-#         idtoken = request.session['uid']
-#         print(uid)
-#      except:
-#         return render(request, "Registration.html")
-#      return render(request,"Login.html")
 
 
 #-----------------------------------------------------------------------

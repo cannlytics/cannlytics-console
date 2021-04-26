@@ -73,6 +73,20 @@ body.dark .btn-outline-orange:hover {
   color: #1a1a1a;
 }
 
+.text-link {
+  color: #FF9500 !important;
+}
+.text-link:hover {
+  color: #e53a23 !important;
+}
+body.dark .text-link {
+  color: #ffa600 !important;
+}
+body.dark .text-link:hover {
+  color: #FF9500 !important;
+}
+
+
 /*--------------------------------------------------------------------------
   Images and icons
 ---------------------------------------------------------------------------*/

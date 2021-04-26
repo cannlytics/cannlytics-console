@@ -40,8 +40,16 @@
             screen=screen
             sidebar=sidebar
             user=user
+            organization=organization
             only
           %}
+        {% comment %} {% elif user %}
+          {% include "cannlytics_console/layout/side_navigation_create_org.html" with
+            screen=screen
+            sidebar=sidebar
+            user=user
+            only
+          %} {% endcomment %}
         {% else %}
           {% include "cannlytics_console/layout/side_navigation_login.html" with
             screen=screen

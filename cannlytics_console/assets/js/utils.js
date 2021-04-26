@@ -29,10 +29,10 @@ export const authRequest = (endpoint, data, options) => new Promise((resolve, re
       'X-CSRFToken': csrftoken,
     });
     const headers = { headers: headerAuth, mode: 'same-origin', method: 'GET' };
-    // if (data) {
-    //   headers.method = 'POST';
-    //   headers.body = JSON.stringify(data);
-    // }
+    if (data) {
+      headers.method = 'POST';
+      headers.body = JSON.stringify(data);
+    }
     if (options) {
       if (options.delete) {
         headers.method = 'DELETE';

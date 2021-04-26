@@ -1,7 +1,7 @@
 """
 Views | Cannlytics API
 Created: 1/22/2021
-Updated: 4/25/2021
+Updated: 4/26/2021
 
 API to interface with cannabis analytics.
 """
@@ -74,9 +74,12 @@ def logout(request):
     try:
         claims = authenticate(request)
         uid = claims['uid']
+        try:
+            del request.session['uid']
+        except:
+            pass
         create_log(f'users/{uid}/logs', claims, 'Signed out.', 'auth', 'logout')
         update_document(f'users/{uid}', {'signed_in': False})
         return Response({'success': True}, content_type='application/json')
     except:
         return Response({'success': False}, content_type='application/json', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
