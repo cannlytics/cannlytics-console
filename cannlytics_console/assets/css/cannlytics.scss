@@ -250,7 +250,8 @@ a.text-secondary-on-light:hover {
   color: #ccc;
 }
 body.dark a.text-secondary small,
-body.dark p.text-secondary small {
+body.dark p.text-secondary,
+body.dark svg.text-secondary {
   color: #ccc !important;
 }
 ::-moz-selection {

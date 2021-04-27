@@ -4,14 +4,11 @@
   <!-- Created 4/22/2021 -->
   {% load icon %}
 
-  <footer class="text-muted pb-4">
-    <div class="container mx-0 px-0">
-      {% comment %} <p class="float-end mb-1">
-        <a href="https://cannlytics.com/docs" target="_blank">
-          {% icon "book-open" %}
-        </a>
-      </p> {% endcomment %}
-      <p class="mb-1 fs-6 text-small">
+  <footer class="text-muted bg-light">
+
+    <!-- Title and policies -->
+    <div class="px-3 d-flex justify-content-between align-items-center border-top">
+      <div class="fs-6 text-small">
         <small>Copyright &copy; Cannlytics 2021</small>
         -
         <a class="text-secondary fs-6" href="https://cannlytics.com/privacy-policy" target="_blank">
@@ -21,11 +18,27 @@
           <a class="text-secondary fs-6" href="https://cannlytics.com/terms-of-service" target="_blank">
           <small>Terms of Service</small>
           </a>
-      </p>
-      {% comment %} <p class="mb-0 fs-6">New to Cannlytics? <a href="https://cannlytics.com/docs" target="_blank">Read the docs</a>
-      or take a <a href="https://cannlytics.com/docs/getting-started/introduction/">quickstart</a>.</p>
-    </div> {% endcomment %}
-  </footer>
+      </div>
+      <div class="align-self-end"></div>
 
+      <!-- Help Menu -->
+      <div class="btn-group dropup">
+        <button
+          type="button"
+          class="btn dropdown-toggle simple-dropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {% icon 'help-circle' width="18px" height="18px" class="text-secondary" %}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item text-dark" href="/docs" target="_blank">Documentation</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li class="px-3"><small>Version {{ APP_VERSION_NUMBER }}</small></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
 
 </html>

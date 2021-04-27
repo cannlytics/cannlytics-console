@@ -5,7 +5,8 @@ Updated: 4/20/2021
 """
 
 # External imports
-from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.views.generic.base import TemplateView
 
 # Internal imports
@@ -22,6 +23,8 @@ BASE = 'cannlytics_console'
 #-----------------------------------------------------------------------
 # Main view
 #-----------------------------------------------------------------------
+
+# FIXME: Handle no user more elegantly. Redirect?
 
 class ConsoleView(TemplateView):
     """Main view used for most console pages."""
@@ -96,6 +99,25 @@ class OrganizationView(TemplateView):
 
     # TODO: Create organization on post
 
+
+#-----------------------------------------------------------------------
+# Error views (Optional: Condense into a single error view?)
+#-----------------------------------------------------------------------
+
+def handler404(request, *args, **argv):
+    status_code = 404
+    template = f'{BASE}/general/error-pages/{status_code}.html'
+    response = render_to_response(template, {}, context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    status_code = 500
+    template = f'{BASE}/general/error-pages/{status_code}.html'
+    response = render_to_response(template, {}, context_instance=RequestContext(request))
+    response.status_code = status_code
+    return response
 
 #-----------------------------------------------------------------------
 # Scrap functional view

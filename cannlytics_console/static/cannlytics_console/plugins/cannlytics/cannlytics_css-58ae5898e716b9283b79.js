@@ -95,7 +95,7 @@ var cannlytics =
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/cannlytics-f969d6c28e1c348b990ce3062b9f03a3.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/cannlytics.scss?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/cannlytics-9c668807b665d0959c8cdc158ef0af74.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/cannlytics.scss?");
 
 /***/ }),
 

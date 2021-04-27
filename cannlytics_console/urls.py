@@ -20,19 +20,24 @@ from cannlytics_console import views
 app_name = 'cannlytics_console' # pylint: disable=invalid-name
 urlpatterns = [
     path('', views.ConsoleView.as_view(), name='index'),
-    path('account/<slug:page>/', views.LoginView.as_view(), name='auth'),
-    path('api/', include('cannlytics_api.urls'), name='api'),
+    path('account/<slug:page>', views.LoginView.as_view(), name='auth'),
+    path('api', include('cannlytics_api.urls'), name='api'),
     # path('docs', include_docs_urls(title='Cannlytics API'), name='api-docs'),
     # path('swagger-ui', TemplateView.as_view(
     #     template_name='cannlytics_console/pages/general/swagger-ui.html',
     #     extra_context={'schema_url':'openapi-schema'}
     # ), name='swagger-ui'),
-    path('settings/organizations/<slug:name>/', views.OrganizationView.as_view()),
-    path('<slug:screen>/', views.ConsoleView.as_view()),
-    path('<slug:screen>/<slug:section>/', views.ConsoleView.as_view()),
-    path('<slug:screen>/<slug:section>/<slug:unit>/', views.ConsoleView.as_view()),
+    path('settings/organizations/<slug:name>', views.OrganizationView.as_view()),
+    path('<slug:screen>', views.ConsoleView.as_view()),
+    path('<slug:screen>/<slug:section>', views.ConsoleView.as_view()),
+    path('<slug:screen>/<slug:section>/<slug:unit>', views.ConsoleView.as_view()),
 ]
 
+# Error pages.
+handler404 = 'cannlytics_console.views.my_custom_page_not_found_view'
+handler500 = 'cannlytics_console.views.my_custom_error_view'
+handler403 = 'cannlytics_console.views.my_custom_permission_denied_view'
+handler400 = 'cannlytics_console.views.my_custom_bad_request_view'
 
     # path('account', include('cannlytics_console.authentication.urls'), name='auth'),
     # path('api/authenticate', authenticate),

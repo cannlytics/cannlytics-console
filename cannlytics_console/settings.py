@@ -10,6 +10,7 @@ References:
 """
 
 # Standard imports
+import json
 import os
 import re
 import sys
@@ -29,6 +30,11 @@ WSGI_APPLICATION = 'cannlytics_console.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # sys.path.insert(0, os.path.join(BASE_DIR))
+
+# Set the version number.
+with open(os.path.join(BASE_DIR, 'package.json')) as v_file:
+    package = json.loads(v_file.read())
+    APP_VERSION_NUMBER = package['version']
 
 # ------------------------------------------------------------#
 # Environment variables.
@@ -53,6 +59,9 @@ DEBUG = env('DEBUG')
 
 if PRODUCTION:
     DEBUG = False
+
+# MONKEY
+DEBUG = False
 
 # ------------------------------------------------------------#
 # Apps
@@ -117,6 +126,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cannlytics_console.context_processors.selected_settings', # Adds select settings to the context.
             ],
         },
     },
@@ -259,7 +269,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # ------------------------------------------------------------#
 
 # Remove trailing slash from URLs.
-# APPEND_SLASH = False
+APPEND_SLASH = False
 
 # Allow Django template tags to span multiple lines.
 # https://stackoverflow.com/questions/49110044/django-template-tag-on-multiple-line

@@ -35,7 +35,8 @@
       <div class="row">
         
         <!-- Side Navigation -->
-        {% if user %}
+        <!-- Optional: Custom sidebars -->
+        {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
           {% include "cannlytics_console/layout/side_navigation.html" with
             screen=screen
             sidebar=sidebar
@@ -50,19 +51,22 @@
             user=user
             only
           %} {% endcomment %}
-        {% else %}
+        {% comment %} {% else %}
           {% include "cannlytics_console/layout/side_navigation_login.html" with
             screen=screen
             sidebar=sidebar
             only
-          %}
-        {% endif %}
+          %} {% endcomment %}
+        {% comment %} {% endif %} {% endcomment %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}
         
       </div>
     </div>
+
+    <!-- Footer -->
+    {% include "cannlytics_console/layout/footer.html" %}
 
     <!-- Notifications -->
     {% include "cannlytics_console/components/notifications/notification_toast.html" %}

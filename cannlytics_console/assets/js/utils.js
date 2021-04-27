@@ -22,7 +22,6 @@ export const authRequest = (endpoint, data, options) => new Promise((resolve, re
    */
   getUserToken().then((idToken) => {
     const csrftoken = getCookie('csrftoken');
-    console.log(csrftoken);
     const headerAuth = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`,

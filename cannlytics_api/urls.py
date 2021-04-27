@@ -20,46 +20,46 @@ app_name = 'cannlytics_api' # pylint: disable=invalid-name
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('auth/', include([
-        path('authenticate/', auth.authenticate),
-        path('login/', auth.login),
-        path('logout/', auth.logout),
+    path('auth', include([
+        path('authenticate', auth.authenticate),
+        path('login', auth.login),
+        path('logout', auth.logout),
     ])),
     # Allow for labs to choose to make their analyses public,
     # so that producers can search for analyses.
-    path('analyses/', include([
+    path('analyses', include([
         path('', views.index),
         path('<uuid:analysis_id>/', views.index),
     ])),
-    path('analytes/', include([
+    path('analytes', include([
         path('', views.index),
-        path('<uuid:analyte_id>/', views.index),
+        path('<uuid:analyte_id>', views.index),
     ])),
     path('areas/', include([
         path('', inventory.areas),
         path('<uuid:area_id>/', inventory.areas),
     ])),
-    path('clients/', include([
+    path('clients', include([
         path('', views.index),
-        path('<uuid:org_id>/', views.index),
-        path('<uuid:org_id>/contacts/', views.index),
+        path('<uuid:org_id>', views.index),
+        path('<uuid:org_id>/contacts', views.index),
     ])),
-    path('inventory/', include([
+    path('inventory', include([
         path('', views.index),
-        path('<uuid:inventory_id>/', views.index),
+        path('<uuid:inventory_id>', views.index),
     ])),
-    path('instruments/', include([
+    path('instruments', include([
         path('', views.index),
-        path('<uuid:instruments_id>/', views.index),
+        path('<uuid:instruments_id>', views.index),
     ])),
-    path('invoices/', include([
+    path('invoices', include([
         path('', views.index),
-        path('<uuid:invoice_id>/', views.index),
+        path('<uuid:invoice_id>', views.index),
     ])),
-    path('users/', include([
-        path('', views.users),
-        path('<uuid:uid>/', views.users),
-        path('<uuid:uid>/settings/', views.users),
+    path('users', include([
+        path('', auth.users),
+        path('<uuid:uid>', auth.users),
+        path('<uuid:uid>/settings', auth.users),
     ])),
     path('organizations/', include([
         path('', organizations.organizations),
@@ -67,20 +67,19 @@ urlpatterns = [
         path('<uuid:org_id>/settings/', organizations.organizations),
         # path('join/', organizations.join_organization),
     ])),
-    path('samples/', include([
+    path('samples', include([
         path('', views.index),
-        path('<uuid:sample_id>/', views.index),
+        path('<uuid:sample_id>', views.index),
     ])),
-    path('results/', include([
+    path('results', include([
         path('', views.index),
-        path('<uuid:sample_id>/', views.index),
+        path('<uuid:sample_id>', views.index),
     ])),
-    path('transfers/', include([
+    path('transfers', include([
         path('', views.index),
-        path('<uuid:sample_id>/', views.index),
-    ])),  
-
-    path('regulations/', views.regulations),
+        path('<uuid:sample_id>', views.index),
+    ])),
+    path('regulations', views.regulations),
 ]
 
 # TODO: Handle 404's

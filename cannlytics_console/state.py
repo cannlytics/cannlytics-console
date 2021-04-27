@@ -101,28 +101,28 @@ material = {
             # Sales (Transactions | Receipts) *Cultivator* *Processor* *Retailer*
         ],
         "welcome_message": {
-            "title": "Welcome to your laboratory platform 🚀",
-            "message": "Get started with lab testing or analyzing your lab results.",
+            "title": "Welcome to your new laboratory platform 🚀",
+            "message": "Get started with simple and easy cannabis analysis.",
         },
         "organization_choices": [
             {
                 "action": "Get started",
                 "title": "For Labs",
-                "description": "Get started with lab work, manage your lab data, and issue your certificates. Start or join a lab.",
+                "description": "Start your lab workflow, manage your lab data, and issue your certificates. Start or join a lab.",
                 "type": "lab",
             },
-            # {
-            #     "action": "Begin now",
-            #     "title": "For Producers / Processors",
-            #     "description": "Start managing your lab results now. Start or join aa a producer/processor to begin.",
-            #     "type": "producer",
-            # },
-            # {
-            #     "action": "Explore for free",
-            #     "title": "For Retailers",
-            #     "description": "Access lab data for your products quickly and easily. Begin today.",
-            #     "type": "retailer",
-            # },
+            {
+                "action": "Begin now",
+                "title": "For Cultivators / Processors",
+                "description": "Start managing your lab results now. Start or join as a producer/processor to begin.",
+                "type": "producer",
+            },
+            {
+                "action": "Explore for free",
+                "title": "For Retailers",
+                "description": "Access lab data for your products quickly and easily. Begin today.",
+                "type": "retailer",
+            },
             # {
             #     "action": "Learn more",
             #     "title": "For Consumers",

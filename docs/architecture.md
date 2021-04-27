@@ -61,3 +61,8 @@ A Duck may also have:
 Resources:
 
 * [React design patterns and structures of Redux and Flux](https://www.etatvasoft.com/insights/react-design-patterns-and-structures-of-redux-and-flux/)
+
+
+## Authentication
+
+See [OAuth](https://stackoverflow.com/questions/37674294/what-is-oauth-and-how-does-it-secure-rest-api-calls/37686727#37686727).
