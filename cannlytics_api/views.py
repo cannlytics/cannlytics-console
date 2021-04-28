@@ -5,7 +5,7 @@ Created: 1/22/2021
 API to interface with cannabis analytics.
 """
 
-# Standard imports
+# External imports
 from datetime import datetime
 from json import loads
 

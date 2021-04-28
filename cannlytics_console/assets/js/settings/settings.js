@@ -6,12 +6,14 @@
  */
 import { auth, db } from '../firebase.js';
 import { accountSettings } from './account.js';
+import { errorSettings } from './errors.js';
 import { showNotification } from '../utils.js';
 
 
 export const settings = {
   ...coreSettings,
   ...accountSettings,
+  ...errorSettings,
 };
 
 

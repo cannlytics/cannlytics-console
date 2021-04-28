@@ -2,6 +2,7 @@
 <html>
 <!-- 500 Page -->
 <!-- Created 4/27/2021 -->
+<!-- Updated 4/28/2021 -->
 {% extends "cannlytics_console/pages/account/base_login.html" %}
 {% block title %}500 | Cannlytics{% endblock %}
 {% block login_form %}
@@ -9,6 +10,18 @@
     <p class="h6 font-weight-light serif text-center mt-5 mb-4">
       An error occured on our end. Could you please
       report this occurance to support@cannlytics.com?
+    </p>
+    <div class="simple-flex">
+      <button
+        class="btn bg-gradient-green text-white"
+        style="width: 191px;"
+        type="button"
+        onclick="cannlytics.settings.reportError({ 'status_code': 500, 'version': {{ APP_VERSION_NUMBER }} });"
+      >
+        Report Error
+      </button>
+    </div>
+    <p class="fs-6 font-weight-light serif text-center my-4" style="line-height:2;">
       You can use the following links to
       try to get to where you need to go.
     </p>
@@ -35,7 +48,7 @@
     </a>
   </div>
 
-  <!-- Redirect to login JavaScript -->
+  <!-- JavaScript -->
   <script>
     function goBack() {
       window.history.back();

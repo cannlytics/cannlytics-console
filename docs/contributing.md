@@ -9,3 +9,25 @@ Finding and reporting issues, bugs, and sub-optimal features and functionality i
 ## Pull Requests
 
 Feel free to clone the repository and make any pull requests that you think would benefit the project.
+
+## Writing documentation
+
+Install Material for MkDocs with Docker.
+
+```shell
+docker pull squidfunk/mkdocs-material
+```
+
+Preview the documentation as you write.
+
+```shell
+docker pull squidfunk/mkdocs-material
+```
+
+* [Quick note - how to fix django-livereload-server import error](https://gist.github.com/hangtwenty/f53b3867db1e33780505ccafd8d2eef0)
+
+Build the documentation
+
+```shell
+mkdocs build
+```

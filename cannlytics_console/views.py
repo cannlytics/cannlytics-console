@@ -97,50 +97,25 @@ class OrganizationView(TemplateView):
         # context = self.get_screen_material(context)
         return context
 
-    # TODO: Create organization on post
+    # TODO: Create organization on post.
 
 
 #-----------------------------------------------------------------------
-# Error views (Optional: Condense into a single error view?)
+# Error views
 #-----------------------------------------------------------------------
 
-def handler404(request, *args, **argv):
+def handler404(request): # , *args, **argv
+    """Handle missing pages."""
     status_code = 404
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-def handler500(request, *args, **argv):
+def handler500(request):
+    """Handle internal errors."""
     status_code = 500
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
-    print('\n\nLooking for:', template, '\n\n')
     return render(request, template, {}, status=status_code)
 
-#-----------------------------------------------------------------------
-# Scrap functional view
-#-----------------------------------------------------------------------
 
-# def dashboard(request, **kwargs):
-#     """Dashboard user interface."""
-#     context = {}
-#     uid = request.session.get('uid', '')
-#     context['sidebar'] = layout['sidebar']
-#     context = get_screen_specific_state(kwargs, context)
-#     context = get_screen_specific_data(kwargs, context)
-#     context = get_user_specific_state(uid, context)
-#     template = f'{BASE}/pages/dashboard/dashboard.html'
-#     return render(request, template, context)
-
-#-----------------------------------------------------------------------
-# Scrap login required class view
-#-----------------------------------------------------------------------
-
-# from django.contrib.auth.mixins import LoginRequiredMixin
-
-# class ConsoleView(LoginRequiredMixin, TemplateView):
-#     """Main view used for most console pages."""
-
-#     login_url = '/account/sign-in'
-#     redirect_field_name = 'redirect_to'
-
-
+# Optional: Add 403 and 400 views

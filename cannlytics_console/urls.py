@@ -37,6 +37,8 @@ urlpatterns = [
 # Error pages.
 handler404 = 'cannlytics_console.views.handler404'
 handler500 = 'cannlytics_console.views.handler500'
+
+# Optional: Add 403 and 400 pages
 # handler403 = 'cannlytics_console.views.my_custom_permission_denied_view'
 # handler400 = 'cannlytics_console.views.my_custom_bad_request_view'
 

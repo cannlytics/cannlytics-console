@@ -23,4 +23,3 @@ def get_timestamp(past=0, future=0, tz='local'):
         return now.isoformat()[:19]
     else:
         return now.isoformat()
-
