@@ -82,31 +82,20 @@ var cannlytics =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./cannlytics_console/assets/css/login.scss");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./cannlytics_console/assets/css/cannlytics.scss":
-/*!*******************************************************!*\
-  !*** ./cannlytics_console/assets/css/cannlytics.scss ***!
-  \*******************************************************/
+/***/ "./cannlytics_console/assets/css/login.scss":
+/*!**************************************************!*\
+  !*** ./cannlytics_console/assets/css/login.scss ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/cannlytics-9c668807b665d0959c8cdc158ef0af74.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/cannlytics.scss?");
-
-/***/ }),
-
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./cannlytics_console/assets/css/cannlytics.scss ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__(/*! ./cannlytics_console/assets/css/cannlytics.scss */\"./cannlytics_console/assets/css/cannlytics.scss\");\n\n\n//# sourceURL=webpack://cannlytics/multi_./cannlytics_console/assets/css/cannlytics.scss?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"./plugins/cannlytics/login-710e36d168869bfcb9ebac7532affd73.css\");\n\n//# sourceURL=webpack://cannlytics/./cannlytics_console/assets/css/login.scss?");
 
 /***/ })
 

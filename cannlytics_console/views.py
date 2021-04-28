@@ -5,7 +5,7 @@ Updated: 4/20/2021
 """
 
 # External imports
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.views.generic.base import TemplateView
 
@@ -106,18 +106,15 @@ class OrganizationView(TemplateView):
 
 def handler404(request, *args, **argv):
     status_code = 404
-    template = f'{BASE}/general/error-pages/{status_code}.html'
-    response = render_to_response(template, {}, context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
+    template = f'{BASE}/pages/general/error-pages/{status_code}.html'
+    return render(request, template, {}, status=status_code)
 
 
 def handler500(request, *args, **argv):
     status_code = 500
-    template = f'{BASE}/general/error-pages/{status_code}.html'
-    response = render_to_response(template, {}, context_instance=RequestContext(request))
-    response.status_code = status_code
-    return response
+    template = f'{BASE}/pages/general/error-pages/{status_code}.html'
+    print('\n\nLooking for:', template, '\n\n')
+    return render(request, template, {}, status=status_code)
 
 #-----------------------------------------------------------------------
 # Scrap functional view

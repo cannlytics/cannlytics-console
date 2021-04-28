@@ -172,6 +172,7 @@ USE_TZ = True
 # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/web_application_security
 # ------------------------------------------------------------#
 ALLOWED_HOSTS = [
+    '*',
     'console.cannlytics.com',
     'cannlytics-console.web.app',
     'cannlytics-console-deeuhexjlq-uc.a.run.app',

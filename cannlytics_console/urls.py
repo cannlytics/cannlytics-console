@@ -5,6 +5,7 @@ Resources: https://docs.djangoproject.com/en/3.2/topics/http/urls/
 """
 
 # External imports
+from django.conf.urls import handler404, handler500
 from django.urls import include, path
 from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
@@ -34,10 +35,10 @@ urlpatterns = [
 ]
 
 # Error pages.
-handler404 = 'cannlytics_console.views.my_custom_page_not_found_view'
-handler500 = 'cannlytics_console.views.my_custom_error_view'
-handler403 = 'cannlytics_console.views.my_custom_permission_denied_view'
-handler400 = 'cannlytics_console.views.my_custom_bad_request_view'
+handler404 = 'cannlytics_console.views.handler404'
+handler500 = 'cannlytics_console.views.handler500'
+# handler403 = 'cannlytics_console.views.my_custom_permission_denied_view'
+# handler400 = 'cannlytics_console.views.my_custom_bad_request_view'
 
     # path('account', include('cannlytics_console.authentication.urls'), name='auth'),
     # path('api/authenticate', authenticate),

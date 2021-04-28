@@ -3,7 +3,8 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/cannlytics/cannlytics-console/fork)
 
-Cannlytics is a modern cannabis-testing engine made with love, tried-and-true, and ready to help you power your lab. The Cannlytics platform comes with **batteries included**, but you are always welcome to supercharge your setup with modifications and custom components.
+
+Cannlytics is a simple, easy-to-use **end-to-end** laboratory software solution. modern cannabis-testing engine made with love, tried-and-true, and ready to help you power your lab. The Cannlytics platform is an , but you are always welcome to supercharge your setup with modifications and custom components. Cannlytics mission is to make cannabis analysis **simple** and **easy**. You can easily have dozens and dozens of data points for your cannabis products. Cannlytics believes that there is no good reason that you can't access your data.
 
 - [Introduction](#introduction)
 - [Features](#features)
