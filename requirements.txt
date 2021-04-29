@@ -21,3 +21,9 @@ python-decouple==3.3
 psycopg2-binary==2.8.5
 ulid-py==1.1.0
 xhtml2pdf==0.2.5
+
+# Docs (TODO: Split up requirements?)
+# git+https://github.com/facelessuser/pymdown-lexers.git
+# mkdocs-git-revision-date-localized-plugin
+# mkdocs-minify-plugin
+# pyspelling

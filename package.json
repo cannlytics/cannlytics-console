@@ -19,7 +19,9 @@
     "container": "npm run collectstatic && gcloud builds submit --tag gcr.io/cannlytics/cannlytics-console",
     "cloud": "gcloud run deploy cannlytics-console --image gcr.io/cannlytics/cannlytics-console --region us-central1 --allow-unauthenticated --platform managed",
     "deploy": "firebase deploy --project cannlytics --only hosting:production",
-    "lint": "python manage.py check"
+    "lint": "python manage.py check",
+    "docs": "docker run --rm -it -p 8000:8000 -v \"%cd%\":/docs squidfunk/mkdocs-material",
+    "build-docs": "mkdocs build"
   },
   "dependencies": {
     "@popperjs/core": "^2.5.3",

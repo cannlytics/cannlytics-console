@@ -5,10 +5,10 @@
 
 
 
-https://github.com/facelessuser/pymdown-extensions
+<!-- https://github.com/facelessuser/pymdown-extensions
 https://squidfunk.github.io/mkdocs-material/publishing-your-site/
 https://squidfunk.github.io/mkdocs-material/customization/
-https://github.com/mkdocstrings/mkdocstrings
+https://github.com/mkdocstrings/mkdocstrings -->
 
 
 Cannlytics is a simple, easy-to-use **end-to-end** laboratory software solution. modern cannabis-testing engine made with love, tried-and-true, and ready to help you power your lab. The Cannlytics platform is an , but you are always welcome to supercharge your setup with modifications and custom components. Cannlytics mission is to make cannabis analysis **simple** and **easy**. You can easily have dozens and dozens of data points for your cannabis products. Cannlytics believes that there is no good reason that you can't access your data.

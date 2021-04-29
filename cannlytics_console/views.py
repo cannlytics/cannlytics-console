@@ -104,14 +104,14 @@ class OrganizationView(TemplateView):
 # Error views
 #-----------------------------------------------------------------------
 
-def handler404(request): # , *args, **argv
+def handler404(request, *args, **argv):
     """Handle missing pages."""
     status_code = 404
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-def handler500(request):
+def handler500(request, *args, **argv):
     """Handle internal errors."""
     status_code = 500
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'

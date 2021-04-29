@@ -55,6 +55,7 @@ def errors(request):
     if request.method == 'POST':
 
         # TODO: Get meta data
+        # https://docs.djangoproject.com/en/3.2/ref/request-response/#django.http.HttpRequest.META
         print(request.META) 
 
         # TODO: Format the error data into an email.
