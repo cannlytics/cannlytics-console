@@ -8,8 +8,9 @@ copyright: |
   Copyright &copy; 2021 <a href="https://github.com/cannlytics"  target="_blank" rel="noopener">Cannlytics</a>
 
 docs_dir: docs/markdown
+site_dir: cannlytics_console/static/cannlytics_console/docs
 theme:
-  name: material
+  name: default
   custom_dir: docs/theme
   favicon: assets/images/favicon.ico
   logo: assets/images/cannlytics_calyx_512.svg

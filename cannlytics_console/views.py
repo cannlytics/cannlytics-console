@@ -1,12 +1,11 @@
 """
 Console Views | Cannlytics
 Created: 12/18/2020
-Updated: 4/20/2021
+Updated: 4/30/2021
 """
 
 # External imports
 from django.shortcuts import render
-from django.template import RequestContext
 from django.views.generic.base import TemplateView
 
 # Internal imports
@@ -24,7 +23,7 @@ BASE = 'cannlytics_console'
 # Main view
 #-----------------------------------------------------------------------
 
-# FIXME: Handle no user more elegantly. Redirect?
+# FIXME: Handle no user more elegantly. (Redirect?)
 
 class ConsoleView(TemplateView):
     """Main view used for most console pages."""
@@ -75,47 +74,43 @@ class LoginView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
-
 #-----------------------------------------------------------------------
-# Organizations
-#-----------------------------------------------------------------------
-
-class OrganizationView(TemplateView):
-    """View used for managing organizations."""
-
-    template_name = f'{BASE}/pages/settings/organization.html'
-
-    def get_context_data(self, **kwargs):
-        """ Get the screen context data. """
-        context = super().get_context_data(**kwargs)
-        organization = self.kwargs.get('name', '')
-        context['breadcrumbs'] = [
-            {'title': 'Settings', 'url': '/settings'},
-            {'title': 'Organizations', 'url': '/settings/organizations'},
-            {'title': organization.title(), 'active': True}
-        ]
-        # context = self.get_screen_material(context)
-        return context
-
-    # TODO: Create organization on post.
-
-
-#-----------------------------------------------------------------------
-# Error views
+# Error views (Optional: Add 403 and 400 views)
 #-----------------------------------------------------------------------
 
-def handler404(request, *args, **argv):
+def handler404(request, *args, **argv): #pylint: disable=unused-argument
     """Handle missing pages."""
     status_code = 404
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-def handler500(request, *args, **argv):
+def handler500(request, *args, **argv): #pylint: disable=unused-argument
     """Handle internal errors."""
     status_code = 500
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-# Optional: Add 403 and 400 views
+#-----------------------------------------------------------------------
+# Organizations TODO: Making obsolete?
+#-----------------------------------------------------------------------
+
+# class OrganizationView(TemplateView):
+#     """View used for managing organizations."""
+
+#     template_name = f'{BASE}/pages/settings/organization.html'
+
+#     def get_context_data(self, **kwargs):
+#         """ Get the screen context data. """
+#         context = super().get_context_data(**kwargs)
+#         organization = self.kwargs.get('name', '')
+#         context['breadcrumbs'] = [
+#             {'title': 'Settings', 'url': '/settings'},
+#             {'title': 'Organizations', 'url': '/settings/organizations'},
+#             {'title': organization.title(), 'active': True}
+#         ]
+#         # context = self.get_screen_material(context)
+#         return context
+
+#     # Create organization on post.

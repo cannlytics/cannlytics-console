@@ -68,3 +68,6 @@ typings/
 
 # Ignore Webpack hashes
 cannlytics_console\static\cannlytics_console\webpack-stats.json
+
+# Ignore documentation build
+docs/build

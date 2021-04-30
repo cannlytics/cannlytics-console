@@ -60,8 +60,8 @@ DEBUG = env('DEBUG')
 if PRODUCTION:
     DEBUG = False
 
-# MONKEY
-DEBUG = False
+# DEV: MONKEY
+# DEBUG = False
 
 # ------------------------------------------------------------#
 # Apps
@@ -275,3 +275,15 @@ APPEND_SLASH = False
 # Allow Django template tags to span multiple lines.
 # https://stackoverflow.com/questions/49110044/django-template-tag-on-multiple-line
 base.tag_re = re.compile(base.tag_re.pattern, re.DOTALL)
+
+# Host static documentation.
+DOCS_DIR = os.path.join(BASE_DIR, f'{PROJECT_NAME}/static/{PROJECT_NAME}/docs')
+DOCS_STATIC_NAMESPACE = os.path.basename(DOCS_DIR)
+
+# Optional: Re-write to read docs directory directly.
+# MKDOCS_CONFIG = os.path.join(BASE_DIR, 'mkdocs.yml')
+# DOCS_DIR = ''
+# DOCS_STATIC_NAMESPACE = ''
+# with open(MKDOCS_CONFIG, 'r') as f:
+#     DOCS_DIR = yaml.load(f, Loader=yaml.Loader)['site_dir']
+#     DOCS_STATIC_NAMESPACE = os.path.basename(DOCS_DIR)

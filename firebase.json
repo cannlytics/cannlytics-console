@@ -1,6 +1,10 @@
 {
   "hosting": [
     {
+      "target": "docs",
+      "public": "docs/build"
+    },
+    {
       "target": "dev",
       "public": "public",
       "ignore": [

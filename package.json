@@ -21,7 +21,8 @@
     "deploy": "firebase deploy --project cannlytics --only hosting:production",
     "lint": "python manage.py check",
     "docs": "docker run --rm -it -p 8000:8000 -v \"%cd%\":/docs squidfunk/mkdocs-material",
-    "build-docs": "mkdocs build"
+    "build-docs": "mkdocs build",
+    "publish-docs": "firebase deploy --project cannlytics --only hosting:docs"
   },
   "dependencies": {
     "@popperjs/core": "^2.5.3",

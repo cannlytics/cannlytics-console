@@ -8,8 +8,8 @@ Created: 4/26/2021
 from django.conf import settings
 
 
-def selected_settings(request):
+def selected_settings(request): #pylint: disable=unused-argument
     """Include relevant settings in the context."""
     return {
-        'APP_VERSION_NUMBER': settings.APP_VERSION_NUMBER
+        'APP_VERSION_NUMBER': settings.APP_VERSION_NUMBER,
     }
