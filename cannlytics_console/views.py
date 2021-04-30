@@ -6,6 +6,7 @@ Updated: 4/20/2021
 
 # External imports
 from django.shortcuts import render
+from django.template import RequestContext
 from django.views.generic.base import TemplateView
 
 # Internal imports
@@ -14,6 +15,7 @@ from cannlytics_console.utils import (
     get_screen_specific_data,
     get_screen_specific_state,
     get_user_specific_state,
+    get_user_specific_data,
 )
 
 BASE = 'cannlytics_console'
@@ -22,8 +24,10 @@ BASE = 'cannlytics_console'
 # Main view
 #-----------------------------------------------------------------------
 
+# FIXME: Handle no user more elegantly. Redirect?
+
 class ConsoleView(TemplateView):
-    """Main view used for most console screens."""
+    """Main view used for most console pages."""
 
     login_url = '/account/sign-in'
     redirect_field_name = 'redirect_to'
@@ -34,20 +38,23 @@ class ConsoleView(TemplateView):
         section = self.kwargs.get('section', screen)
         unit = self.kwargs.get('unit', section)
         return [
-            f'{BASE}/screens/{screen}/{unit}.html',
-            f'{BASE}/screens/{screen}/{section}.html',
-            f'{BASE}/screens/{screen}/{screen}.html',
-            f'{BASE}/screens/general/{screen}/{screen}-{section}.html',
-            f'{BASE}/screens/general/{screen}/{section}.html',
+            f'{BASE}/pages/{screen}/{unit}.html',
+            f'{BASE}/pages/{screen}/{section}.html',
+            f'{BASE}/pages/{screen}/{screen}-{section}.html',
+            f'{BASE}/pages/{screen}/{screen}.html',
+            f'{BASE}/pages/general/{screen}/{screen}-{section}.html',
+            f'{BASE}/pages/general/{screen}/{section}.html',
         ]
 
     def get_context_data(self, **kwargs):
         """Get context that is used on all pages."""
         context = super().get_context_data(**kwargs)
+        uid = self.request.session.get('uid', '')
         context['sidebar'] = layout['sidebar']
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
-        context = get_user_specific_state(self.request, context)
+        context = get_user_specific_state(uid, context)
+        context = get_user_specific_data(uid, context)
         return context
 
 
@@ -62,53 +69,11 @@ class LoginView(TemplateView):
 
     def get_template_names(self):
         page = self.kwargs.get('page', 'login')
-        return [f'{BASE}/screens/auth/{page}.html']
+        return [f'{BASE}/pages/account/{page}.html']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-# def signIn(request):
-#     return render(request,"Login.html")
-# def home(request):
-#     return render(request,"Home.html")
-  
-# def postsignIn(request):
-#     email=request.POST.get('email')
-#     pasw=request.POST.get('pass')
-#     try:
-#         # if there is no error then signin the user with given email and password
-#         user=authe.sign_in_with_email_and_password(email,pasw)
-#     except:
-#         message="Invalid Credentials!!Please ChecK your Data"
-#         return render(request,"Login.html",{"message":message})
-#     session_id=user['idToken']
-#     request.session['uid']=str(session_id)
-#     return render(request,"Home.html",{"email":email})
-  
-# def logout(request):
-#     try:
-#         del request.session['uid']
-#     except:
-#         pass
-#     return render(request,"Login.html")
-  
-# def signUp(request):
-#     return render(request,"Registration.html")
-  
-# def postsignUp(request):
-#      email = request.POST.get('email')
-#      passs = request.POST.get('pass')
-#      name = request.POST.get('name')
-#      try:
-#         # creating a user with the given email and password
-#         user=authe.create_user_with_email_and_password(email,passs)
-#         uid = user['localId']
-#         idtoken = request.session['uid']
-#         print(uid)
-#      except:
-#         return render(request, "Registration.html")
-#      return render(request,"Login.html")
 
 
 #-----------------------------------------------------------------------
@@ -118,7 +83,7 @@ class LoginView(TemplateView):
 class OrganizationView(TemplateView):
     """View used for managing organizations."""
 
-    template_name = f'{BASE}/screens/settings/organization.html'
+    template_name = f'{BASE}/pages/settings/organization.html'
 
     def get_context_data(self, **kwargs):
         """ Get the screen context data. """
@@ -132,32 +97,25 @@ class OrganizationView(TemplateView):
         # context = self.get_screen_material(context)
         return context
 
-    # TODO: Create organization on post
+    # TODO: Create organization on post.
 
 
 #-----------------------------------------------------------------------
-# Scrap functional view
+# Error views
 #-----------------------------------------------------------------------
 
-# def dashboard(request, **kwargs):
-#     """Dashboard user interface."""
-#     context = {}
-#     uid = request.session.get('uid', '')
-#     context['sidebar'] = layout['sidebar']
-#     context = get_screen_specific_state(kwargs, context)
-#     context = get_screen_specific_data(kwargs, context)
-#     context = get_user_specific_state(uid, context)
-#     template = f'{BASE}/screens/dashboard/dashboard.html'
-#     return render(request, template, context)
+def handler404(request, *args, **argv):
+    """Handle missing pages."""
+    status_code = 404
+    template = f'{BASE}/pages/general/error-pages/{status_code}.html'
+    return render(request, template, {}, status=status_code)
 
-#-----------------------------------------------------------------------
-# Scrap login required class view
-#-----------------------------------------------------------------------
 
-# from django.contrib.auth.mixins import LoginRequiredMixin
+def handler500(request, *args, **argv):
+    """Handle internal errors."""
+    status_code = 500
+    template = f'{BASE}/pages/general/error-pages/{status_code}.html'
+    return render(request, template, {}, status=status_code)
 
-# class ConsoleView(LoginRequiredMixin, TemplateView):
-#     """Main view used for most console screens."""
 
-#     login_url = '/account/sign-in'
-#     redirect_field_name = 'redirect_to'
+# Optional: Add 403 and 400 views

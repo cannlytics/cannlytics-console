@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <!-- Clients Page -->
+  <!-- Created 12/17/2020 -->
+  {% extends "cannlytics_console/console.html" %}
+  {% block console_body %}
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+      <!-- Clients Tabls-->
+      <div id="clients-table" class="ag-theme-alpine-dark" style="height: 600px; width:100%;"></div>
+
+      <!-- Header -->
+      <div class="col pt-3 pb-2 mb-3">
+        <h1 class="fs-5 mb-0 lh-base mb-3">Clients</h1>
+        <ul class="nav nav-tabs">
+          <!-- TODO: For loop -->
+          <li class="nav-item">
+            <a
+              class="nav-link {% if section == 'records' %}active{% endif %}"
+              aria-current="{% if section == 'records' %}page{% endif %}"
+              href="/clients/records"
+            >
+              Records
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link {% if section == 'marketing' %}active{% endif %}"
+              aria-current="{% if section == 'marketing' %}page{% endif %}"
+              href="/clients/marketing"
+            >
+              Marketing
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link {% if section == 'notifications' %}active{% endif %}"
+              aria-current="{% if section == 'notifications' %}page{% endif %}"
+              href="/clients/notifications"
+            >
+              Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link {% if section == 'logs' %}active{% endif %}"
+              aria-current="{% if section == 'logs' %}page{% endif %}"
+              href="/clients/logs"
+            >
+              Logs
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Dynamic section -->
+      <section>
+        {% block section %}{% endblock %}
+      </section>
+
+      <!-- TODO: Load clients -->
+
+      <!-- Clients JavaScript -->
+      {% comment %} {% block console_js %}
+        <script>
+          cannlytics.clients.initialize();
+        </script>
+      {% endblock console_js %} {% endcomment %}
+
+    </main>
+
+    <!-- JavaScript -->
+    <script type="text/javascript" charset="utf-8">
+      // specify the columns
+      const columnDefs = [
+        { field: "make" },
+        { field: "model" },
+        { field: "price" }
+      ];
+
+      // specify the data
+      const rowData = [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+      ];
+
+      // let the grid know which columns and what data to use
+      const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData
+      };
+
+      // lookup the container we want the Grid to use
+      const eGridDiv = document.querySelector('#clients-table');
+
+      // create the grid passing in the div to use together with the columns & data we want to use
+      new agGrid.Grid(eGridDiv, gridOptions);
+
+    </script>
+
+  {% endblock %}
+</html>

@@ -47,7 +47,6 @@ def get_screen_specific_data(kwargs, context):
     else:
         screen_data = data.get(screen)
     if screen_data is None:
-        print('Not screen data')
         return context
     documents = screen_data.get('documents')
     collections = screen_data.get('collections')
@@ -91,7 +90,8 @@ def get_user_specific_state(uid, context):
         context (dict): The context updated with any user-specific state.
     """
     context['uid'] = uid
-    print('User:', uid)
+    context['organization'] = {}
+    print('User session:', uid)
     if not uid:
         return context
     # Optional: Attach custom claim context.
@@ -112,6 +112,7 @@ def get_user_specific_data(uid, context):
         context (dict): The context updated with any user-specific state.
     """
     context['user'] = get_user(uid)
+    print('User Django side:', context['user'])
     # FIXME: Implement
     # context['organizations'] = get_user_organizations(uid)
     context['organizations'] = []

@@ -12,6 +12,7 @@
 const BundleTracker = require('webpack-bundle-tracker')
 const Dotenv = require('dotenv-webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // Need to nerd basis:
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -105,13 +106,24 @@ module.exports = env => {
       ],
     },
     plugins: [
-      new Dotenv(), // Make .env variables available in entry file.
+
+      // Make .env variables available in entry file.
+      new Dotenv(),
+
+      // Minimize the CSS.
       new OptimizeCSSAssetsPlugin({
         // cssProcessorPluginOptions: {
         //   preset: ['default', { discardComments: { removeAll: true } }],
         // },
-      }), // Minimize the CSS.
-      new BundleTracker({filename: './webpack-stats.json'}), // Create bundle with hashes.
+      }),
+
+      // Create bundle with hashes.
+      new BundleTracker({filename: './webpack-stats.json'}),
+      
+      // Remove old bundles.
+      // new CleanWebpackPlugin(),
+
+      // Grep hashes after build.
       {
         apply: (compiler) => {
           compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {

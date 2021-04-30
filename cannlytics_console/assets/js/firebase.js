@@ -97,14 +97,14 @@ function signOut() {
       });
       fetch('/api/logout', { headers }).then(() => {
         firebase.auth().signOut().then(() => {
-          document.location.href = '/account/logout/';
+          document.location.href = '/account/logout';
         }).catch((error) => {
-          document.location.href = '/account/logout/';
+          document.location.href = '/account/logout';
         }); 
       });
     })
   } catch(error) {
-    document.location.href = '/account/logout/';
+    document.location.href = '/account/logout';
   }
 }
 

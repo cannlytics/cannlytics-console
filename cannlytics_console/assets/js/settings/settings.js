@@ -1,20 +1,29 @@
 /**
- * Cannlytics Console (v1.0.0): settings.js
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Settings JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/3/2020
+ * Updated: 4/25/2021
  */
 import { auth, db } from '../firebase.js';
-// import { v4 as uuidv4 } from 'uuid';
-// const id = uuidv4();
 import { accountSettings } from './account.js';
+import { errorSettings } from './errors.js';
+import { showNotification } from '../utils.js';
+
+
+export const settings = {
+  ...coreSettings,
+  ...accountSettings,
+  ...errorSettings,
+};
+
 
 const coreSettings = {
 
 
   newOrganization() {
     // const id = uuidv4();
-    console.log('TODO: Create new org');
+    // TODO:
+    console.log('Create new org');
   },
 
 
@@ -75,7 +84,7 @@ const coreSettings = {
     /* 
     * Update a user's organizations.
     */
-
+    // TODO:
   },
 
 
@@ -83,7 +92,7 @@ const coreSettings = {
     /* 
     * Record time and user of any activity.
     */
-
+    // TODO:
   },
 
 
@@ -91,14 +100,14 @@ const coreSettings = {
     /*
      * Send feedback through Firestore-triggered Google Cloud Function.
      */
-    sessionStorage.getItem('user', {}); // TODO: Get user data.
+    const user = auth.currentUser || {};
     const message = document.getElementById('feedback-message').value;
-    const timestamp = Date.now().toString(); // TODO: Use ISO time instead.
+    const timestamp = Date.now().toString(); // Optional: Specify time zone.
     const code = Math.random().toString(36).slice(-3);
     const data = {
-      name: user.name,
-      email: user.email,
-      organization: user.organization,
+      name: user.displayName || 'Anonymous user',
+      email: user.email || 'No user',
+      organization: user.organization || 'No organization',
       body: message,
       from: 'contact@cannlytics.com',
       reply: 'contact@cannlytics.com',
@@ -109,14 +118,12 @@ const coreSettings = {
     db.collection('users').doc(user.uid).collection('feedback')
       .doc(timestamp)
       .set(data).then(() => {
-        // TODO: Show toast: "Thank you for your feedback! ** Save code ${code} for 1 free hour of support."
+        showNotification('Feedback sent', 'Thank you for your feedback', { type: 'success' });
       }).catch((error) => {
-        // Handle error
+        showNotification('Error sending feedback', error.message, { type: 'error' });
       });
   }
 
 
 };
 
-
-export const settings = { ...coreSettings, ...accountSettings };

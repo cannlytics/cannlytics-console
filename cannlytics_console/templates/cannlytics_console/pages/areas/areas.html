@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<!-- Areas -->
+<!-- Created 4/24/2021 -->
+{% extends "cannlytics_console/console.html" %}
+{% load icon %}
+{% block console_body %}
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- Header-->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="fs-5 mb-0 lh-base">Areas</h1>
+    </div>
+
+    <!-- Body -->
+    <div class="col">
+
+      <!-- Table -->
+      <div
+        id="areas-table"
+        class="ag-theme-alpine"
+        style="height: 400px; width:100%%;"
+      ></div>
+
+    </div><!-- End of body -->
+
+  </main>
+
+{% endblock console_body %}
+
+{% block console_js %}
+
+  <!-- JavaScript -->
+  <script type="text/javascript" charset="utf-8">
+
+    // Get current organization's areas.
+    cannlytics.inventory.initializeAreas();
+
+  </script>
+
+{% endblock console_js %}
+
+</html>

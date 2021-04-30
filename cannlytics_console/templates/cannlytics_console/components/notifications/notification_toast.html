@@ -2,10 +2,11 @@
 <html>
   <!-- Notification Toast -->
   <!-- Created 2/27/20201 -->
+  <!-- FIXME: d-none required to hide but hinders showing of notifications -->
   {% load icon %}
   <div
     id="notification-toast"
-    class="toast toast-error position-fixed"
+    class="toast toast-error position-fixed d-none"
     style="bottom:2rem; right:2rem; z-index:10005;"
     role="alert"
     aria-live="assertive"

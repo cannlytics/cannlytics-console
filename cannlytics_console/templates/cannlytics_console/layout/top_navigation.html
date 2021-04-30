@@ -5,7 +5,7 @@
 <html>
   <header
     id="console-header"
-    class="navbar navbar-expand flex-md-nowrap border-bottom p-0"
+    class="navbar navbar-expand flex-md-nowrap justify-content-between border-bottom px-0 py-0"
   >
 
     <!-- Menu toggle -->
@@ -45,7 +45,9 @@
     <!-- Organization Choice -->
     <!-- TODO: Dynamically render up to 3 of user's organizations -->
     <!-- TODO: Show organization if already created -->
-    
+    {% if organization %}
+      {% include "cannlytics_console/components/menus/organization_menu.html" %}
+    {% endif %}
 
     <!-- Search -->
     {% comment %} <form id="console-search" class="d-flex flex-grow-1 nav-search-form px-sm-3" role="search">
@@ -58,7 +60,7 @@
     </form> {% endcomment %}
 
     <!-- Options -->
-    <ul id="console-options" class="navbar-nav">
+    <ul id="console-options" class="navbar-nav float-end">
 
       <!-- Optional: Notification menu -->
       <!-- TODO: Dynamically render notifications -->
@@ -106,6 +108,15 @@
           {% icon "book-open" class="text-dark" %}
         </a>
       </li> {% endcomment %}
+
+      <!-- Search -->
+      {% comment %} <form class="col-12 col-lg-auto me-lg-3 d-flex align-items-center">
+        <input type="search" class="form-control" placeholder="Search...">
+      </form> {% endcomment %}
+
+      <!-- TODO: Stat / Database / Usage menu -->
+
+      <!-- TODO: Log menu -->
 
       <!-- User Menu -->
       {% include "cannlytics_console/components/menus/user_menu.html" with user=user %}

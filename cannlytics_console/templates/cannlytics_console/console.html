@@ -12,9 +12,10 @@
 
   <!-- Console header -->
   {% block page_css %}
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
+    <script src="{% static 'cannlytics_console/plugins/ag-grid/ag-grid-community.min.noStyle.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-grid.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-theme-alpine.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cannlytics_console/plugins/ag-grid/ag-theme-alpine-dark.min.css'%}">
     {% block console_css %}{% endblock console_css %}
   {% endblock %}
 
@@ -34,20 +35,29 @@
       <div class="row">
         
         <!-- Side Navigation -->
-        {% if user %}
+        <!-- Optional: Custom sidebars -->
+        {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
           {% include "cannlytics_console/layout/side_navigation.html" with
             screen=screen
             sidebar=sidebar
             user=user
+            organization=organization
             only
           %}
-        {% else %}
+        {% comment %} {% elif user %}
+          {% include "cannlytics_console/layout/side_navigation_create_org.html" with
+            screen=screen
+            sidebar=sidebar
+            user=user
+            only
+          %} {% endcomment %}
+        {% comment %} {% else %}
           {% include "cannlytics_console/layout/side_navigation_login.html" with
             screen=screen
             sidebar=sidebar
             only
-          %}
-        {% endif %}
+          %} {% endcomment %}
+        {% comment %} {% endif %} {% endcomment %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}
@@ -55,8 +65,11 @@
       </div>
     </div>
 
+    <!-- Footer -->
+    {% include "cannlytics_console/layout/footer.html" %}
+
     <!-- Notifications -->
-    {% include "./components/notifications/notification_toast.html" %}
+    {% include "cannlytics_console/components/notifications/notification_toast.html" %}
 
   {% endblock %}
 

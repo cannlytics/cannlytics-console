@@ -56,6 +56,36 @@ body {
 .custom-close-button:active {
     transform: scale(0.99);
 }
+.btn-outline-orange {
+  border-color: #FF9500;
+  color: #1a1a1a;
+}
+.btn-outline-orange:hover {
+  background: #FF9500;
+  color: #1a1a1a;
+}
+body.dark .btn-outline-orange {
+  border-color: #ffa600;
+  color: #ffa600;
+}
+body.dark .btn-outline-orange:hover {
+  background: #FF9500;
+  color: #1a1a1a;
+}
+
+.text-link {
+  color: #FF9500 !important;
+}
+.text-link:hover {
+  color: #e53a23 !important;
+}
+body.dark .text-link {
+  color: #ffa600 !important;
+}
+body.dark .text-link:hover {
+  color: #FF9500 !important;
+}
+
 
 /*--------------------------------------------------------------------------
   Images and icons
@@ -182,6 +212,14 @@ body.dark .nav-search-form .feather:hover {
 }
 .simple-select option {
   font-size: 2rem !important;
+}
+
+/*--------------------------------------------------------------------------
+  Menus
+---------------------------------------------------------------------------*/
+
+.simple-dropdown::after {
+  content: none !important;
 }
 
 /*--------------------------------------------------------------------------
@@ -337,14 +375,6 @@ main .action {
 body.dark main .action {
   color: #50fa7b !important;
 }
-body.dark .btn-outline-primary {
-  border-color: #50fa7b;
-  color: #50fa7b;
-}
-body.dark .btn-outline-primary:hover {
-  background: #50fa7b;
-  color: #1a1a1a;
-}
 /* TODO: Style primary buttons */
 body.dark .btn-light {
   background-color: #333644;
@@ -405,6 +435,11 @@ body.dark .list-group-item-action:hover {
 /*------------------------------------------------
   Tables
 -------------------------------------------------- */
+
+.ag-icon,
+.ag-checkbox-input-wrapper {
+  font-family: 'agGridAlpine' !important;
+}
 
 /* Dark tables */
 body.dark .card-header {

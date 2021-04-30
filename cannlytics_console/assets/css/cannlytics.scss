@@ -39,6 +39,7 @@ a {
   font-family: 'IBM Plex Sans', sans-serif;
   /* font-family: 'Source Serif Pro', Georgia, 'Times New Roman', Times, serif; */
 }
+// :not(.ag-icon)
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Cormorant Garamond', serif;
   /* font-family: 'Libre Baskerville', serif !important; */
@@ -247,6 +248,11 @@ body.dark .markdown a:hover {
 }
 a.text-secondary-on-light:hover {
   color: #ccc;
+}
+body.dark a.text-secondary small,
+body.dark p.text-secondary,
+body.dark svg.text-secondary {
+  color: #ccc !important;
 }
 ::-moz-selection {
   color: #1a1a1a;

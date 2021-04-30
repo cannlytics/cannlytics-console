@@ -5,6 +5,10 @@
  * Created: 2/21/2021
  */
 
+// import { v4 as uuidv4 } from 'uuid';
+// const id = uuidv4();
+
+// import Cookies from 'js-cookie'
 import { getUserToken } from './firebase.js';
 
 
@@ -12,23 +16,32 @@ import { getUserToken } from './firebase.js';
  Auth Helpers
  --------------------------------------------------------------------*/
 
-export const authRequest = (endpoint, data) => new Promise((resolve, reject) => {
+export const authRequest = (endpoint, data, options) => new Promise((resolve, reject) => {
   /*
    * Make an authorized GET or POST request.
    */
   getUserToken().then((idToken) => {
     const csrftoken = getCookie('csrftoken');
-    const headers = new Headers({
-      'Content-Type': 'text/plain',
+    const headerAuth = new Headers({
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`,
       'X-CSRFToken': csrftoken,
     });
-    const options = { headers, mode: 'same-origin' };
+    const headers = { headers: headerAuth, mode: 'same-origin', method: 'GET' };
     if (data) {
-      options.method = 'POST';
-      options.body = JSON.stringify(data);
+      headers.method = 'POST';
+      headers.body = JSON.stringify(data);
     }
-    fetch(endpoint, options)
+    if (options) {
+      if (options.delete) {
+        headers.method = 'DELETE';
+      }
+      if (options.params) {
+        endpoint = new URL(endpoint)
+        endpoint.search = new URLSearchParams(options.params).toString();
+      }
+    }
+    fetch(endpoint, headers)
       .then(response => response.json())
       .then((data) => {
         resolve(data);
@@ -120,6 +133,7 @@ export function showNotification(title, message, options) {
   const toastEl = document.getElementById('notification-toast');
   document.getElementById('notification-title').textContent = title;
   document.getElementById('notification-message').textContent = message;
+  toastEl.classList.remove('d-none');
   if (options.type) {
     const types = ['error', 'success', 'wait'];
     types.forEach((type) => {

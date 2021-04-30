@@ -6,6 +6,9 @@ Resources:
 """
 
 import json
+import time
+import os
+
 from bs4 import BeautifulSoup
 
 # Django directories.
@@ -17,7 +20,7 @@ TEMPLATE_DIR = f'./{APP}/templates/{APP}/'
 # Specify templates that import bundles.
 TEMPLATES = [
     'base.html',
-    'screens/auth/base_login.html'
+    'pages/account/base_login.html'
 ]
 
 def get_webpack_hashes():
@@ -86,6 +89,23 @@ def get_webpack_hashes():
             print('Updated hashes in %s.' % template)
 
 
+def clean_bundle_folder(folder, history=60):
+    """Remove old bundles.
+    Args:
+        folder (str): The path to the directory to clean old files.
+        history (int): The time in seconds in history to delete files.
+    """
+    time_ago = time.time() - history
+    for doc in os.listdir(folder):
+        file_path = folder + '/' + doc
+        updated_at = os.stat(file_path)
+        time_modified = updated_at.st_mtime
+        if time_modified < time_ago:
+            os.unlink(file_path)
+            print('Removed %s' % file_path)
+
+
 if __name__ == '__main__':
 
+    clean_bundle_folder(f'./{APP}/static/' + MODULE_DIR)
     get_webpack_hashes()

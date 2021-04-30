@@ -105,6 +105,7 @@ def get_timestamp(past=0, future=0, tz='local'):
     else:
         return now.isoformat()
 
+
 def remove_dict_fields(d, fields):
     """Remove multiple keys from a dictionary.
     Args:

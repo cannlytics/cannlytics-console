@@ -10,6 +10,7 @@ References:
 """
 
 # Standard imports
+import json
 import os
 import re
 import sys
@@ -29,6 +30,11 @@ WSGI_APPLICATION = 'cannlytics_console.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # sys.path.insert(0, os.path.join(BASE_DIR))
+
+# Set the version number.
+with open(os.path.join(BASE_DIR, 'package.json')) as v_file:
+    package = json.loads(v_file.read())
+    APP_VERSION_NUMBER = package['version']
 
 # ------------------------------------------------------------#
 # Environment variables.
@@ -54,12 +60,16 @@ DEBUG = env('DEBUG')
 if PRODUCTION:
     DEBUG = False
 
+# MONKEY
+DEBUG = False
+
 # ------------------------------------------------------------#
 # Apps
 # https://docs.djangoproject.com/en/3.1/ref/applications/
 # ------------------------------------------------------------#
 INSTALLED_APPS = [
     'cannlytics',
+    # 'cannlytics_api.apps.CannlyticsAPIConfig',
     'cannlytics_api',
     'cannlytics_console',
     'crispy_forms',
@@ -116,6 +126,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cannlytics_console.context_processors.selected_settings', # Adds select settings to the context.
             ],
         },
     },
@@ -161,6 +172,7 @@ USE_TZ = True
 # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/web_application_security
 # ------------------------------------------------------------#
 ALLOWED_HOSTS = [
+    '*',
     'console.cannlytics.com',
     'cannlytics-console.web.app',
     'cannlytics-console-deeuhexjlq-uc.a.run.app',
