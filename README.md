@@ -11,7 +11,7 @@ https://squidfunk.github.io/mkdocs-material/customization/
 https://github.com/mkdocstrings/mkdocstrings -->
 
 
-Cannlytics is a simple, easy-to-use **end-to-end** laboratory software solution. modern cannabis-testing engine made with love, tried-and-true, and ready to help you power your lab. The Cannlytics platform is an , but you are always welcome to supercharge your setup with modifications and custom components. Cannlytics mission is to make cannabis analysis **simple** and **easy**. You can easily have dozens and dozens of data points for your cannabis products. Cannlytics believes that there is no good reason that you can't access your data.
+Cannlytics is a simple, easy-to-use, **end-to-end** laboratory software solution. Cannlytics' mission is to make cannabis analysis **simple** and **easy**. You can easily have dozens and dozens of data points for your cannabis products. Cannlytics believes that there is no good reason that you can't access your data.
 
 - [Introduction](#introduction)
 - [Features](#features)
@@ -47,11 +47,11 @@ The `cannlytics_console` is the user application where user's can interface with
 | Package     | Details               | Status         |
 | ----------- | --------------------- | --------------- |
 | Dashboard   |                       | 🟡 In-progress |
-| Analysis    |                       | ❌ Not started |
-| Clients     |                       | ❌ Not started |
+| Analysis    |                       | 🟡 In-progress |
+| Clients     |                       | 🟡 In-progress |
 | Intake      |                       | ❌ Not started |
 | Logistics   |                       | ❌ Not started |
-| Settings    |                       | ❌ Not started |
+| Settings    |                       | 🟡 In-progress |
 | Help        | Provide minimal support options, including a feedback form. | ✔️ Stable |
 
 ### 🌱 Producer/Processors
@@ -84,7 +84,7 @@ The `cannlytics_console` is the user application where user's can interface with
 
 ## Contributing <a name="contributing"></a>
 
-Contributions are always welcome! You are encouraged to submit issues, functionality, and features that you want to be addressed. See [the contributing guide](/contributing.md) to get started. Anyone is welcome to contribute anything. Currently, the Cannlytics Console would love:
+Contributions are always welcome! You are encouraged to submit issues, functionality, and features that you want to be addressed. See [the contributing guide](/docs/markdown/about/contributing.md) to get started. Anyone is welcome to contribute anything. Currently, the Cannlytics Console would love:
 
 * Art;
 * More code;
