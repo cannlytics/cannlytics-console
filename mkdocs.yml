@@ -1,6 +1,6 @@
 site_name: Docs | Cannlytics
 site_url: https://cannlytics.com/docs
-repo_url: https://github.com/cannlytics/cannlytics-console
+repo_url: https://github.com/cannlytics/cannlytics-engine
 # edit_uri: tree/master/docs/src/cannlytics
 edit_uri: ""
 site_description: Simple and easy cannabis analytics.
@@ -15,13 +15,13 @@ theme:
   logo: assets/images/cannlytics_calyx_512.svg
   palette:
     - scheme: default
-      primary: teal
+      primary: white
       accent: deep orange
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
     - scheme: slate
-      primary: teal
+      primary: black
       accent: deep orange
       toggle:
         icon: material/toggle-switch
@@ -33,17 +33,21 @@ theme:
     - navigation.tabs
 
 nav:
-  - Home:
-    - Installation: installation.md
-  - FAQ:
-    - Frequently Asked Questions: faq.md
-  - About:
-    - Contributing &amp; Support: about/contributing.md
-    - Development: about/development.md
-    - Changelog: about/changelog.md
-    - Release Notes:
-        - '0.0.3': about/releases/0.0.3.md
-  - License: about/license.md
+  - Usage:
+    - Installation: app/installation.md
+  #   - Getting Started: app/getting-started.md
+  #   - FAQ:
+  #     - Frequently Asked Questions: faq.md
+  #   - About:
+  #     - Contributing &amp; Support: about/contributing.md
+  #     - Development: about/development.md
+  #     - Changelog: about/changelog.md
+  #     - Release Notes:
+  #         - '0.0.3': about/releases/0.0.3.md
+  #   - License: about/license.md
+  # - API:
+  #   - Getting Started: api/getting-started.md
+  #   - Authentication: api/authentication.md
 
 markdown_extensions:
   - markdown.extensions.toc:
@@ -106,7 +110,7 @@ markdown_extensions:
       nbsp: True
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.progressbar:
+  # - pymdownx.progressbar:
   - pymdownx.arithmatex:
   - pymdownx.mark:
   - pymdownx.striphtml:
@@ -118,18 +122,16 @@ markdown_extensions:
   - pymdownx.tabbed:
   - pymdownx.saneheaders:
 
-extra:
-  social:
-    - icon: fontawesome/brands/github-alt
-      link: https://github.com/cannlytics
-extra_css:
-  - assets/pymdownx-extras/extra-75bc45e106.css
-extra_javascript:
-  - assets/pymdownx-extras/extra-uml-51b11a9a.js
+# extra:
+#   social:
+#     - icon: fontawesome/brands/github-alt
+#       link: https://github.com/cannlytics
+# extra_css:
+#   - assets/pymdownx-extras/extra-75bc45e106.css
+# extra_javascript:
+#   - assets/pymdownx-extras/extra-uml-51b11a9a.js
 
 plugins:
   - search
-  # - git-revision-date-localized
-  # - git-revision-date
   - minify:
       minify_html: true

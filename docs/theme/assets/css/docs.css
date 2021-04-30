@@ -1,0 +1,58 @@
+/*--------------------------------------------------------------------------
+  Docs Style | Cannlytics
+  Created: 4/30/2021
+---------------------------------------------------------------------------*/
+
+.md-content__inner p {
+  line-height: 2 !important;
+}
+
+.md-typeset a {
+  color: #009485;
+}
+
+.md-nav__link--active {
+  color: #009485 !important;
+}
+
+.md-nav__link--active:hover {
+  color: #ff6e42 !important;
+}
+
+.md-search-result__more summary {
+  color: #009485 !important;
+}
+
+.md-search-result__more summary:focus,
+.md-search-result__more summary:hover {
+  color: #ff6e42 !important;
+}
+
+/*--------------------------------------------------------------------------
+  Header
+---------------------------------------------------------------------------*/
+
+/* body[data-md-color-scheme="default"] .md-header,
+body[data-md-color-scheme="default"] .md-tabs {
+  background-color: #fff;
+} */
+
+body[data-md-color-scheme="slate"] .md-header,
+body[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #000;
+}
+
+/*--------------------------------------------------------------------------
+  Footer
+---------------------------------------------------------------------------*/
+
+body[data-md-color-scheme="default"] .md-footer-meta {
+  background-color: #f8f9fa !important;
+}
+
+body[data-md-color-scheme="default"] .md-footer-copyright,
+body[data-md-color-scheme="default"] .md-footer-copyright a,
+body[data-md-color-scheme="default"] .md-footer-copyright__highlight,
+body[data-md-color-scheme="default"] .md-footer-social__link svg {
+  color: #6c757d !important;
+}
