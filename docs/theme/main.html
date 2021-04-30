@@ -9,6 +9,11 @@
 {% block libs %}
   {{ super() }}
   {% include "partials/libs.html" ignore missing %}
+  <style>
+    .md-content__inner p {
+      line-height: 2 !important;
+    }
+  </style>
 {% endblock %}
 
 <!-- Announcement -->
