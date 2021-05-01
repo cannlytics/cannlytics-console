@@ -38,7 +38,7 @@ copyright: Copyright &copy; 2021 Cannlytics
 
 # Configuration
 docs_dir: docs/markdown
-site_dir: cannlytics_console/static/cannlytics_console/docs
+site_dir: docs/build
 
 # Theme
 theme:
@@ -91,6 +91,10 @@ nav:
     - Invoices: app/invoices.md
     - Traceability: app/traceability.md
     - Settings: app/settings.md
+    - Website and Portal:
+      - Installation: website/installation.md
+      - Development: website/development.md
+      - Publishing: website/publishing.md
     - Development:
       - Installation: app/installation.md
       - Development: app/development.md
