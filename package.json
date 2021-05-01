@@ -1,13 +1,26 @@
 {
   "name": "cannlytics_console",
-  "productName": "Cannlytics Console",
   "version": "0.0.3",
+  "description": "Cannlytics Community Console.",
+  "keywords": [
+    "cannabis",
+    "analytics",
+    "python"
+  ],
+  "homepage": "https://cannlytics.com/",
+  "bugs": {
+    "url": "https://github.com/cannlytics/cannlytics-console/issues",
+    "email": "contact@cannlytics.com"
+  },
   "license": "GPLv3",
   "private": true,
-  "description": "Cannlytics Community Console.",
-  "author": "Keegan Skeate <contact@cannlytics.com>",
-  "build": {
-    "productName": "Cannlytics Console"
+  "author": {
+    "name": "Keegan Skeate",
+    "email": "keegan@cannlytics.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cannlytics/cannlytics-console.git"
   },
   "scripts": {
     "webpack": "webpack-dev-server --env development",

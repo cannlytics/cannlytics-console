@@ -1,4 +1,4 @@
-# Python Packaging
+# Cannlytics Python SDK Publishing
 
 Packaging Python modules and deploying them to [PyPI](https://pypi.org) is super easy.
 

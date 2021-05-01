@@ -1,6 +1,5 @@
 # License
 
-Cannlytics
 Copyright (&copy;) 2021 Cannlytics
 
 This program is free software: you can redistribute it and/or modify

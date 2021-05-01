@@ -1,12 +1,14 @@
 <!--
   Announcement Banner | Cannlytics Docs
   Created: 4/29/2021
-  Updated: 4/29/2021
+  Updated: 5/31/2021
 -->
+{% block announce %}
 <span class="twemoji">
   {% set icon = "material/alert-decagram" %}
   {% include ".icons/" ~ icon ~ ".svg" %}
 </span>
-Available for production! The
-<a href="{{ 'about/releases/8.0/#8.0' | url }}">getting started guide</a>
-can help you integrate with Metrc.
+Integrated with Metrc in Oklahoma!
+<a href="{{ 'app/get-started' | url }}">Get started</a>
+in 5 minutes.
+{% endblock %}
