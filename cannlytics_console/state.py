@@ -111,18 +111,18 @@ material = {
                 "description": "Start your lab workflow, manage your lab data, and issue your certificates. Start or join a lab.",
                 "type": "lab",
             },
-            {
-                "action": "Begin now",
-                "title": "For Cultivators / Processors",
-                "description": "Start managing your lab results now. Start or join as a producer/processor to begin.",
-                "type": "producer",
-            },
-            {
-                "action": "Explore for free",
-                "title": "For Retailers",
-                "description": "Access lab data for your products quickly and easily. Begin today.",
-                "type": "retailer",
-            },
+            # {
+            #     "action": "Begin now",
+            #     "title": "For Cultivators / Processors",
+            #     "description": "Start managing your lab results now. Start or join as a producer/processor to begin.",
+            #     "type": "producer",
+            # },
+            # {
+            #     "action": "Explore for free",
+            #     "title": "For Retailers",
+            #     "description": "Access lab data for your products quickly and easily. Begin today.",
+            #     "type": "retailer",
+            # },
             # {
             #     "action": "Learn more",
             #     "title": "For Consumers",

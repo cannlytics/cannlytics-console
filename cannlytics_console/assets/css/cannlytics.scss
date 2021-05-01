@@ -249,11 +249,24 @@ body.dark .markdown a:hover {
 a.text-secondary-on-light:hover {
   color: #ccc;
 }
+a.text-secondary:hover {
+  color: #000 !important;
+}
+svg.text-secondary:hover {
+  stroke: #000 !important;
+}
 body.dark a.text-secondary small,
 body.dark p.text-secondary,
 body.dark svg.text-secondary {
   color: #ccc !important;
 }
+body.dark a.text-secondary small:hover {
+  color: #fff !important;
+}
+body.dark svg.text-secondary:hover {
+  stroke: #fff !important;
+}
+
 ::-moz-selection {
   color: #1a1a1a;
   background: #96e6a1;

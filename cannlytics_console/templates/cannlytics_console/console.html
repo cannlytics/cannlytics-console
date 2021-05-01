@@ -37,6 +37,7 @@
         <!-- Side Navigation -->
         <!-- Optional: Custom sidebars -->
         {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
+        {% if user %}
           {% include "cannlytics_console/layout/side_navigation.html" with
             screen=screen
             sidebar=sidebar
@@ -44,20 +45,13 @@
             organization=organization
             only
           %}
-        {% comment %} {% elif user %}
-          {% include "cannlytics_console/layout/side_navigation_create_org.html" with
-            screen=screen
-            sidebar=sidebar
-            user=user
-            only
-          %} {% endcomment %}
-        {% comment %} {% else %}
+        {% else %}
           {% include "cannlytics_console/layout/side_navigation_login.html" with
             screen=screen
             sidebar=sidebar
             only
-          %} {% endcomment %}
-        {% comment %} {% endif %} {% endcomment %}
+          %}
+        {% endif %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}

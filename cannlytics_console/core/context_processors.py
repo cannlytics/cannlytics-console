@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 def selected_settings(request): #pylint: disable=unused-argument
-    """Include relevant settings in the context."""
+    """Include relevant settings in a view's context."""
     return {
         'APP_VERSION_NUMBER': settings.APP_VERSION_NUMBER,
     }

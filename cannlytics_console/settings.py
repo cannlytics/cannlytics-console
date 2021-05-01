@@ -26,7 +26,7 @@ PRODUCTION = False
 PROJECT_NAME = 'cannlytics_console'
 ROOT_URLCONF = 'cannlytics_console.urls'
 SETTINGS_NAME = 'cannlytics_console_settings'
-WSGI_APPLICATION = 'cannlytics_console.wsgi.application'
+WSGI_APPLICATION = 'cannlytics_console.core.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # sys.path.insert(0, os.path.join(BASE_DIR))
@@ -126,7 +126,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cannlytics_console.context_processors.selected_settings', # Adds select settings to the context.
+                'cannlytics_console.core.context_processors.selected_settings', # Adds select settings to the context.
             ],
         },
     },
