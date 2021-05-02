@@ -16,7 +16,7 @@ app_name = 'cannlytics_console' # pylint: disable=invalid-name
 urlpatterns = [
     path('', views.ConsoleView.as_view(), name='index'),
     path('account/<slug:page>', views.LoginView.as_view(), name='auth'),
-    path('api', include('cannlytics_api.urls'), name='api'),
+    path('api/', include('cannlytics_api.urls'), name='api'),
     # path('settings/organizations/<slug:name>', views.OrganizationView.as_view()),
     path('<slug:screen>', views.ConsoleView.as_view()),
     path('<slug:screen>/<slug:section>', views.ConsoleView.as_view()),

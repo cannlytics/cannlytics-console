@@ -26,7 +26,7 @@ site_description: >-
   Cannlytics is a user-friendly interface to quickly transfer laboratory samples,
   perform analyses, collect and review results,
   manage certificates of analysis (CoAs), and crunch statistics
-  to your heart's content.
+  to your ❤️'s content.
 
 # Repository
 repo_name: Cannlytics
@@ -204,10 +204,13 @@ extra:
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/cannlytics
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/company/cannlytics
 
 # Plugins
 plugins:
   - search
+  - mkdocstrings
   - minify:
       minify_html: true
 

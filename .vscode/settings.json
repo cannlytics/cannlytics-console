@@ -99,6 +99,7 @@
     "mathjax",
     "metrc",
     "mkdocs",
+    "mkdocstrings",
     "nbsp",
     "noinput",
     "noopener",

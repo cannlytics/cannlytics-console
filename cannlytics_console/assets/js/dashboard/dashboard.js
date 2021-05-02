@@ -1,9 +1,11 @@
 /**
- * dashboard.js | Cannlytics Console
+ * Dashboard JavaScript | Cannlytics Console
  * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
  * Author: Keegan Skeate
  * Created: 12/3/2020
+ * Updated: 5/2/2021
  */
+
 import { auth, changePhotoURL, storageErrors } from '../firebase.js';
 import { authRequest, hasClass, Password, showNotification } from '../utils.js';
 
@@ -14,12 +16,18 @@ export const dashboard = {
     /*
      * Initializes the get started forms.
      */
-    if (stage === 'profile') {
-      authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
-    }
-    if (stage === 'organization') {
-      authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
-    }
+    auth.onAuthStateChanged((user) => {
+      console.log('Detected user in dashboard:', user)
+      if (user) {
+        if (stage === 'profile') {
+          initializeGetStartedProfileUI(user)
+          // authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
+        }
+      }
+    });
+    // if (stage === 'organization') {
+    //   authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
+    // }
   },
 
 
@@ -161,15 +169,6 @@ export const dashboard = {
   },
 
 
-  addLicenseInput() {
-    /*
-     * Adds a license input field to the UI.
-     */
-    console.log('Adding license input...');
-    
-  }
-
-
 }
 
 
@@ -246,8 +245,9 @@ function initializeGetStartedProfileUI(data) {
 
   // Set the user's photo.
   try {
-    if (data.photo_url) document.getElementById('user-photo-url').src = data.photo_url;
-
+    if (data.photo_url || data.photoURL || data.email) {
+      document.getElementById('user-photo-url').src = data.photo_url || data.photoURL || `https://robohash.org/${data.email}?set=set5`;
+    }
   } catch (error) {}
 
 

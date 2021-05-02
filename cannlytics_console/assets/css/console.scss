@@ -86,6 +86,24 @@ body.dark .text-link:hover {
   color: #FF9500 !important;
 }
 
+/*--------------------------------------------------------------------------
+  Tooltips
+---------------------------------------------------------------------------*/
+
+.tooltip-inner {
+  background-color: #f1f1f1 !important;
+  color: #1a1a1a;
+  text-align: left;
+}
+body.dark .tooltip-inner {
+  background-color: #000 !important;
+  color: #ccc;
+}
+.btn-tooltip-help {
+  height: 0;
+  padding: 0;
+  transform: translateY(-12px);
+}
 
 /*--------------------------------------------------------------------------
   Images and icons
@@ -333,16 +351,19 @@ body.dark .breadcrumb-item .action {
 }
 .sidebar .nav-link:hover {
   color: inherit !important;
-  background: rgb(0 0 0 / 5%);
+  // background: rgb(0 0 0 / 5%);
+  // background-color: #E0FCF5;
+  background-color: rgba(80, 250, 123, 0.15);
 }
 .sidebar .nav-link.active {
-  color: #0BA67F !important;
-  background: rgb(0 0 0 / 5%);
+  color: #1a1a1a !important;
+  // background: rgb(0 0 0 / 5%);
+  background-color: rgba(80, 250, 123, 0.15);
   font-weight: 600;
 }
-.sidebar .nav-link.active .feather {
-  color: #0BA67F;
-}
+// .sidebar .nav-link.active .feather {
+//   color: #1a1a1a;
+// }
 .sidebar-heading {
   font-size: .75rem;
   text-transform: uppercase;
