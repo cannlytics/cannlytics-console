@@ -190,6 +190,46 @@ python manage.py test personal_website
 
 See [testing](/testing) for more information.
 
+## Writing documentation
+
+Install Material for MkDocs with Docker.
+
+```shell
+docker pull squidfunk/mkdocs-material
+```
+
+Build the documentation:
+
+```shell
+docker build -t squidfunk/mkdocs-material docs
+```
+
+Preview the documentation as you write.
+
+```shell
+docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+```
+
+or
+
+```shell
+npm run docs
+```
+
+* [Quick note - how to fix django-livereload-server import error](https://gist.github.com/hangtwenty/f53b3867db1e33780505ccafd8d2eef0)
+
+Build the documentation
+
+```shell
+mkdocs build
+```
+
+or
+
+```shell
+npm run build-docs
+```
+
 
 ## Helpful Resources
 

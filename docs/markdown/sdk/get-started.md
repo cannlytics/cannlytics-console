@@ -4,5 +4,12 @@ Cannlytics offers a lab website if you need a simple web presence or want to use
 
 ## Metrc
 
-::: cannlytics.traceability.metrc
+::: cannlytics.traceability.metrc.client.Client
+    handler: python
+    selection:
+      members:
+        - request
+    rendering:
+      show_root_heading: false
+      show_source: false
 

@@ -100,14 +100,14 @@ nav:
       - Development: app/development.md
       - Publishing: app/publishing.md
   - API:
-    - Getting Started: api/getting-started.md
+    - Getting Started: api/get-started.md
     - Authentication: api/authentication.md
     - Development:
       - Installation: api/dev/installation.md
       - Development: api/dev/development.md
       - Publishing: api/dev/publishing.md
   - Python SDK:
-    - Getting Started: sdk/getting-started.md
+    - Getting Started: sdk/get-started.md
     - Firebase Module: sdk/firebase/firebase.md
     - Leaf Data Systems Module: sdk/traceability/leaf.md
     - LIMS Module: sdk/lims/lims.md
@@ -210,7 +210,16 @@ extra:
 # Plugins
 plugins:
   - search
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            # - sys.path.append('cannlytics')
+            - sys.path.append('../../')
+            # - sys.path.append('../')
+          selection:
+            new_path_syntax: true
   - minify:
       minify_html: true
 
@@ -218,3 +227,6 @@ plugins:
 google_analytics:
   - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
   - auto
+
+# Specify development server
+# dev_addr: '0.0.0.0:8080'

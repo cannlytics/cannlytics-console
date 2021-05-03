@@ -153,3 +153,6 @@ https://all-free-download.com/free-vector/download/science-background-scientist-
 * [freedesignfile](http://freedesignfile.com/)
 
 Unless otherwise stated, then art is licensed under the [FreeArt License](https://artlibre.org/licence/lal/en/).
+
+[macrovector](https://www.freepik.com/macrovector)
+[pch.vector](https://www.freepik.com/pch-vector)
