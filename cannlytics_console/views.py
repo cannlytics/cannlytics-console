@@ -7,6 +7,7 @@ Updated: 4/30/2021
 # External imports
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse
 
 # Internal imports
 from cannlytics_console.state import layout
@@ -90,6 +91,11 @@ def handler500(request, *args, **argv): #pylint: disable=unused-argument
     status_code = 500
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
+
+
+def no_content(request, *args, **argv): #pylint: disable=unused-argument
+    """Handle empty response."""
+    return HttpResponse(status=204)
 
 
 #-----------------------------------------------------------------------

@@ -39,4 +39,13 @@ export const ui = {
   },
 
 
+  toggleElementClass(id, className) {
+    /*
+     * Show or hide a given element.
+     */
+    const element = document.getElementById(id);
+    element.classList.toggle(className);
+  },
+
+
 }

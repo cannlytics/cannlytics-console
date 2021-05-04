@@ -13,11 +13,17 @@ References:
 import json
 import os
 import re
-import sys
+# import sys
 
 # External imports
 import environ
 from django.template import base
+
+# TODO: Prepare for production
+# Caching
+# https://docs.djangoproject.com/en/3.2/ref/templates/api/#django.template.loaders.cached.Loader
+# Hashing
+# https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
 
 # ------------------------------------------------------------#
 # Project variables

@@ -7,8 +7,15 @@
   line-height: 2 !important;
 }
 
-.md-typeset a {
+/* FIXME: Paragraph hover color needs to be dark green? */
+/* .md-typeset a {
   color: #009485;
+} */
+.md-typeset a {
+  color: #ffa600 !important;
+}
+.md-typeset a:hover {
+  color: #ff6e42 !important;
 }
 
 .md-nav__link--active {
@@ -33,6 +40,14 @@
   margin: .4rem auto !important;
 }
 
+/* Announcement actions */
+.md-announce .md-typeset a {
+  color: #ffa600 !important;
+}
+.md-announce .md-typeset a:hover {
+  color: #ff6e42 !important;
+}
+
 /*--------------------------------------------------------------------------
   Header
 ---------------------------------------------------------------------------*/
@@ -52,7 +67,7 @@ body[data-md-color-scheme="slate"] .md-tabs {
 }
 
 /*--------------------------------------------------------------------------
-  Footer
+  Footer (Optional: Make footer lighter)
 ---------------------------------------------------------------------------*/
 
 /* body[data-md-color-scheme="default"] .md-footer-meta {

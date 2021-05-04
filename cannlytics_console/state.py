@@ -4,6 +4,7 @@ State Variables | Cannlytics Console
 Author: Keegan Skeate
 Company: Cannlytics
 Created: 10/15/2020
+Updated: 5/3/2021
 
 Relatively static state variables for extra context on each page/screen.
 The idea is to separate the material from the templates,
@@ -193,7 +194,12 @@ material = {
             {"type": "text", "key": "phone", "title": "Phone"},
             {"type": "email", "key": "email", "title": "Email"},
             {"type": "text", "key": "linkedin", "title": "LinkedIn"},
-            # {"type": "text", "key": "location", "title": "Location"},
+            {"type": "text", "key": "address", "title": "Address", "secondary": True},
+            {"type": "text", "key": "city", "title": "City", "secondary": True},
+            {"type": "text", "key": "state", "title": "State", "secondary": True},
+            {"type": "text", "key": "country", "title": "Country", "secondary": True},
+            {"type": "text", "key": "zip_code", "title": "Zip Code", "secondary": True},
+            {"type": "text", "key": "external_id", "title": "External ID", "secondary": True},
         ],
     },
     "pin": {

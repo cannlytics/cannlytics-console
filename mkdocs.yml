@@ -65,10 +65,11 @@ theme:
   features:
     - navigation.tabs
     - navigation.tracking
+    #   - navigation.sections
   # FIXME: Custom 404 page.
   # static_templates:
   #   - partials/404.html
-  #   - navigation.sections
+  
 
 # Site map
 nav:
@@ -204,6 +205,8 @@ extra:
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/cannlytics
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/cannlytics/
     - icon: fontawesome/brands/linkedin
       link: https://linkedin.com/company/cannlytics
 
@@ -228,5 +231,5 @@ google_analytics:
   - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
   - auto
 
-# Specify development server
+# FIXME: Specify development server
 # dev_addr: '0.0.0.0:8080'

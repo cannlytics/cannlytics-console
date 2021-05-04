@@ -558,6 +558,15 @@ body.dark .sliding-action:hover {
   right: 1rem;
   top: 1rem;
 }
+.btn-outline-primary {
+  border-color: #45B649;
+  color: #3f7f34;
+  font-weight: 600;
+}
+.btn-outline-primary:hover {
+  background: #45B649;
+  color: #ffffff;
+}
 
 /*--------------------------------------------------------------------------
   Tabs
@@ -756,6 +765,12 @@ ul {
 }
 .custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
   background-color: #96e6a1;
+}
+
+/* Radio Groups */
+.form-check-input:checked {
+  background-color: #45B649;
+  border-color: #45B649;
 }
 
 /* Dark forms */

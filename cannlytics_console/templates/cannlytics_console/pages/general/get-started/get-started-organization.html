@@ -34,16 +34,19 @@
   </div>
 
   <!-- Start or create an organization choice -->
-  <div id="organization-choice" class="row row-cols-1 row-cols-lg-3 g-4 mt-3 mb-5">
-    <div class="col-6 col--4 my-3">
+  <div id="organization-choice" class="row row-cols-1 row-cols-lg-2 g-4 mt-3 mb-5">
+    <div class="col my-3">
       <div
         class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
-        style="max-width: 375px;"
       >
         <a
           class="card-block stretched-link text-decoration-none app-action"
           onclick="cannlytics.dashboard.showOrganizationForm('join')"
         >
+          <img src="{% static 'cannlytics_console/images/illustrations/outline/lab_analyst_prep.svg' %}"
+            width="150px"
+            class="float-end"
+          >
           <div class="card-body">
             <h5 class="card-title text-dark fs-5">Join an organization</h5>
             <p class="card-text text-secondary fs-5">
@@ -53,15 +56,18 @@
         </a>
       </div>
     </div>
-    <div class="col-6 col--4 my-3">
+    <div class="col my-3">
       <div
         class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
-        style="max-width: 375px;"
       >
         <a
           class="card-block stretched-link text-decoration-none app-action"
           onclick="cannlytics.dashboard.showOrganizationForm('create')"
         >
+          <img src="{% static 'cannlytics_console/images/illustrations/outline/lab_tablet.svg' %}"
+            width="150px"
+            class="float-end"
+          >
           <div class="card-body">
             <h5 class="card-title text-dark fs-5">Create an organization</h5>
             <p class="card-text text-secondary fs-5">
@@ -103,7 +109,7 @@
 
 
   <!-- Organization Form -->
-  <form id="create-organization-form" class="mb-3 d-none">
+  <form id="create-organization-form" class="mb-3"><!-- DEV: d-none -->
     <div class="row">
 
     <!-- Organization image -->
@@ -138,32 +144,98 @@
       <p class="text-left fw-bold fs-5 mb-3" style="max-width:540px;">
         <small>Setup your organization for maximum impact.</small>
       </p>
-      {% for item in get_started.organization.fields %}        
-        <div class="row mb-3">
 
-          <!-- Field label -->
-          <label
-            for="input-{{ item.key }}"
-            class="col-sm-3 col-form-label col-form-label-sm"
-          >
-            {{ item.title }}
+      <!-- Public / private choice -->
+      <div class="mb-3">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="publicOptions" id="public-choice" value="public" checked>
+          <label class="form-check-label" for="public-choice">
+            Public {% icon "globe" width="16px" height="16px" %}<br>
+            <small class="text-secondary">Appears in search results.</small>
           </label>
-
-          <!-- Field input -->
-          <div class="col-sm-9">
-            <input
-              type="{{ item.type }}"
-              class="form-control form-control-sm"
-              id="input-{{ item.key }}"
-              spellcheck="false"
-              name="{{ item.key }}"
-            >
-          </div>
-
         </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="publicOptions" id="private-choice" value="private">
+          <label class="form-check-label" for="private-choice">
+            Private {% icon "lock" width="16px" height="16px" %}<br>
+            <small class="text-secondary">Only visible to you.</small>
+          </label>
+        </div>
+      </div>
+
+      <!-- Primary Fields -->
+      {% for item in get_started.organization.fields %}
+        {% if not item.secondary %}
+          <div class="row mb-3">
+
+            <!-- Field label -->
+            <label
+              for="input-{{ item.key }}"
+              class="col-sm-3 col-form-label col-form-label-sm"
+            >
+              {{ item.title }}
+            </label>
+
+            <!-- Field input -->
+            <div class="col-sm-9">
+              <input
+                type="{{ item.type }}"
+                class="form-control form-control-sm"
+                id="input-{{ item.key }}"
+                spellcheck="false"
+                name="{{ item.key }}"
+              >
+            </div>
+
+          </div>
+        {% endif %}
       {% endfor %}
 
-      <!-- TODO: Show advanced fields -->
+      <!-- Extra Fields-->
+      <div id="extra-organization-fields" class="d-none">
+        {% for item in get_started.organization.fields %}
+          {% if item.secondary %}
+            <div class="row mb-3">
+
+              <!-- Field label -->
+              <label
+                for="input-{{ item.key }}"
+                class="col-sm-3 col-form-label col-form-label-sm"
+              >
+                {{ item.title }}
+              </label>
+
+              <!-- Field input -->
+              <div class="col-sm-9">
+                <input
+                  type="{{ item.type }}"
+                  class="form-control form-control-sm"
+                  id="input-{{ item.key }}"
+                  spellcheck="false"
+                  name="{{ item.key }}"
+                >
+              </div>
+
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Optional: Show advanced fields -->
+      <a
+        id="extra-organization-fields-show"
+        class="nav-link text-secondary app-action d-inline-block"
+        onclick="toggleOrganizationFields();"
+      >
+        {% icon 'chevrons-down' hegiht="16px" width="16px" %} Show more
+      </a>
+      <a
+        id="extra-organization-fields-hide"
+        class="nav-link text-secondary app-action d-inline-block d-none"
+        onclick="toggleOrganizationFields();"
+      >
+        {% icon 'chevrons-up' hegiht="16px" width="16px" %} Show less
+      </a>
         
     </div><!-- End of organization fields -->
     </div>
@@ -174,7 +246,7 @@
         <small>Add all of your organization's licenses.</small>
       </p>
 
-      <!-- TODO: Dynamically Add license inputs -->
+      <!-- License fields -->
       <ol id="license-list" class="bold-list">
         <li id="primary-license" class="mb-3">
           <div class="row g-4">
@@ -212,16 +284,16 @@
             <div class="col-md-2">
               <label for="license-type-1" class="form-label">State</label>
               <select
-                class="form-select form-select-sm"
+                class="form-select form-select-sm license-state-selection"
                 aria-label="License type"
               >
                 <option selected></option>
-                <!-- TODO: Dynamic list states -->
+                <!-- TODO: Dynamically list states -->
                 <option value="OK">Oklahoma</option>
                 <option value="other">Other</option>
               </select>
             </div>
-            <!-- TODO: Only show API key if state is OKlahoma -->
+            <!-- TODO: Only show API key if state is Oklahoma -->
             <div class="col-md-3">
               <label for="license-type-other-1" class="form-label">
                 User API Key
@@ -372,6 +444,36 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     });
+
+    // Toggle extra organization fields
+    function toggleOrganizationFields() {
+      cannlytics.ui.toggleElementClass('extra-organization-fields', 'd-none');
+      cannlytics.ui.toggleElementClass('extra-organization-fields-hide', 'd-none');
+      cannlytics.ui.toggleElementClass('extra-organization-fields-show', 'd-none');
+    }
+
+    // FIXME: Only show user API Key for Oklahoma.
+    // $('.license-state-selection').change(function() {
+    //   console.log($(this).val());
+    //   if ($(this).val() === 'OK') {
+    //     $('.user-api-key').removeClass('d-none');
+    //   } else {
+    //     $('.user-api-key').addClass('d-none');
+    //   }
+    // });
+
+    // Optional: Show other when other license type is selected
+    // https://stackoverflow.com/questions/18992839/hide-show-content-if-some-option-is-selected-with-bootstrap
+    // $('#pasveids').on('change', function(e){
+    //   if(e.val == 'Value if clicked on other') {
+    //       $('#hiddenevent').attr('type', 'text');
+    //       $('#pasveids').attr('name', '');
+    //       $('#hiddenevent').attr('name', 'eventtype');
+    //   } else {
+    //       $('#hiddenevent').attr('type', 'hidden');
+    //       $('#pasveids').attr('name', 'eventtype');
+    //   }
+    // });
 
   </script>
 {% endblock console_js %}

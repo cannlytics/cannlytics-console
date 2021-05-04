@@ -163,6 +163,14 @@ body[data-md-color-scheme="slate"] .tx-container {
   color: #ff6e42 !important;
 }
 
+/* Announcement actions */
+.md-announce .md-typeset a {
+  color: #ffa600 !important;
+}
+.md-announce .md-typeset a:hover {
+  color: #ff6e42 !important;
+}
+
 /*--------------------------------------------------------------------------
   Mobile
 ---------------------------------------------------------------------------*/
