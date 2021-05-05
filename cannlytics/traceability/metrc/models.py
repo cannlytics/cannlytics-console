@@ -100,27 +100,31 @@ class Facility(Model):
     """A Facility represents a building licensed for the growing,
     processing, and/or selling of product. Facilities are created
     and have their permissions determined by a state.
+
     E.g.
-        {
-            "HireDate": "0001-01-01",
-            "IsOwner": false,
-            "IsManager": true,
-            "Occupations": [],
-            "Name": "Cultivation LLC",
-            "Alias": "Cultivation on Road St",
-            "DisplayName": "Cultivation on Road St",
-            "CredentialedDate": "1969-08-15",
-            "SupportActivationDate": null,
-            "SupportExpirationDate": null,
-            "SupportLastPaidDate": null,
-            "FacilityType": null,
-            "License": {
-                "Number": "403-X0001",
-                "StartDate": "2013-06-28",
-                "EndDate": "2015-12-28",
-                "LicenseType": "Medical Cultivation"
-            }
+
+    ```js
+    {
+        "HireDate": "0001-01-01",
+        "IsOwner": false,
+        "IsManager": true,
+        "Occupations": [],
+        "Name": "Cultivation LLC",
+        "Alias": "Cultivation on Road St",
+        "DisplayName": "Cultivation on Road St",
+        "CredentialedDate": "1969-08-15",
+        "SupportActivationDate": null,
+        "SupportExpirationDate": null,
+        "SupportLastPaidDate": null,
+        "FacilityType": null,
+        "License": {
+            "Number": "403-X0001",
+            "StartDate": "2013-06-28",
+            "EndDate": "2015-12-28",
+            "LicenseType": "Medical Cultivation"
         }
+    }
+    ```
     """
 
     @property

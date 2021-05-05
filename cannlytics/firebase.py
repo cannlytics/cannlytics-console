@@ -2,31 +2,33 @@
 Firebase Module | Cannlytics
 Author: Keegan Skeate <contact@cannlytics.com>
 Created: 2/7/2021
+Updated: 5/4/2021
 
 Resources:
 
-    https://firebase.google.com/docs/
+- https://firebase.google.com/docs/
 
 Description:
 
-    A wrapper of firebase_admin to make interacting with the Firestore database
-    and Firebase Storage buckets even easier.
+A wrapper of firebase_admin to make interacting with the Firestore database
+and Firebase Storage buckets even easier.
 
 Example:
 
-    import os
-    import environ
+```py
+import os
+import environ
 
-    # Get and set all credentials.
-    env = environ.Env()
-    env.read_env('.env')
-    credentials = env('GOOGLE_APPLICATION_CREDENTIALS')
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials
-    bucket_name = environ.get('FIREBASE_STORAGE_BUCKET')
+# Get and set all credentials.
+env = environ.Env()
+env.read_env('.env')
+credentials = env('GOOGLE_APPLICATION_CREDENTIALS')
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials
+bucket_name = environ.get('FIREBASE_STORAGE_BUCKET')
 
-    # Initialize Firebase
-    db = initialize_firebase()
-
+# Initialize Firebase
+db = initialize_firebase()
+```
 """
 import ulid
 from datetime import datetime
@@ -35,8 +37,11 @@ from os.path import isfile, join
 from re import sub, findall
 from django.utils.crypto import get_random_string
 from firebase_admin import auth, firestore, initialize_app, storage
-from google.cloud.firestore import ArrayUnion, ArrayRemove, Increment
-from google.cloud.firestore_v1.collection import CollectionReference
+try:
+    from google.cloud.firestore import ArrayUnion, ArrayRemove, Increment
+    from google.cloud.firestore_v1.collection import CollectionReference
+except:
+    pass
 from pandas import notnull, read_csv, read_excel, DataFrame, Series
 # from uuid import uuid4
 
@@ -305,13 +310,13 @@ def create_account(name, email, notification=True):
     Given user name and email, create an account.
     If the email is already being used, then nothing is returned.
 
-        Args:
-            name (str): A name for the user.
-            email (str): The user's email.
-            notification (bool): Whether to notify the user.
+    Args:
+        name (str): A name for the user.
+        email (str): The user's email.
+        notification (bool): Whether to notify the user.
 
-        Returns
-            (tuple): User object, random password
+    Returns
+        (tuple): User object, random password
 
     """
     chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$-_'
@@ -337,7 +342,7 @@ def create_custom_claims(uid, email=None, claims=None):
     """Create custom claims for a user to grant granular permission.
     The new custom claims will propagate to the user's ID token the
     next time a new one is issued.
-    
+
     Args:
         uid (str): A user's ID.
         email (str): A user's email.
@@ -351,7 +356,7 @@ def create_custom_claims(uid, email=None, claims=None):
 
 def get_custom_claims(name):
     """Get custom claims for a user.
-    
+
     Args:
         name (str): A user ID or user email.
     """
@@ -361,7 +366,7 @@ def get_custom_claims(name):
 
 def create_custom_token(uid, email=None, claims=None):
     """Create a custom token for a given user, expires after one hour.
-    
+
     Args:
         uid (str): A user's ID.
         email (str): A user's email.
@@ -375,7 +380,7 @@ def create_custom_token(uid, email=None, claims=None):
 
 def verify_token(token):
     """Verify a user's custom token.
-    
+
     Args:
         token (str): The custom token to authenticate a user.
     """
@@ -384,10 +389,10 @@ def verify_token(token):
 
 def get_user(name):
     """Get a user by user ID or by email.
-    
+
     Args:
         name (str): A user ID, email, or phone number.
-    
+
     Returns:
         (Firebase user): A Firebase user object.
     """
@@ -411,7 +416,7 @@ def get_user(name):
 
 def get_users():
     """Get all Firebase users.
-    
+
     Returns:
         (list): A list of Firebase users.
     """
@@ -423,7 +428,7 @@ def get_users():
 
 def update_user(existing_user, data):
     """Update a user.
-    
+
     Args:
         existing_user (Firebase user):
         data (dict): The values of the user to update, which can include
@@ -458,12 +463,107 @@ def update_user(existing_user, data):
 
 def delete_user(uid):
     """Delete a user from Firebase.
-    
+
     Args:
         uid (str): A user's ID.
     """
     auth.delete_user(uid)
 
+
+# TODO: Create user secret
+def create_user_secret(uid):
+    """Delete a user from Firebase.
+    Args:
+        uid (str): A user's ID.
+    """
+    raise NotImplementedError
+
+
+# ------------------------------------------------------------#
+# Secret Management
+# ------------------------------------------------------------#
+
+
+# def create_user_secret(uid, project_id, secret_id):
+#     """Create a new secret with the given name. A secret is a logical wrapper
+#     around a collection of secret versions. Secret versions hold the actual
+#     secret material.
+#     Args:
+#         uid (str): A user's ID.
+#     """
+#     # Import the Secret Manager client library.
+#     from google.cloud import secretmanager
+
+#     # Create the Secret Manager client.
+#     client = secretmanager.SecretManagerServiceClient()
+
+#     # Build the resource name of the parent project.
+#     parent = f"projects/{project_id}"
+
+#     # Create the secret.
+#     response = client.create_secret(
+#         request={
+#             "parent": parent,
+#             "secret_id": secret_id,
+#             "secret": {"replication": {"automatic": {}}},
+#         }
+#     )
+
+#     # Print the new secret name.
+#     print("Created secret: {}".format(response.name))
+
+
+# def add_secret_version(project_id, secret_id, payload):
+#     """
+#     Add a new secret version to the given secret with the provided payload.
+#     A secret version contains the actual contents of a secret. A secret version can be enabled, disabled, or destroyed. To change the contents of a secret, you create a new version.
+#     Adding a secret version requires the Secret Manager Admin role (roles/secretmanager.admin) on the secret, project, folder, or organization. Roles can't be granted on a secret version.
+#     """
+
+#     # Import the Secret Manager client library.
+#     from google.cloud import secretmanager
+
+#     # Create the Secret Manager client.
+#     client = secretmanager.SecretManagerServiceClient()
+
+#     # Build the resource name of the parent secret.
+#     parent = client.secret_path(project_id, secret_id)
+
+#     # Convert the string payload into a bytes. This step can be omitted if you
+#     # pass in bytes instead of a str for the payload argument.
+#     payload = payload.encode("UTF-8")
+
+#     # Add the secret version.
+#     response = client.add_secret_version(
+#         request={"parent": parent, "payload": {"data": payload}}
+#     )
+
+#     # Print the new secret version name.
+#     print("Added secret version: {}".format(response.name))
+
+
+# def get_user_secret(uid):
+#     """Delete a user from Firebase.
+#     Args:
+#         uid (str): A user's ID.
+#     """
+#     raise NotImplementedError
+
+
+# def update_user_secret(uid):
+#     """Delete a user from Firebase.
+#     Args:
+#         uid (str): A user's ID.
+#     """
+#     raise NotImplementedError
+
+
+# def delete_user_secret(uid):
+#     """Delete a user from Firebase.
+#     Args:
+#         uid (str): A user's ID.
+#     """
+#     raise NotImplementedError
 
 # Optional: Implement custom email.
 # def send_password_reset(email):

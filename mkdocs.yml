@@ -61,11 +61,13 @@ theme:
         name: Switch to light mode
   font:
     text: Lora
+    # text: Source Serif Pro
     code: Roboto Mono
   features:
     - navigation.tabs
     - navigation.tracking
     #   - navigation.sections
+    # - navigation.instant
   # FIXME: Custom 404 page.
   # static_templates:
   #   - partials/404.html
@@ -211,25 +213,33 @@ extra:
       link: https://linkedin.com/company/cannlytics
 
 # Plugins
+# Optional: Add updated at date for docs
+# https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#revision-date-localized
 plugins:
+  # - admonition
+  - autorefs
   - search
   - mkdocstrings:
       handlers:
         python:
           setup_commands:
             - import sys
-            # - sys.path.append('cannlytics')
+            - from unittest.mock import MagicMock as mock
             - sys.path.append('../../')
-            # - sys.path.append('../')
-          selection:
-            new_path_syntax: true
+            - sys.modules["pandas"] = mock()
+            - sys.modules["firebase_admin"] = mock()
+            - sys.modules["googlemaps"] = mock()
+            - sys.modules["google-cloud"] = mock()
+            - sys.modules["google-cloud-firestore"] = mock()
+          # selection:
+          #   new_path_syntax: true
   - minify:
       minify_html: true
 
 # Google Analytics
-google_analytics:
-  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
-  - auto
+# google_analytics:
+#   - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
+#   - auto
 
 # FIXME: Specify development server
-# dev_addr: '0.0.0.0:8080'
+dev_addr: '0.0.0.0:4200'

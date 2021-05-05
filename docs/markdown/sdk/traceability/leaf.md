@@ -16,8 +16,13 @@ print(lab_result.summary())
 - [Spotipy](https://github.com/plamere/spotipy/blob/master/spotipy/client.py)
 - [Pythentic Jobs](https://github.com/ryanmcgrath/pythentic_jobs/blob/master/pythentic_jobs.py)
 
+::: cannlytics.traceability.leaf
+    rendering:
+      show_root_toc_entry: true
+      show_root_heading: true
+      show_source: true
 
-## Models
+<!-- ## Models
 
 ### Areas
 
@@ -93,4 +98,4 @@ Disposal records (referred to as "Destructions" within the UI) are
     Once this time period has elapsed, physical destruction of 
     the lots may be performed. This can be accomplished through the "dispose_item" API call.
     Disposal records can be created from harvest batches (any waste associated with a harvest batch),
-    inventory lots, or recorded as daily plant waste."
+    inventory lots, or recorded as daily plant waste." -->

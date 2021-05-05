@@ -9,6 +9,26 @@
     id="sidebar-menu"
     class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse"
   >
+
+    <!-- Create Organization Prompt -->
+    {% if not organization %}
+      <div class="text-center pt-3 px-3">
+        <img
+          src="{% static 'cannlytics_console/images/icons/multi-tone/lab.png' %}"
+          style="width:175px;"
+        >
+        <h4 class="fs-5 fw-bold">No organizations yet</h4>
+        <p class=""><small>Create or join an organization to get started.</small></p>
+        <a
+          class="w-100 text-link fs-6 pt-3"
+          type="button"
+          href="/organizations"
+        >
+          Create an Organization
+        </a>
+      </dv>
+    {% endif %}
+
     <div class="pt-3">
 
       <!-- TODO: Show different index for labs|producers|retailers|consumers -->

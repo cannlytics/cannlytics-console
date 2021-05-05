@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
   <!-- Cannlytics Console -->
-  <!-- Created 11/26/2020 | Thanksgiving -->
+  <!-- Created: 11/26/2020 | Thanksgiving -->
+  <!-- Updated: 5/4/2021 -->
   {% extends "cannlytics_console/base.html" %}
   {% load static %}
 
@@ -48,8 +49,15 @@
         
         <!-- Side Navigation -->
         <!-- Optional: Custom sidebars -->
+        {% include "cannlytics_console/layout/side_navigation.html" with
+          screen=screen
+          sidebar=sidebar
+          user=user
+          organization=organization
+          only
+        %}
         {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
-        {% if user %}
+        {% comment %} {% if user %}
           {% include "cannlytics_console/layout/side_navigation.html" with
             screen=screen
             sidebar=sidebar
@@ -63,7 +71,7 @@
             sidebar=sidebar
             only
           %}
-        {% endif %}
+        {% endif %} {% endcomment %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}

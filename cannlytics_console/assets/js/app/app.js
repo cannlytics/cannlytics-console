@@ -25,8 +25,8 @@ export const app = {
         //   console.log('User organizations:', data);
         // });
         // FIXME: Hot-fix to reload page if sidebar is prompting login.
-        const signInMenu = document.getElementById('sidebar-menu-login');
-        if (signInMenu) location.reload();
+        // const signInMenu = document.getElementById('sidebar-menu-login');
+        // if (signInMenu) location.reload();
       }
     });
   },

@@ -351,7 +351,7 @@ layout = {
             # },
             {
                 "title": "Transfers",
-                "url": "/logistics/calendar",
+                "url": "/transfers",
                 "icon": "navigation",
                 "slug": "transfers",
             },
