@@ -3,11 +3,11 @@
 <!-- User Menu -->
 <!-- Created 2/20/2021 -->
 {% load static icon %}
-<li class="nav-item dropdown">
+<li class="nav-item dropdown d-flex align-items-center">
 
   <!-- Profile image -->
   <a
-    class="nav-link dropdown-toggle py-0"
+    class="nav-link dropdown-toggle d-flex py-0"
     href="#"
     id="navbarUserMenu"
     role="button"
@@ -75,7 +75,7 @@
     <li><a class="dropdown-item" href="/settings/account">Your account</a></li>
 
     <!-- Change theme -->
-    <li>
+    {% comment %} <li>
       <a
         class="dropdown-item app-action d-flex justify-content-between"
         onClick="cannlytics.theme.changeTheme();"
@@ -84,16 +84,20 @@
         {% icon "sunset" class="light-only ms-2" %}
         {% icon "sunrise" class="dark-only ms-2" %}
       </a>
-    </li>
+    </li> {% endcomment %}
 
     <!-- Invite a user -->
-    <li><a class="dropdown-item" href="/settings/invite">Invite user</a></li>
+    <li><a class="dropdown-item" href="/settings/invite">Invite a user</a></li>
 
     <!-- Send feedback -->
     <li><a class="dropdown-item" href="/help/feedback">Send feedback</a></li>
 
     <!-- Sign out-->
-    <li><button class="dropdown-item" onClick="cannlytics.app.signOut();">Sign Out</button></li>
+    <li>
+      <button class="dropdown-item" onClick="cannlytics.app.signOut();">
+        Sign Out {% icon 'log-out' class="ps-1" %}
+      </button>
+    </li>
 
   </ul><!-- End of dropdown menu -->
 </li>

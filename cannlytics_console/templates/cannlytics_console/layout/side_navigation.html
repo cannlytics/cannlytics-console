@@ -10,28 +10,28 @@
     class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse"
   >
 
-    <!-- Create Organization Prompt -->
-    {% if not organization %}
-      <div class="text-center pt-3 px-3">
-        <img
-          src="{% static 'cannlytics_console/images/icons/multi-tone/lab.png' %}"
-          style="width:175px;"
-        >
-        <h4 class="fs-5 fw-bold">No organizations yet</h4>
-        <p class=""><small>Create or join an organization to get started.</small></p>
-        <a
-          class="w-100 text-link fs-6 pt-3"
-          type="button"
-          href="/organizations"
-        >
-          Create an Organization
-        </a>
-      </dv>
-    {% endif %}
-
     <div class="pt-3">
 
-      <!-- TODO: Show different index for labs|producers|retailers|consumers -->
+      <!-- Create Organization Prompt -->
+      {% if not organization and not user.disabled_org_prompt %}
+        <div class="text-center border-bottom px-2 pb-4 mb-3">
+          <!-- Optional: Close message button -->
+          <img
+            src="{% static 'cannlytics_console/images/icons/multi-tone/lab_large.png' %}"
+            style="width:175px;"
+          >
+          <h4 class="fs-5 mt-0 mb-0 fw-bold">Get started</h4>
+          <p class=""><small>Create or join an organization to get started.</small></p>
+          <div class="d-flex align-items-center justify-content-center mt-2">
+            <a
+              class="btn btn-sm bg-gradient-orange text-white text-no-wrap me-1"
+              href="/organizations"
+            >
+              Setup your Organization
+            </a>
+          </div>
+        </div>
+      {% endif %}
 
       <!-- Main Index -->
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-4 mb-2 text-muted">
@@ -39,46 +39,8 @@
       </h6>
       <ul class="nav flex-column">
         {% for item in sidebar.lab_index %}
-          <li class="nav-item px-2 mb-1">
-            <a
-              class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
-              href="{{ item.url }}"
-            >
-              {% icon item.icon class="me-2" height="16" width="16" %}
-              {{ item.title }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul><!-- End of main index -->
-
-      <!-- QA Index -->
-      {% if qa %}
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-4 mt-3 mb-2 text-muted">
-          <span>QA</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          {% for item in qa.qa_index %}
-          <li class="nav-item d-flex px-2 mb-1">
-            <a
-              class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
-              href="{{ item.url }}"
-            >
-              {% icon item.icon class="me-2" height="16" width="16" %}
-              {{ item.title }}
-            </a>
-          </li>
-        {% endfor %}
-        </ul>
-      {% endif %}<!-- End of QA index -->
-
-      <!-- Admin Index -->
-      {% if admin.admin_index %}
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-4 mt-3 mb-2 text-muted">
-          <span>Admin</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          {% for item in admin.admin_index %}
-            <li class="nav-item d-flex px-2 mb-1">
+          {% if user.type in item.user_type or item.user_type == '*' %}
+            <li class="nav-item px-2 mb-1">
               <a
                 class="nav-link d-flex py-1 px-3 {% if item.slug == screen %}active{% endif %}"
                 href="{{ item.url }}"
@@ -87,12 +49,12 @@
                 {{ item.title }}
               </a>
             </li>
-          {% endfor %}
-        </ul>
-      {% endif %}<!-- End of Admin index -->
+          {% endif %}
+        {% endfor %}
+      </ul><!-- End of main index -->
 
     <!-- Bottom option -->
-    <div class="w-100 text-center mt-5 mb-3 position-absolute bottom-0">
+    {% comment %} <div class="w-100 text-center mt-5 mb-3 position-absolute bottom-0">
       <a
         class="h6 btn btn-sm btn-outline-orange"
         href="https://cannlytics.com/support"
@@ -101,7 +63,7 @@
         {% icon "life-buoy" class="me-2" height="16" width="16" %}
         Get support
       </a>
-    </div>
+    </div> {% endcomment %}
 
     </div>
   </nav>

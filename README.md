@@ -4,11 +4,8 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/cannlytics/cannlytics-console/fork)
 
 
-
-<!-- https://github.com/facelessuser/pymdown-extensions
-https://squidfunk.github.io/mkdocs-material/publishing-your-site/
-https://squidfunk.github.io/mkdocs-material/customization/
-https://github.com/mkdocstrings/mkdocstrings -->
+<!-- Useful links: >
+<!-- https://github.com/haltu/muuri#table-of-contents-->
 
 
 Cannlytics is a simple, easy-to-use, **end-to-end** laboratory software solution. Cannlytics' mission is to make cannabis analysis **simple** and **easy**. You can easily have dozens and dozens of data points for your cannabis products. Cannlytics believes that there is no good reason that you can't access your data.

@@ -120,6 +120,19 @@
 
       <!-- TODO: Log menu -->
 
+      <!-- Theme switch -->
+      <!-- Optional: Better moon icon -->
+      <button
+        class="btn px-2"
+        onClick="cannlytics.theme.changeTheme();"
+      >
+        {% icon "sun" class="light-only text-secondary" %}
+        {% icon "moon" class="dark-only text-secondary" %}
+      </button>
+
+      <!-- Help Menu -->
+      {% include "cannlytics_console/components/menus/help_menu.html" with version=version %}
+
       <!-- User Menu -->
       {% include "cannlytics_console/components/menus/user_menu.html" with user=user %}
 

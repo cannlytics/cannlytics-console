@@ -481,6 +481,7 @@ def create_user_secret(uid):
 
 # ------------------------------------------------------------#
 # Secret Management
+# https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets
 # ------------------------------------------------------------#
 
 

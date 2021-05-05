@@ -4,7 +4,7 @@ State Variables | Cannlytics Console
 Author: Keegan Skeate
 Company: Cannlytics
 Created: 10/15/2020
-Updated: 5/3/2021
+Updated: 5/5/2021
 
 Relatively static state variables for extra context on each page/screen.
 The idea is to separate the material from the templates,
@@ -102,34 +102,45 @@ material = {
             # Sales (Transactions | Receipts) *Cultivator* *Processor* *Retailer*
         ],
         "welcome_message": {
-            "title": "Welcome to your new laboratory platform 🚀",
-            "message": "Get started with simple and easy cannabis analysis.",
+            "title": "Welcome to your new laboratory platform!", # 🚀
+            "message": "Get started with simple and easy cannabis analytics.",
         },
         "organization_choices": [
             {
                 "action": "Get started",
-                "title": "For Labs",
+                "title": "🥼 For Labs",
                 "description": "Start your lab workflow, manage your lab data, and issue your certificates. Start or join a lab.",
+                "image": "cannlytics_console/images/illustrations/outline/lab_tablet.svg",
                 "type": "lab",
             },
-            # {
-            #     "action": "Begin now",
-            #     "title": "For Cultivators / Processors",
-            #     "description": "Start managing your lab results now. Start or join as a producer/processor to begin.",
-            #     "type": "producer",
-            # },
-            # {
-            #     "action": "Explore for free",
-            #     "title": "For Retailers",
-            #     "description": "Access lab data for your products quickly and easily. Begin today.",
-            #     "type": "retailer",
-            # },
-            # {
-            #     "action": "Learn more",
-            #     "title": "For Consumers",
-            #     "description": "Track your consumption. Log purchases, see your usage stats, and get lab data.",
-            #     "type": "consumer",
-            # },
+            {
+                "action": "Begin now",
+                "title": "🌳 For Cultivators / Processors",
+                "description": "Start managing your lab results now. Start or join as a producer/processor to begin.",
+                "image": "cannlytics_console/images/illustrations/outline/lab_tablet.svg",
+                "type": "producer",
+            },
+            {
+                "action": "Explore for free",
+                "title": "📦 For Retailers",
+                "description": "Access lab data for your products quickly and easily. Begin today.",
+                "image": "cannlytics_console/images/illustrations/outline/lab_tablet.svg",
+                "type": "retailer",
+            },
+            {
+                "action": "Learn more",
+                "title": "🛍️ For Consumers",
+                "description": "Track your consumption. Log purchases, see your usage stats, and get lab data.",
+                "image": "cannlytics_console/images/illustrations/outline/lab_tablet.svg",
+                "type": "consumer",
+            },
+            {
+                "action": "Dive in",
+                "title": "🤝 For Everyone Else",
+                "description": "For all software integrators, researchers, and data seekers. Cannlytics has something for you.",
+                "image": "cannlytics_console/images/illustrations/outline/lab_desktop.svg",
+                "type": "integrator",
+            },
         ],
     },
     "analyses": {
@@ -287,12 +298,14 @@ layout = {
                 "url": "/",
                 "icon": "grid",
                 "slug": "",
+                "user_type": "*",
             },
             {
                 "title": "Analysis",
                 "url": "/analysis",
                 "icon": "edit",
                 "slug": "analysis",
+                "user_type": "lab",
             },
             # {
             #     "title": "Areas",
@@ -305,172 +318,101 @@ layout = {
                 "url": "/clients/records",
                 "icon": "users",
                 "slug": "clients",
+                "user_type": "lab",
+            },
+            {
+                "title": "Contacts",
+                "url": "/clients/records",
+                "icon": "users",
+                "slug": "clients",
+                "user_type": [None, "producer", "processor", "retailer",
+                    "consumer", "integrator"],
             },
             {
                 "title": "Instruments",
                 "url": "/instruments",
                 "icon": "server",
-                "slug": "instruments"
+                "slug": "instruments",
+                "user_type": "lab",
             },
             {
                 "title": "Intake",
                 "url": "/intake",
                 "icon": "log-in",
-                "slug": "intake"
+                "slug": "intake",
+                "user_type": "lab",
             },
             {
                 "title": "Inventory",
                 "url": "/inventory",
                 "icon": "archive",
-                "slug": "inventory"
+                "slug": "inventory",
+                "user_type": "*",
             },
             {
                 "title": "Invoices",
                 "url": "/invoices",
                 "icon": "credit-card",
-                "slug": "invoices"
+                "slug": "invoices",
+                "user_type": "*",
             },
-            
+            {
+                "title": "Purchases",
+                "url": "/purchases",
+                "icon": "shoping-bag",
+                "slug": "purchases",
+                "user_type": ["consumer"],
+            },
             {
                 "title": "Samples",
                 "url": "/samples",
                 "icon": "edit-2",
                 "slug": "samples",
+                "user_type": "*",
             },
             {
                 "title": "Results",
                 "url": "/results",
                 "icon": "award",
                 "slug": "results",
+                "user_type": "*",
             },
-            # {
-            #     "title": "Stats",
-            #     "url": "/stats",
-            #     "icon": "activity",
-            #     "slug": "stats",
-            # },
+            {
+                "title": "Stats",
+                "url": "/stats",
+                "icon": "activity",
+                "slug": "stats",
+                "user_type": ["producer", "processor", "retailer",
+                    "consumer", "integrator"],
+            },
             {
                 "title": "Transfers",
                 "url": "/transfers",
                 "icon": "navigation",
                 "slug": "transfers",
+                "user_type": ["producer", "processor", "retailer", 
+                    "integrator"],
             },
             {
                 "title": "Traceability",
                 "url": "/traceability",
                 "icon": "share-2",
                 "slug": "traceability",
+                "user_type": "*",
             },
             {
                 "title": "Settings",
                 "url": "/settings",
                 "icon": "settings",
                 "slug": "settings",
+                "user_type": "*",
             },
             {
                 "title": "Help",
                 "url": "/help",
                 "icon": "help-circle",
                 "slug": "help",
-            },
-        ],
-        "producer_index": [
-            {"title": "Dashboard", "slug": "dashboard", "icon": "home", "url": "/"},
-            {
-                "title": "Purchases",
-                "url": "/purchases",
-                "icon": "shoping-bag",
-                "slug": "purchases",
-            },
-            {"title": "Stats", "url": "/stats", "icon": "bar-chart-2", "slug": "stats"},
-            {
-                "title": "Lab Results",
-                "url": "/lab-results",
-                "icon": "globe",
-                "slug": "lab-results",
-            },
-            {
-                "title": "Settings",
-                "url": "/settings",
-                "icon": "settings",
-                "slug": "settings",
-            },
-            {"title": "Help", "url": "/help", "icon": "help-circle", "slug": "help"},
-        ],
-        "retailer_index": [
-            {"title": "Dashboard", "url": "/", "icon": "home", "slug": "dashboard"},
-            {
-                "title": "Purchases",
-                "url": "/purchases",
-                "icon": "shoping-bag",
-                "slug": "purchases",
-            },
-            {"title": "Stats", "url": "/stats", "icon": "bar-chart-2", "slug": "stats"},
-            {
-                "title": "Lab Results",
-                "url": "/lab-results",
-                "icon": "globe",
-                "slug": "lab-results",
-            },
-            {
-                "title": "Settings",
-                "url": "/settings",
-                "icon": "settings",
-                "slug": "settings",
-            },
-            {"title": "Help", "url": "/help", "icon": "help-circle", "slug": "help"},
-        ],
-        "consumer_index": [
-            {"title": "Dashboard", "url": "/", "icon": "home", "slug": "dashboard"},
-            {
-                "title": "Purchases",
-                "url": "/purchases",
-                "icon": "shoping-bag",
-                "slug": "purchases",
-            },
-            {"title": "Stats", "url": "/stats", "icon": "bar-chart-2", "slug": "stats"},
-            {
-                "title": "Lab Results",
-                "url": "/lab-results",
-                "icon": "globe",
-                "slug": "lab-results",
-            },
-            {
-                "title": "Settings",
-                "url": "/settings",
-                "icon": "settings",
-                "slug": "settings",
-            },
-            {"title": "Help", "url": "/help", "icon": "help-circle", "slug": "help"},
-        ],
-        "admin_index": [
-            {"title": "Files", "url": "/files", "icon": "server", "slug": "files"},
-            {
-                "title": "Invoicing",
-                "url": "/invoicing",
-                "icon": "credit-card",
-                "slug": "invoicing",
-            },
-            {
-                "title": "Security",
-                "url": "/security",
-                "icon": "shield",
-                "slug": "security",
-            },
-        ],
-        "qa_index": [
-            {
-                "title": "Inventory",
-                "url": "/inventory",
-                "icon": "briefcase",
-                "slug": "inventory",
-            },
-            {"title": "Stats", "url": "/stats", "icon": "trending-up", "slug": "stats"},
-            {
-                "title": "Traceability",
-                "url": "/traceability",
-                "icon": "share-2",
-                "slug": "traceability",
+                "user_type": "*",
             },
         ],
     },
