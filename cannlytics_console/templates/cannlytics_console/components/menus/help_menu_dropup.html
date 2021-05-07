@@ -1,19 +1,22 @@
 <!doctype html>
 <html>
-<!-- Help Menu -->
-<!-- Created: 5/4/2021 -->
-<!-- Updated: 5/4/2021 -->
+<!--
+  Help Menu Drop Up | Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com
+  Created: 5/4/2021
+  Updated: 5/5/2021
+-->
 {% load icon %}
-<div class="btn-group dropdown">
+<div class="btn-group dropup">
   <button
     type="button"
-    class="btn dropdown-toggle simple-dropdown px-2"
+    class="btn dropdown-toggle simple-dropdown"
     data-bs-toggle="dropdown"
     aria-expanded="false"
   >
-    {% icon 'help-circle' width="24px" height="24px" class="text-secondary" %}
+    {% icon 'help-circle' width="18px" height="18px" class="text-secondary" %}
   </button>
-  <ul class="dropdown-menu dropdown-menu-end">
+  <ul class="dropdown-menu">
     <li>
       <a class="dropdown-item text-dark" href="https://docs.cannlytics.com" target="_blank">
         Documentation <sup>{% icon 'external-link' width="16px" height="16px" %}</sup>
@@ -40,7 +43,7 @@
       </a>
     </li>
     <li><hr class="dropdown-divider"></li>
-    <li class="px-3"><small>Version {{ version }}</small></li>
+    <li class="px-3"><small>Version {{ APP_VERSION_NUMBER }}</small></li>
   </ul>
 </div>
 </html>

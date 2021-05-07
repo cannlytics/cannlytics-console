@@ -1,14 +1,18 @@
 <!doctype html>
 <html>
-<!-- Cannlytics Console -->
-<!-- Created 11/26/2020 Thanksgiving -->
+<!--
+  Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 11/26/2020 Thanksgiving
+  Updated: 5/5/2021
+-->
 {% extends "cannlytics_console/console.html" %}
 {% block console_body %}
 {% load static %}
   <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mx-auto">
 
     <!-- Show main dashboard given a user -->
-    {% if user and False %}
+    {% if user %}
       <div class="row">
 
       <!-- Dashboard cards -->

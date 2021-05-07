@@ -54,7 +54,11 @@ function initializeUserUI(user) {
   }
   document.getElementById('anonymous-signup').classList.add('d-none');
   document.getElementById('userEmail').textContent = user.email;
-  document.getElementById('userName').textContent = user.displayName || 'New account';
+  document.getElementById('userName').textContent = user.displayName;
+  // TODO: Show Personalize your account button
+  if (!user.displayName) {
+    document.getElementById('personalize-account').classList.remove('d-none');
+  }
   document.title = `${document.title.split('|')[0]} | ${organization}`;
   if (document.title.startsWith('|')) document.title = `Dashboard ${document.title}`;
 }

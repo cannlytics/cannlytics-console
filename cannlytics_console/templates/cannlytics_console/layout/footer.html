@@ -26,30 +26,7 @@
       <div class="align-self-end"></div>
 
       <!-- Help Menu -->
-      <div class="btn-group dropup">
-        <button
-          type="button"
-          class="btn dropdown-toggle simple-dropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {% icon 'help-circle' width="18px" height="18px" class="text-secondary" %}
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a class="dropdown-item text-dark" href="https://docs.cannlytics.com" target="_blank">
-              Documentation <sup>{% icon 'external-link' width="16px" height="16px" %}</sup>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item text-dark" href="https://cannlytics.com/support" target="_blank">
-              Get support <sup>{% icon 'external-link' width="16px" height="16px" %}</sup>
-            </a>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li class="px-3"><small>Version {{ APP_VERSION_NUMBER }}</small></li>
-        </ul>
-      </div>
+      {% include 'cannlytics_console/components/menus/help_menu_dropup.html' %}
 
     </div>
   </footer>

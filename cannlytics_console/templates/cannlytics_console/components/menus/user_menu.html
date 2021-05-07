@@ -47,6 +47,13 @@
 
       <!-- Profile name and email -->
       <div class="d-flex flex-column justify-content-center ps-2">
+        <a
+          id="personalize-account"
+          class="text-link d-none"
+          href="/settings/account"
+        >
+          Personalize your account &rarr;
+        </a>
         <h3 id="userName" class="mb-1 fs-5"></h3>
         <h5 id="userEmail" class="mb-0 fs-6 text-secondary"></h5>
       </div>
@@ -93,6 +100,7 @@
     <li><a class="dropdown-item" href="/help/feedback">Send feedback</a></li>
 
     <!-- Sign out-->
+    <!-- Optional: Don't display if there is no user -->
     <li>
       <button class="dropdown-item" onClick="cannlytics.app.signOut();">
         Sign Out {% icon 'log-out' class="ps-1" %}

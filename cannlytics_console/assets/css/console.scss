@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------
   Cannlytics Console Style
-  Author: Keegan Skeate
+  Author: Keegan Skeate <keegan@cannlytics.com>
   Created: 11/26/2020
+  Updated: 5/5/2021
 ---------------------------------------------------------------------------*/
 
 body {
@@ -73,11 +74,22 @@ body.dark .btn-outline-orange:hover {
   color: #1a1a1a;
 }
 
+/* Secondary buttons */
+body:not(.dark) .btn-secondary {
+  background-color: #8B9196;
+  border-color: #8B9196;
+}
+body:not(.dark) .btn-secondary:hover,
+body:not(.dark) .btn-secondary:active {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
 .text-link {
-  color: #FF9500 !important;
+  color: #e53a23 !important;
 }
 .text-link:hover {
-  color: #e53a23 !important;
+  color: #FF9500 !important;
 }
 body.dark .text-link {
   color: #ffa600 !important;

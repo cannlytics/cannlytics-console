@@ -90,6 +90,15 @@ export const dashboard = {
     /*
      * Save's a user's data. FIXME: Kind of broken
      */
+    const terms = document.getElementById('login-terms-accepted');
+    if (!terms.checked) {
+      const message = 'Please accept the terms of service and read the privacy and security policies.';
+      showNotification('Terms not accepted', message, { type: 'error' });
+      terms.classList.add('is-invalid');
+      return;
+    } else {
+      terms.classList.remove('is-invalid');
+    }
     const user = auth.currentUser;
     const elements = document.getElementById('userForm').elements;
     const data = { type };
@@ -100,7 +109,10 @@ export const dashboard = {
     if (user === null) {
       signUp(data.email).then(() => {
         document.location.href = `/get-started/organization/?from=${type}`;
-      })
+      }).catch((error) => {
+        showNotification('Sign up error', error.message, { type: 'error' });
+        // TODO: Show error class if invalid (.is-invalid)
+      });
     } else {
       if (data.email !== user.email) {
         user.updateEmail(data.email);
@@ -180,14 +192,20 @@ function signUp(email) {
   /*
    * Sign up a user.
    */
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     var password = Password.generate(32);
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          })
       })
       .catch((error) => {
-        showNotification('Sign up error', error.message, { type: 'error' });
+        reject(error);
       });
   });
   // var termsAccepted = document.getElementById('login-terms-accepted').checked;

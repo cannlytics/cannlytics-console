@@ -30,6 +30,22 @@ export const auth = {
   currentUser() { return firebase.auth().currentUser },
 
 
+  anonymousSignIn() {
+    /*
+     * Anonymously sign-in a user.
+     */
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInAnonymously()
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error)
+        });
+    });
+  },
+
+
   googleSignIn() {
     /*
      * Sign in a user with Google.

@@ -177,7 +177,8 @@ material = {
             {"type": "text", "key": "name", "title": "Name"},
             {"type": "text", "key": "position", "title": "Position"},
             {"type": "text", "key": "location", "title": "Location"},
-            {"type": "text", "key": "linkedin", "title": "LinkedIn"},
+            # {"type": "text", "key": "linkedin", "title": "LinkedIn"},
+            {"type": "text", "key": "license", "title": "License"},
         ],
         "options": [
             {"title": "Change your password", "url": "/account/password-reset/"},
