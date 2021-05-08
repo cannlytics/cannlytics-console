@@ -89,11 +89,13 @@
 
   <!-- Console JavaScript -->
   {% block page_js %}
+
+    <!-- Initialize the console -->
     <script>
       cannlytics.app.initialize();
     </script>
 
-    <!-- Screen-specific JavaScript -->
+    <!-- Load page-specific JavaScript -->
     {% block console_js %}{% endblock console_js %}
 
   {% endblock page_js %}

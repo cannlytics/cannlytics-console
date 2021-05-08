@@ -305,7 +305,7 @@ def get_id_timestamp(uid):
 # ------------------------------------------------------------#
 
 
-def create_account(name, email, notification=True):
+def create_user(name, email, notification=True):
     """
     Given user name and email, create an account.
     If the email is already being used, then nothing is returned.
@@ -364,7 +364,7 @@ def get_custom_claims(name):
     return user.custom_claims
 
 
-def create_custom_token(uid, email=None, claims=None):
+def create_custom_token(uid='', email=None, claims=None):
     """Create a custom token for a given user, expires after one hour.
 
     Args:

@@ -10,11 +10,7 @@
 {% load static icon %}
 {% block console_css %}
 
-  <!-- Muuri -->
-  <script src="https://cdn.jsdelivr.net/npm/muuri@0.9.3/dist/muuri.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
-
-  <!-- Console CSS -->
+  <!-- Page-specific CSS -->
   <link rel="stylesheet" href="{% static 'cannlytics_console/css/areas/areas.css' %}">
 
 {% endblock %}
@@ -29,145 +25,19 @@
     <!-- Body -->
     <div class="">
 
-      <!-- Place holder for create an area -->
-      <!--
-        Ideally place items in each item. (Each item as a grid).
-        Then when moving an item, pass the other grids that it can be moved into.
-      -->
-
-      <!-- Areas list -->
-      <!-- Optional: Make minimizable -->
-      {% comment %} <div id="area-list" class="drag-container"></div>
-        <div class="board">
-          <div class="board-column todo">
-            <div class="board-column-container">
-              <div class="board-column-header">Todo</div>
-              <div class="board-column-content-wrapper">
-                <div class="board-column-content">
-                  <div class="board-item"><div class="board-item-content"><span>Item #</span>1</div></div>
-                  <div class="board-item"><div class="board-item-content"><span>Item #</span>2</div></div>
-                  <div class="board-item"><div class="board-item-content"><span>Item #</span>3</div></div>
-                  <div class="board-item"><div class="board-item-content"><span>Item #</span>4</div></div>
-                  <div class="board-item"><div class="board-item-content"><span>Item #</span>5</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
-
-      <!-- Grid -->
-      <section class="grid-demo">
-        <h2 class="section-title"><span>Areas</span></h2>
-
-        <!-- Controls -->
-        <div class="controls cf">
-          <div class="control search">
-            <div class="control-icon">
-              <i class="material-icons">&#xE8B6;</i>
-            </div>
-            <input class="control-field search-field form-control " type="text" name="search" placeholder="Search..." />
-          </div>
-          <div class="control filter">
-            <div class="control-icon">
-              <i class="material-icons">&#xE152;</i>
-            </div>
-            <div class="select-arrow">
-              <i class="material-icons">&#xE313;</i>
-            </div>
-            <select class="control-field filter-field form-control">
-              <option value="" selected>All</option>
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
-            </select>
-          </div>
-          <div class="control sort">
-            <div class="control-icon">
-              <i class="material-icons">&#xE164;</i>
-            </div>
-            <div class="select-arrow">
-              <i class="material-icons">&#xE313;</i>
-            </div>
-            <select class="control-field sort-field form-control">
-              <option value="order" selected>Drag</option>
-              <option value="title">Title (drag disabled)</option>
-              <option value="color">Color (drag disabled)</option>
-            </select>
-          </div>
-          <div class="control layout">
-            <div class="control-icon">
-              <i class="material-icons">&#xE871;</i>
-            </div>
-            <div class="select-arrow">
-              <i class="material-icons">&#xE313;</i>
-            </div>
-            <select class="control-field layout-field form-control">
-              <option value="left-top" selected>Left Top</option>
-              <option value="left-top-fillgaps">Left Top (fill gaps)</option>
-              <option value="right-top">Right Top</option>
-              <option value="right-top-fillgaps">Right Top (fill gaps)</option>
-              <option value="left-bottom">Left Bottom</option>
-              <option value="left-bottom-fillgaps">Left Bottom (fill gaps)</option>
-              <option value="right-bottom">Right Bottom</option>
-              <option value="right-bottom-fillgaps">Right Bottom (fill gaps)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Grid -->
-        <div class="grid"></div>
-
-        <!-- Footer -->
-        <div class="grid-footer">
-          <button class="add-more-items btn btn-primary"><i class="material-icons">&#xE145;</i>Add more items</button>
-        </div>
-    
-      </section>
-
-      {% comment %} <div class="grid">
-        <div class="item">
-          <div class="item-content">
-            This can be anything.
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-content">
-            <div class="my-custom-content">
-              Yippee!
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
-
       <!-- Table -->
-      {% comment %} <div
-        id="areas-table"
-        class="ag-theme-alpine"
-        style="height: 400px; width:100%%;"
-      ></div> {% endcomment %}
+      <div id="clients-table" class="ag-theme-alpine-dark" style="height: 600px; width:100%;"></div>
+      
 
-    </div><!-- End of body -->
+    </div>
 
   </main>
 
 {% endblock console_body %}
-
 {% block console_js %}
 
-  <!-- JavaScript -->
-  <script type="text/javascript" charset="utf-8">
-
-    // Get current organization's areas.
-    // cannlytics.inventory.initializeAreas();
-
-    // Fire up area management.
-    // console.log('Firing grid...', Muuri);
-    //var grid = new Muuri('.grid', { dragEnabled: true });
-
-  </script>
+  <!-- Page-specific JavaScript -->
   <script src="{% static 'cannlytics_console/js/areas/areas.js' %}"></script>
 
 {% endblock console_js %}
-
 </html>

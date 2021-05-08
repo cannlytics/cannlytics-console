@@ -176,7 +176,7 @@ def test_auth():
     name = 'CannBot'
     email = 'contact@cannlytics.com'
     claims = {'organizations': ['Cannlytics']}
-    user, _ = firebase.create_account(name, email, notification=True)
+    user, _ = firebase.create_user(name, email, notification=True)
 
     # Create and get custom claims.
     firebase.create_custom_claims(user.uid, email=email, claims=claims)

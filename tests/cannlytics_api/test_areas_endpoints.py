@@ -13,6 +13,10 @@ import os
 import pytest
 import requests
 
+import sys
+sys.path.append('../../')
+from cannlytics import firebase
+
 BASE = 'http://127.0.0.1:4200/'
 REQUESTS = [
     {
@@ -48,6 +52,10 @@ REQUESTS = [
 ]
 
 # TODO: Test authenticate.
+TOKEN = firebase.create_custom_token(email='bot@cannlytics.com')
+HEADERS = {
+    
+}
 
 @pytest.fixture
 def target_endpoints():
@@ -64,9 +72,9 @@ def expected_result():
 def test_endpoints(target_endpoints, expected_result):
     """Request each endpoint, expecting responses with 200 status code."""
     metadata = []
-    for endpoint in ENDPOINTS:
-        url = os.path.join(BASE, endpoint) 
-        response = requests.get(url)
+    for r in REQUESTS:
+        url = os.path.join(BASE, r['endpoint']) 
+        response = getattr(requests, r['method'])(url, data=r['data'], headers=HEADERS)
         metadata.append(response.status_code)
     assert metadata == expected_result
 
