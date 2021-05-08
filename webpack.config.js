@@ -8,12 +8,12 @@
  *     https://medium.com/@poshakajay/heres-how-i-reduced-my-bundle-size-by-90-2e14c8a11c11
  *     https://webpack.js.org/guides/code-splitting/
  *     https://owais.lone.pw/blog/webpack-plus-reactjs-and-django/
+ *     https://webpack.js.org/migrate/5/
  */
 
 // Webpack plugins.
 const BundleTracker = require('webpack-bundle-tracker')
 const Dotenv = require('dotenv-webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -41,7 +41,7 @@ module.exports = env => {
     },
     output: {
       path: path.resolve(__dirname, `${appName}/static/${appName}`), // Should be in STATICFILES_DIRS.
-      filename: './plugins/cannlytics/[name]-[hash].js',
+      filename: './plugins/cannlytics/[name]-[contenthash].js',
       libraryTarget: 'var',
       library: 'cannlytics', // Turns JavaScript into a module.
       // publicPath: "/static/", // Should match Django STATIC_URL.
@@ -55,10 +55,11 @@ module.exports = env => {
         {
           test: /\.s?css$/,
           use: [
+            // Optional fix: https://webpack.js.org/guides/asset-modules/
             {
               loader: 'file-loader', // Output CSS.
               options: {
-                name: './plugins/cannlytics/[name]-[hash].css',
+                name: './plugins/cannlytics/[name]-[contenthash].css',
                 // sourceMap: env.production,
               },
             },
@@ -73,15 +74,12 @@ module.exports = env => {
                 },
               },
             },
-            // {
-            //   loader: MiniCssExtractPlugin.loader, // Minify CSS.
-            // },
           ],
         },
         {
           test: /\.js$/,
           loader: 'babel-loader', // Convert ES2015 to JavaScript.
-          query: {
+          options: {
             "presets": [
               ["@babel/preset-env", {
                 "targets": { "esmodules": true }
@@ -92,7 +90,7 @@ module.exports = env => {
       ],
     },
     optimization: {
-      //   runtimeChunk: 'single',
+      //   runtimeChunk: 'single', // What does this do?
       minimize: true,
       minimizer: [
         new TerserPlugin(),
