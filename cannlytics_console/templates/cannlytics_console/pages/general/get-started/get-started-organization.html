@@ -266,30 +266,36 @@
         <li id="primary-license" class="mb-3">
           <div class="row g-4">
             <div class="col-md-3">
-              <label for="license-1" class="form-label">License</label>
+              <label class="form-label">License</label>
               <input
                 type="text"
                 class="form-control form-control-sm"
               >
             </div>
             <div class="col-md-3">
-              <label for="license-type-1" class="form-label">License Type</label>
+              <label class="form-label">License Type</label>
               <select
                 class="form-select form-select-sm"
                 aria-label="License type"
               >
                 <option selected></option>
-                <!-- TODO: Dynamic license types-->
+                <!-- Optional: Dynamic license types-->
                 <option value="lab">Lab</option>
                 <option value="producer-cultivator">Cultivator</option>
                 <option value="producer-processor">Processor</option>
                 <option value="retailer">Retailer</option>
                 <option value="other">Other</option>
               </select>
+              <!-- TODO: Let user specify type if other -->
+              <input
+                type="text"
+                class="form-control form-control-sm d-none"
+                placeholder="Please specify..."
+              >
             </div>
-            <!-- TODO: Let user specify type if other -->
+            
             <!-- <div class="col-md-3">
-              <label for="license-type-other-1" class="form-label">Please specify</label>
+              <label class="form-label">Please specify</label>
               <input
                 type="text"
                 class="form-control form-control-sm"
@@ -297,7 +303,7 @@
               >
             </div> -->
             <div class="col-md-2">
-              <label for="license-type-1" class="form-label">State</label>
+              <label class="form-label">State</label>
               <select
                 class="form-select form-select-sm license-state-selection"
                 aria-label="License type"
@@ -310,7 +316,7 @@
             </div>
             <!-- TODO: Only show API key if state is Oklahoma -->
             <div class="col-md-3">
-              <label for="license-type-other-1" class="form-label">
+              <label class="form-label">
                 User API Key
                 <button
                   type="button"

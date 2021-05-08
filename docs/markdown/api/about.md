@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/class-based-views/mixins/
 
 Data about cannabis testing labs can be retrieved from the Cannlytics API.
 
-## Endpoints
+## API Entities
 
 `auth`
 

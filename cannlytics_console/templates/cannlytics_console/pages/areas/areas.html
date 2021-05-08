@@ -1,9 +1,23 @@
 <!doctype html>
 <html>
-<!-- Areas -->
-<!-- Created 4/24/2021 -->
+<!--
+  Areas | Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 4/24/2021
+  Updated: 5/7/2021
+-->
 {% extends "cannlytics_console/console.html" %}
-{% load icon %}
+{% load static icon %}
+{% block console_css %}
+
+  <!-- Muuri -->
+  <script src="https://cdn.jsdelivr.net/npm/muuri@0.9.3/dist/muuri.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
+
+  <!-- Console CSS -->
+  <link rel="stylesheet" href="{% static 'cannlytics_console/css/areas/areas.css' %}">
+
+{% endblock %}
 {% block console_body %}
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
@@ -13,14 +27,57 @@
     </div>
 
     <!-- Body -->
-    <div class="col">
+    <div class="">
+
+      <!-- Place holder for create an area -->
+      <!--
+        Ideally place items in each item. (Each item as a grid).
+        Then when moving an item, pass the other grids that it can be moved into.
+      -->
+
+      <!-- Areas list -->
+      <!-- Optional: Make minimizable -->
+      <div id="area-list" class="drag-container"></div>
+        <div class="board">
+          <div class="board-column todo">
+            <div class="board-column-container">
+              <div class="board-column-header">Todo</div>
+              <div class="board-column-content-wrapper">
+                <div class="board-column-content">
+                  <div class="board-item"><div class="board-item-content"><span>Item #</span>1</div></div>
+                  <div class="board-item"><div class="board-item-content"><span>Item #</span>2</div></div>
+                  <div class="board-item"><div class="board-item-content"><span>Item #</span>3</div></div>
+                  <div class="board-item"><div class="board-item-content"><span>Item #</span>4</div></div>
+                  <div class="board-item"><div class="board-item-content"><span>Item #</span>5</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Area management -->
+      {% comment %} <div class="grid">
+        <div class="item">
+          <div class="item-content">
+            This can be anything.
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            <div class="my-custom-content">
+              Yippee!
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
 
       <!-- Table -->
-      <div
+      {% comment %} <div
         id="areas-table"
         class="ag-theme-alpine"
         style="height: 400px; width:100%%;"
-      ></div>
+      ></div> {% endcomment %}
 
     </div><!-- End of body -->
 
@@ -34,7 +91,11 @@
   <script type="text/javascript" charset="utf-8">
 
     // Get current organization's areas.
-    cannlytics.inventory.initializeAreas();
+    // cannlytics.inventory.initializeAreas();
+
+    // Fire up area management.
+    // console.log('Firing grid...', Muuri);
+    //var grid = new Muuri('.grid', { dragEnabled: true });
 
   </script>
 

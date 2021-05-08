@@ -61,7 +61,7 @@
           </label>
 
           <!-- Field input -->
-          <!-- TODO: Show error if invalid (.is-invalid) -->
+          <!-- TODO: Show error on email if invalid or no email (.is-invalid) -->
           <div class="col-sm-10">
             <input
               type="{{ item.type }}"
@@ -75,7 +75,7 @@
         </div>
       {% endfor %}
 
-      <!-- TODO: Show advanced fields conditional on user type (lab | producer | retailer | consumer | integrator)-->
+      <!-- Optional: Show advanced fields conditional on user type (lab | producer | retailer | consumer | integrator)-->
       <!-- Advanced fields -->
       {% comment %} <a class="text-danger fs-6 my-3">{%icon 'plus' height="18px" width="18px" %} Advanced options</a> {% endcomment %}
 
