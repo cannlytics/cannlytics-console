@@ -17,6 +17,7 @@ google-cloud-secret-manager==1.0.0
 gunicorn==20.0.4
 Markdown==3.2.2
 markdown-markup-emoji==0.2.2 # FIXME: Not working
+PyJWT==2.1.0
 python-decouple==3.3
 psycopg2-binary==2.8.5
 ulid-py==1.1.0

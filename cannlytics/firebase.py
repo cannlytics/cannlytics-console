@@ -50,16 +50,26 @@ from pandas import notnull, read_csv, read_excel, DataFrame, Series
 # ------------------------------------------------------------#
 
 
-def initialize_firebase():
-    """Initialize Firebase, unless already initialized.
-    Returns:
-        (Firestore client): A Firestore database instance.
+def add_to_array(ref, field, value):
+    """Add an element to a given field for a given reference.
+    Args:
+        ref (str): A document reference.
+        field (str): A list field to create or update.
+        value (dynamic): The value to be added to the list.
     """
-    try:
-        initialize_app()
-    except ValueError:
-        pass
-    return firestore.client()
+    database = firestore.client()
+    doc = create_reference(database, ref)
+    doc.update({field: ArrayUnion([value])})
+
+
+def create_document(ref, values):
+    """Create a given document with given values, this leverages the
+    same functionality as `update_document` thanks to `set` with `merge=True`.
+    Args:
+        ref (str): A document reference.
+        values (str): A dictionary of values to update.
+    """
+    update_document(ref, values)
 
 
 def create_reference(database, path):
@@ -81,16 +91,46 @@ def create_reference(database, path):
     return ref
 
 
-def add_to_array(ref, field, value):
-    """Add an element to a given field for a given reference.
+def delete_collection(ref, batch_size=420):
+    """Delete a given collection, a batch at a time.
     Args:
         ref (str): A document reference.
-        field (str): A list field to create or update.
-        value (dynamic): The value to be added to the list.
+        batch_size (int): The number of documents to delete at a time.
+            The default is 420 and the maximum is 500.
+    """
+    database = firestore.client()
+    col = create_reference(database, ref)
+    docs = col.limit(batch_size).stream()
+    deleted = 0
+    for doc in docs:
+        doc.reference.delete()
+        deleted = deleted + 1
+        if deleted >= batch_size:
+            return delete_collection(col, batch_size)
+
+
+def delete_document(ref):
+    """Delete a given document.
+    Args:
+        ref (str): A document reference.
     """
     database = firestore.client()
     doc = create_reference(database, ref)
-    doc.update({field: ArrayUnion([value])})
+    doc.delete()
+
+
+def delete_field(ref, field):
+    """Delete a given field from a document.
+    Args:
+        ref (str): A document reference.
+    """
+    # FIXME:
+    # database = firestore.client()
+    # doc = create_reference(database, ref)
+    # update = {}
+    # update[field] = firestore.DELETE_FIELD
+    # doc.update(update)
+    raise NotImplementedError
 
 
 def remove_from_array(ref, field, value):
@@ -115,6 +155,18 @@ def increment_value(ref, field, amount=1):
     database = firestore.client()
     doc = create_reference(database, ref)
     doc.update({field: Increment(amount)})
+
+
+def initialize_firebase():
+    """Initialize Firebase, unless already initialized.
+    Returns:
+        (Firestore client): A Firestore database instance.
+    """
+    try:
+        initialize_app()
+    except ValueError:
+        pass
+    return firestore.client()
 
 
 def update_document(ref, values):

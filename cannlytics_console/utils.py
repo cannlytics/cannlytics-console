@@ -11,6 +11,7 @@ from django.utils.crypto import get_random_string
 
 # Internal imports
 from cannlytics.firebase import get_document, get_collection, get_user
+from cannlytics_api.auth import auth
 from cannlytics_console.state import data, material
 
 
@@ -78,6 +79,26 @@ def get_screen_specific_state(kwargs, context):
         screen_material = material.get(value)
         key = value.replace('-', '_')
         context[key] = screen_material
+    return context
+
+
+def get_user_context(request, context):
+    """Get the user-specific context.
+    Args:
+        request (HTTPRequest): A request to check for a user session.
+        context (dict): Existing page context.
+    Returns
+        context (dict): Page context updated with any user-specific context.
+    """
+    user_claims = auth.verify_session(request)
+    user = {
+        'email_verified': user_claims['email_verified'],
+        'display_name': user_claims['name'],
+        'photo_url': user_claims['picture'],
+        'uid': user_claims['uid'],
+        'email': user_claims['email'],
+    }
+    context.update({'user': user})
     return context
 
 

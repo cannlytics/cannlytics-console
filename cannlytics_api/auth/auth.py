@@ -1,26 +1,34 @@
 """
-Views | Cannlytics API
+Authentication Views | Cannlytics API
 Created: 1/22/2021
-Updated: 4/26/2021
+Updated: 5/10/2021
 
-API to interface with cannabis analytics.
-
-Optional: Rework authentication to authenticate with cookie sessions
-rather than passing ID token on every request.
-https://firebase.google.com/docs/auth/admin/manage-cookies
+Authentication mechanisms for the Cannlytics API, including API key
+utility functions, request authentication and verification helpers,
+and the authentication endpoints.
 """
 
+# Standard imports
+from json import loads
+from secrets import token_urlsafe
+from time import time
+
 # External imports
+import hmac
+from hashlib import sha256
 from datetime import datetime, timedelta
+from django.http.response import JsonResponse
 from firebase_admin import auth, exceptions, initialize_app
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from time import time
 
 # Internal imports
 from cannlytics.firebase import (
     create_log,
+    delete_document,
+    get_custom_claims,
+    get_document,
     update_document,
 )
 
@@ -46,16 +54,21 @@ def authenticate_request(request):
     """
     authorization = request.META['HTTP_AUTHORIZATION']
     token = authorization.split(' ')[-1]
-    try:
-        claims = auth.verify_id_token(token)
-    except auth.InvalidIdTokenError:
-        # TODO: Verify with Cannlytics API key.
-        raise NotImplementedError
-    return claims
+    user_claims = get_user_from_api_key(token)
+    if not user_claims:
+        try:
+            user_claims = auth.verify_id_token(token)
+        except auth.InvalidIdTokenError:
+            user_claims = {}
+    return user_claims
 
 
 def verify_session(request):
     """Verifies that the user has authenticated with a Firebase ID token.
+    If the session cookie is unavailable, then force the user to login.
+    Verify the session cookie. In this case an additional check is added to detect
+    if the user's Firebase session was revoked, user deleted/disabled, etc.
+    If the session cookie is invalid, expired or revoked, then force the user to login.
     Args:
         request: An instance of `django.http.HttpRequest` or
             `rest_framework.request.Request`.
@@ -65,39 +78,93 @@ def verify_session(request):
     """
     session_cookie = request.COOKIES.get('session')
     if not session_cookie:
-        # Session cookie is unavailable. Force user to login.
         return {}
-
-    # Verify the session cookie. In this case an additional check is added to detect
-    # if the user's Firebase session was revoked, user deleted/disabled, etc.
     try:
         return auth.verify_session_cookie(session_cookie, check_revoked=True)
     except auth.InvalidSessionCookieError:
-        # Session cookie is invalid, expired or revoked. Force user to login.
         return {}
 
 
-# TODO: Create / Delete / Get user from API Key
+#-----------------------------------------------------------------------
+# API Key Utilities
+#-----------------------------------------------------------------------
 
-
-def create_api_key():
+def create_api_key(request, *args, **argv): #pylint: disable=unused-argument
     """Mint an API key for a user, granting programmatic use at the same
-    level of permission as the uer."""
+    level of permission as the uer.
+    Args:
+        request (HTTPRequest): A request to get the user's session.
+    Returns:
+        (JsonResponse): A JSON response containing the API key in an
+            `api_key` field.
+    """
+    user_claims = verify_session(request)
+    api_key = token_urlsafe(48)
+    app_secret = get_document('admin/api')['app_secret_key']
+    code = sha256_hmac(app_secret, api_key)
+    post_data = loads(request.body.decode('utf-8'))
+    now = datetime.now()
+    expiration_date = datetime.fromisoformat(post_data['expiration'])
+    if expiration_date - now > timedelta(365):
+        expiration_date = now + timedelta(365)
+    key_data = {
+        'created_at': now.isoformat(),
+        'expiration_at': expiration_date.isoformat(),
+        'name': post_data['name'],
+        'permissions': post_data['permissions'],
+        'uid': user_claims['uid'],
+        'user_email': user_claims['email'],
+        'user_name': user_claims['name'],
+    }
+    update_document(f'admin/api/api_key_hmacs/{code}', key_data)
+    return JsonResponse({'status': 'success', 'api_key': api_key})
 
-    raise NotImplementedError
+
+def delete_api_key(request, *args, **argv): #pylint: disable=unused-argument
+    """Deletes a user's API key passed through an authorization header,
+    e.g. `Authorization: API-key xyz`.
+    Args:
+        request (HTTPRequest): A request to get the user's API key.
+    """
+    authorization = request.META['HTTP_AUTHORIZATION']
+    api_key = authorization.split(' ')[-1]
+    app_secret = get_document('admin/api')['app_secret_key']
+    code = sha256_hmac(app_secret, api_key)
+    delete_document(f'admin/api/api_key_hmacs/{code}')
 
 
-def delete_api_key():
-    """Deletes a user's API key."""
+def get_user_from_api_key(api_key):
+    """Identify a user given an API key.
+    Args:
+        api_key (str): An API key to identify a given user.
+    Returns:
+        (dict): Any user data found, with an empty dictionary if there
+            is no user found.
+    """
+    app_secret = get_document('admin/api')['app_secret_key']
+    code = sha256_hmac(app_secret, api_key)
+    key_data = get_document(f'admin/api/api_key_hmacs/{code}')
+    user_claims = get_custom_claims(key_data['uid'])
+    user_claims['permissions'] = key_data['permissions']
+    return user_claims
 
-    raise NotImplementedError
+
+def sha256_hmac(secret, message):
+    """Create a SHA256-HMAC (hash-based message authentication code).
+    Args:
+        secret (str): A server-side app secret.
+        message (str): The client's secret.
+    Returns:
+        (str): An HMAC string.
+    Credit: https://stackoverflow.com/a/66958131/5021266
+    """
+    byte_key = bytes(secret, 'UTF-8')
+    payload = message.encode()
+    return hmac.new(byte_key, payload, sha256).hexdigest()
 
 
-def get_user_from_api_key():
-    """Identify a user given an API key."""
-
-    raise NotImplementedError
-
+#-----------------------------------------------------------------------
+# API Authentication Endpoints
 #-----------------------------------------------------------------------
 
 @api_view(['GET'])

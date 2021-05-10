@@ -18,14 +18,97 @@
       current_page="API"
     %}
 
-    <!-- Body -->
-    <div class="col">
+    <div class="row">
 
-      <!-- TODO: API key management -->
+      <div class="col col-md-6">
 
-    </div><!-- End of Body -->
+        <!-- Title  -->
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="fs-5 mb-0 lh-base">API Keys</h1>
+            <a
+              class="btn btn-sm bg-gradient-green text-white"
+              href="/settings/api/new"
+            >
+              Add a key
+            </a>
+          </div>
+
+        <!-- Table -->
+
+          <!-- TODO: API key management -->
+          <div id="myGrid" style="height:500px; width:100%;" class="ag-theme-alpine"></div>
+
+      </div><!-- End of column -->
+
+      <!-- Options -->
+      <div class="col">
+        <div
+          class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
+          style="max-width: 375px;"
+        >
+          <h4 class="f2-5 text-dark">Key Information</h4>
+        </div>
+      </div>
+
+    </div><!-- End of row -->
 
   </main>
 
 {% endblock console_body %}
+{% block console_js %}
+
+  <script type="text/javascript" charset="utf-8">
+
+    // TODO: Listen to documents in admin/api/api_key_hmacs
+
+    
+    function onSelectionChanged() {
+      /*
+       * Show key details on selection.
+       */
+      var selectedRows = gridOptions.api.getSelectedRows();
+      console.log('Selected:', selectedRows);
+      //document.querySelector('#selectedRows').innerHTML =
+      //  selectedRows.length === 1 ? selectedRows[0].athlete : '';
+    }
+
+    // specify the columns
+    const columnDefs = [
+      { field: "make" },
+      { field: "model" },
+      { field: "price" }
+    ];
+
+    // let the grid know which columns to use
+    const gridOptions = {
+      columnDefs: columnDefs,
+      defaultColDef: {
+        flex: 1,
+        minWidth: 100,
+      },
+      rowSelection: 'single',
+      onSelectionChanged: onSelectionChanged,
+    };
+
+    // lookup the container we want the Grid to use
+    const eGridDiv = document.querySelector('#myGrid');
+
+    // create the grid passing in the div to use together with the columns & data we want to use
+    new agGrid.Grid(eGridDiv, gridOptions);
+
+    // fetch the row data to use and one ready provide it to the Grid via the Grid API
+    //agGrid.simpleHttpRequest({url: 'https://www.ag-grid.com/example-assets/row-data.json'})
+    //  .then(data => {
+    //      gridOptions.api.setRowData(data);
+    //  });
+    const data = [
+      { make: "Toyota", model: "Celica", price: 35000 },
+      { make: "Ford", model: "Mondeo", price: 32000 },
+      { make: "Porsche", model: "Boxter", price: 72000 }
+    ];
+    gridOptions.api.setRowData(data);
+
+  </script>
+
+{% endblock %}
 </html>

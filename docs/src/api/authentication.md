@@ -35,6 +35,12 @@ Cannlytics leverages [Google Secret Manager](https://cloud.google.com/secret-man
 
 We also strongly recommend that you encrypt your API keys in your data store and in memory when working with them except when you need to access them to access the service.
 
+Cannlytics does not store API keys, leveraging HMACs to securely represent API key claims instead.
+
+References:
+
+- [Whats the simplest and safest method to generate a API KEY and SECRET in Python](https://stackoverflow.com/questions/34897740/whats-the-simplest-and-safest-method-to-generate-a-api-key-and-secret-in-python)
+
 ### Expiration
 
 Your API key will expire after a set mount of time, 6 months by default, but you can set the expiration date as you desire.
