@@ -1,7 +1,7 @@
 """
 Console Views | Cannlytics
 Created: 12/18/2020
-Updated: 4/30/2021
+Updated: 5/10/2021
 """
 
 # External imports
@@ -10,6 +10,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 
 # Internal imports
+from cannlytics_api.auth import auth
 from cannlytics_console.state import layout
 from cannlytics_console.utils import (
     get_screen_specific_data,
@@ -23,8 +24,6 @@ BASE = 'cannlytics_console'
 #-----------------------------------------------------------------------
 # Main view
 #-----------------------------------------------------------------------
-
-# FIXME: Handle no user more elegantly. (Redirect?)
 
 class ConsoleView(TemplateView):
     """Main view used for most console pages."""
@@ -49,11 +48,16 @@ class ConsoleView(TemplateView):
     def get_context_data(self, **kwargs):
         """Get context that is used on all pages."""
         context = super().get_context_data(**kwargs)
-        # uid = self.request.session.get('uid', '')
-        # session = self.request.session.get('session', '')
-        session = self.request.COOKIES.get('session')
-        print('\nSession:', session, '\n')
-        # TODO: Set user context for the front end!!!
+        user_claims = auth.verify_session(self.request)
+        user = {
+            'email_verified': user_claims['email_verified'],
+            'display_name': user_claims['name'],
+            'photo_url': user_claims['picture'],
+            'uid': user_claims['uid'],
+            'email': user_claims['email'],
+        }
+        context.update({'user': user})
+        print('\nUser session:', context['user'], '\n')
         context['sidebar'] = layout['sidebar']
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
@@ -64,7 +68,7 @@ class ConsoleView(TemplateView):
 
 #-----------------------------------------------------------------------
 # Auth
-# Optional: Re-write as functional views?
+# Optional: Create user / sign-in users server-side.
 # https://www.geeksforgeeks.org/django-authentication-project-with-firebase/
 #-----------------------------------------------------------------------
 

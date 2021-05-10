@@ -1,12 +1,11 @@
 /**
- * auth.js | Cannlytics Console
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Authentication JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/4/2020
- * Updated: 4/20/2021
+ * Updated: 5/9/2021
  */
 
-import { authRequest, showNotification } from '../utils.js';
+import { apiRequest, authRequest, showNotification } from '../utils.js';
 
 
 export const auth = {
@@ -145,27 +144,20 @@ export const auth = {
      */
     var email = document.getElementById('login-email').value;
     var password = document.getElementById('login-password').value;
-    // firebase.auth().signInWithEmailAndPassword(email, password)
-    //   .then((user) => {
-    //     window.location.href = '/';
-    //   })
-    //   .catch((error) => {
-    //     showNotification('Sign in error', error.message, { type: 'error' });
-    //   });
+    document.getElementById('sign-in-button').classList.add('d-none');
+    document.getElementById('sign-in-loading-button').classList.remove('d-none');
     firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
-      // Get the user's ID token as it is needed to exchange for a session cookie.
-      // return user.getIdToken().then((idToken) => {
-      //   // Session login endpoint is queried and the session cookie is set.
-      //   // CSRF protection should be taken into account.
-      //   const csrfToken = getCookie('csrftoken')
-      //   return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken);
-      // });
       return authRequest('/api/auth/authenticate');
     }).then(() => {
-      // A page redirect would suffice as the persistence is set to NONE.
       return firebase.auth().signOut();
     }).then(() => {
       window.location.assign('/');
+    })
+    .catch((error) => {
+      showNotification('Sign in error', error.message, { type: 'error' });
+    }).finally(() => {
+      document.getElementById('sign-in-button').classList.remove('d-none');
+      document.getElementById('sign-in-loading-button').classList.add('d-none');
     });
   },
   
@@ -174,23 +166,39 @@ export const auth = {
     /*
      * Sign up a user.
      */
-    var termsAccepted = document.getElementById('login-terms-accepted').checked;
-    if (!termsAccepted) {
-      message = 'Please agree with our terms of service and read our privacy policy to create an account.';
-      showNotification('Terms not accepted', error.message, { type: 'error' });
+    const terms = document.getElementById('login-terms-accepted');
+    if (!terms.checked) {
+      const message = 'Please agree with our terms of service and read our privacy policy to create an account.';
+      showNotification('Terms not accepted', message, { type: 'error' });
+      terms.classList.add('is-invalid');
       return;
+    } else {
+      terms.classList.remove('is-invalid');
     }
-    var email = document.getElementById('login-email').value;
-    var password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    document.getElementById('sign-up-button').classList.add('d-none');
+    document.getElementById('sign-up-loading-button').classList.remove('d-none');
+    // FIXME: Ensure sign-up works with user sessions.
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` });
-        this.verifyUser();
-        window.location.href = '/account/sign-up-complete';
+        return authRequest('/api/auth/authenticate');
+      })
+      .then(() => {
+        apiRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+            .then(() => {
+              // window.location.assign('/account/sign-up-complete');
+            })
+        // DEV: Don't send verification email in development.
+        // this.verifyUser();
       })
       .catch((error) => {
         showNotification('Sign up error', error.message, { type: 'error' });
-      });
+      })
+      .finally(() => {
+        document.getElementById('sign-up-button').classList.remove('d-none');
+        document.getElementById('sign-up-loading-button').classList.add('d-none');
+      });;
   },
   
   
@@ -202,10 +210,10 @@ export const auth = {
     user.sendEmailVerification().then(() => {
       showNotification('Verification email sent', error.message, { type: 'success' });
     }).catch(function(error) {
+      console.log(error);
       showNotification('Verification error', error.message, { type: 'error' });
     });
   },
 
 
 }
-

@@ -29,7 +29,12 @@
     </script>
 
     <!-- Top Navigation -->
-    {% include "cannlytics_console/layout/top_navigation.html" with navbar=navbar version=APP_VERSION_NUMBER only %}
+    {% include "cannlytics_console/layout/top_navigation.html" with
+      navbar=navbar
+      version=APP_VERSION_NUMBER
+      user=user
+      only
+    %}
 
     <!-- Console -->
     <div class="container-fluid">

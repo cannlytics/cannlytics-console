@@ -1,16 +1,11 @@
 /*
- * utils.js | Cannlytics Console
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Utility JavaScript | Cannlytics Console
  * Author: Keegan Skeate <contact@cannlytics.com>
  * Created: 2/21/2021
+ * Updated: 5/9/2021
  */
 
-// import { v4 as uuidv4 } from 'uuid';
-// const id = uuidv4();
-
-// import Cookies from 'js-cookie'
 import { getUserToken } from './firebase.js';
-
 
 /*---------------------------------------------------------------------
  Auth Helpers
@@ -18,39 +13,14 @@ import { getUserToken } from './firebase.js';
 
 export const authRequest = (endpoint, data, options) => new Promise((resolve, reject) => {
   /*
-   * Make an authorized GET or POST request.
+   * Make an authorized GET or POST request by
+   * getting the user's ID token and exchanging it for a session cookie.
    */
   getUserToken().then((idToken) => {
     apiRequest(endpoint, data, options, idToken)
-      .then(response => response.json())
       .then((data) => {
         resolve(data);
       });
-    // const csrftoken = getCookie('csrftoken');
-    // const headerAuth = new Headers({
-    //   'Content-Type': 'application/json',
-    //   'Authorization': `Bearer ${idToken}`,
-    //   'X-CSRFToken': csrftoken,
-    // });
-    // const headers = { headers: headerAuth, mode: 'same-origin', method: 'POST' };
-    // if (data) {
-    //   // headers.method = 'POST';
-    //   headers.body = JSON.stringify(data);
-    // }
-    // if (options) {
-    //   if (options.delete) {
-    //     headers.method = 'DELETE';
-    //   }
-    //   if (options.params) {
-    //     endpoint = new URL(endpoint)
-    //     endpoint.search = new URLSearchParams(options.params).toString();
-    //   }
-    // }
-    // fetch(endpoint, headers)
-    //   .then(response => response.json())
-    //   .then((data) => {
-    //     resolve(data);
-    //   });
   }).catch((error) => {
     reject(error);
   });
@@ -61,6 +31,7 @@ export const apiRequest = (endpoint, data, options, idToken = null) => new Promi
   /*
    * Make a request to the Cannlytics API, with an ID token for authentication
    * or without ID token when the user already has an authenticated session.
+   * CSRF protection is taken into account.
    */
   const csrftoken = getCookie('csrftoken');
   const headerAuth = new Headers({
@@ -188,4 +159,3 @@ export function showNotification(title, message, options) {
   const toast = new bootstrap.Toast(toastEl, { delay: options.delay || 4000 });
   toast.show()
 }
-

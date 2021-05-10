@@ -77,9 +77,30 @@ def verify_session(request):
         return {}
 
 
+# TODO: Create / Delete / Get user from API Key
+
+
+def create_api_key():
+    """Mint an API key for a user, granting programmatic use at the same
+    level of permission as the uer."""
+
+    raise NotImplementedError
+
+
+def delete_api_key():
+    """Deletes a user's API key."""
+
+    raise NotImplementedError
+
+
+def get_user_from_api_key():
+    """Identify a user given an API key."""
+
+    raise NotImplementedError
+
 #-----------------------------------------------------------------------
 
-@api_view(['POST'])
+@api_view(['GET'])
 def authenticate(request):
     """Generate a session cookie for a user from an ID token sent via
     HTTP authorization bearer token."""
@@ -106,6 +127,15 @@ def authenticate(request):
                 httponly=True,
                 secure=True,
             )
+            uid = decoded_claims['uid']
+            create_log(
+                ref=f'users/{uid}/logs',
+                claims=decoded_claims,
+                action='Signed in.',
+                log_type='auth',
+                key='login'
+            )
+            update_document(f'users/{uid}', {'signed_in': True})
             return response
 
         # Otherwise, the user did not sign in recently. To guard against
@@ -127,19 +157,6 @@ def authenticate(request):
             content_type='application/json',
             status=status.HTTP_401_UNAUTHORIZED
         )
-
-# @api_view(['GET'])
-# def login(request):
-#     """Start a user's session."""
-#     try:
-#         claims = authenticate(request)
-#         uid = claims['uid']
-#         create_log(f'users/{uid}/logs', claims, 'Signed in.', 'auth', 'login')
-#         update_document(f'users/{uid}', {'signed_in': True})
-#         return Response({'success': True}, content_type='application/json')
-#     except:
-#         return Response({'success': False}, content_type='application/json', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 @api_view(['GET'])
 def logout(request):

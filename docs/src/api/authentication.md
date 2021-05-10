@@ -20,7 +20,7 @@ After sign-in, all access-protected views check the session cookie and verify it
 
 ## API Keys
 
-A Cannlytics API key identifies a particular user, granting programatic use at the same level of permission as the uer.
+A Cannlytics API key identifies a particular user, granting programmatic use at the same level of permission as the uer.
 
 User API keys are encrypted using a provider's secret key. The secret key is specific to the provider, such as the Cannlytics self-hosted solution. So, only that provider can provide services to the user with the credentials provided.
 

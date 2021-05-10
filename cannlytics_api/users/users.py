@@ -30,41 +30,46 @@ from cannlytics_api.auth import auth
 def users(request):
     """Get, update, or create user's data."""
     print('Request to users endpoint!')
-    try:
-        claims = auth.authenticate_request(request)
-        if request.method =='POST':
-            post_data = loads(request.body.decode('utf-8'))
-            uid = claims['uid']
-            changes = [post_data]
-            try:
-                # TODO: Ensure new user errors?
-                update_document(f'users/{uid}', post_data)
-                create_log(f'users/{uid}/logs', claims, 'Updated user data.', 'users', 'user_data', changes)
-                return Response(post_data, content_type='application/json')
-            except:
-                user_email = post_data['email']
-                user = {
-                    'email': user_email,
-                    'created_at': utils.get_timestamp(),
-                    'uid': post_data['uid'],
-                    'photo_url': f'https://robohash.org/${user_email}?set=set5',
-                }
-                update_document(f'users/{uid}', post_data)
-                create_log(
-                    f'users/{uid}/logs',
-                    claims,
-                    'Created new user.',
-                    'users',
-                    'user_data',
-                    changes
-                )
-                return Response(user, content_type='application/json')
-        else:
-            user_data = get_document(f'users/{claims["uid"]}')
-            return Response(user_data, content_type='application/json')
-    except:
-        return Response(
-            {'success': False},
-            content_type='application/json',
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
+    # try:
+    claims = auth.verify_session(request)
+    if request.method =='POST':
+        post_data = loads(request.body.decode('utf-8'))
+        uid = claims['uid']
+        try:
+            update_document(f'users/{uid}', post_data)
+            create_log(
+                ref=f'users/{uid}/logs',
+                claims=claims,
+                action='Updated user data.',
+                log_type='users',
+                key='user_data',
+                changes=[post_data]
+            )
+            return Response(post_data, content_type='application/json')
+        except:
+            user_email = post_data['email']
+            user = {
+                'email': user_email,
+                'created_at': utils.get_timestamp(),
+                'uid': post_data['uid'],
+                'photo_url': f'https://robohash.org/${user_email}?set=set5',
+            }
+            update_document(f'users/{uid}', post_data)
+            create_log(
+                f'users/{uid}/logs',
+                claims,
+                'Created new user.',
+                'users',
+                'user_data',
+                [post_data]
+            )
+            return Response(user, content_type='application/json')
+    else:
+        user_data = get_document(f'users/{claims["uid"]}')
+        return Response(user_data, content_type='application/json')
+    # except:
+    #     return Response(
+    #         {'success': False},
+    #         content_type='application/json',
+    #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
+    #     )

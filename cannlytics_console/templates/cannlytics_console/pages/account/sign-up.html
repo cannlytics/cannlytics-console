@@ -76,12 +76,16 @@
       </div>
       <div>
         <button
+          id="sign-up-button"
           class="ms-1 btn bg-gradient-green text-white"
           style="max-width:250px;"
           type="button"
           onclick="cannlytics.auth.signUp()"
         >
           Sign Up
+        </button>
+        <button id="sign-up-loading-button" class="ms-1 btn bg-gradient-green text-white d-none" style="width:77px;" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
         </button>
       </div>
     </div>
