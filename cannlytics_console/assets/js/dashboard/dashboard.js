@@ -16,15 +16,16 @@ export const dashboard = {
     /*
      * Initializes the get started forms.
      */
-    auth.onAuthStateChanged((user) => {
-      console.log('Detected user in dashboard:', user)
-      if (user) {
-        if (stage === 'profile') {
-          initializeGetStartedProfileUI(user)
-          // authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
-        }
-      }
-    });
+    // FIXME: Initialize from back-end?
+    // auth.onAuthStateChanged((user) => {
+    //   console.log('Detected user in dashboard:', user)
+    //   if (user) {
+    //     if (stage === 'profile') {
+    //       initializeGetStartedProfileUI(user)
+    //       // authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
+    //     }
+    //   }
+    // });
     // if (stage === 'organization') {
     //   authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
     // }

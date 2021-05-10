@@ -52,7 +52,6 @@ from pandas import notnull, read_csv, read_excel, DataFrame, Series
 
 def initialize_firebase():
     """Initialize Firebase, unless already initialized.
-    
     Returns:
         (Firestore client): A Firestore database instance.
     """
@@ -65,11 +64,9 @@ def initialize_firebase():
 
 def create_reference(database, path):
     """Create a database reference for a given path.
-
     Args:
         database (Firestore Client): The Firestore Client.
         path (str): The path to the document or collection.
-
     Returns:
         (ref): Either a document or collection reference.
     """
@@ -86,7 +83,6 @@ def create_reference(database, path):
 
 def add_to_array(ref, field, value):
     """Add an element to a given field for a given reference.
-    
     Args:
         ref (str): A document reference.
         field (str): A list field to create or update.
@@ -99,7 +95,6 @@ def add_to_array(ref, field, value):
 
 def remove_from_array(ref, field, value):
     """Remove an element from a given field for a given reference.
-    
     Args:
         ref (str): A document reference.
         field (str): A list field to update.
@@ -112,7 +107,6 @@ def remove_from_array(ref, field, value):
 
 def increment_value(ref, field, amount=1):
     """Increment a given field for a given reference.
-    
     Args:
         ref (str): A document reference.
         field (str): A numeric field to create or update.
@@ -125,7 +119,6 @@ def increment_value(ref, field, amount=1):
 
 def update_document(ref, values):
     """Update a given document with given values.
-    
     Args:
         ref (str): A document reference.
         values (str): A dictionary of values to update.
@@ -137,10 +130,8 @@ def update_document(ref, values):
 
 def get_document(ref):
     """Get a given document.
-    
     Args:
         ref (str): A document reference.
-    
     Returns:
         (dict): Returns the document as a dictionary.
             Returns an empty dictionary if no data is found.
@@ -156,7 +147,6 @@ def get_document(ref):
 
 def get_collection(ref, limit=None, order_by=None, desc=False, filters=[]):
     """Get documents from a collection.
-    
     Args:
         ref (str): A document reference.
         limit (int): The maximum number of documents to return. The default is no limit.
@@ -168,8 +158,7 @@ def get_collection(ref, limit=None, order_by=None, desc=False, filters=[]):
             to the given `key` for the given `value`.
             Operators include: `==`, `>=`, `<=`, `>`, `<`, `!=`,
             `in`, `not_in`, `array_contains`, `array_contains_any`.
-    
-    Returns
+    Returns:
         (list): A list of documents.
     """
     docs = []
@@ -195,15 +184,14 @@ def get_collection(ref, limit=None, order_by=None, desc=False, filters=[]):
 
 def import_data(db, ref, data_file):
     """Import data into Firestore.
-
-    Wishlist
-      - Batch upload
-      - Handle types <https://hackersandslackers.com/importing-excel-dates-times-into-pandas/>
-
     Args:
         db (Firestore Client):
         ref (str): A collection or document reference.
         data_file (str): The path to the local data file to upload.
+    
+    Wishlist
+      - Batch upload
+      - Handle types <https://hackersandslackers.com/importing-excel-dates-times-into-pandas/>
     """
     try:
         data = read_csv(
@@ -240,8 +228,12 @@ def import_data(db, ref, data_file):
 
 
 def export_data(db, ref, data_file):
-    """Export data from Firestore.
-
+    """Export data from Firestore.    
+    Args:
+        db (Firestore Client):
+        ref (str): A collection or document reference.
+        data_file (str): The path to the local data file to upload.
+    
     Wishlist
       - Parse fields that are objects into fields. E.g.
 
@@ -254,11 +246,6 @@ def export_data(db, ref, data_file):
             meta_prefix='sp_track_',
             sep='_'
         )
-    
-    Args:
-        db (Firestore Client):
-        ref (str): A collection or document reference.
-        data_file (str): The path to the local data file to upload.
     """
     data_ref = create_reference(db, ref)
     if isinstance(data_ref, CollectionReference):
@@ -309,15 +296,12 @@ def create_user(name, email, notification=True):
     """
     Given user name and email, create an account.
     If the email is already being used, then nothing is returned.
-
     Args:
         name (str): A name for the user.
         email (str): The user's email.
         notification (bool): Whether to notify the user.
-
-    Returns
+    Returns:
         (tuple): User object, random password
-
     """
     chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$-_'
     password = get_random_string(42, chars)
@@ -342,7 +326,6 @@ def create_custom_claims(uid, email=None, claims=None):
     """Create custom claims for a user to grant granular permission.
     The new custom claims will propagate to the user's ID token the
     next time a new one is issued.
-
     Args:
         uid (str): A user's ID.
         email (str): A user's email.
@@ -356,7 +339,6 @@ def create_custom_claims(uid, email=None, claims=None):
 
 def get_custom_claims(name):
     """Get custom claims for a user.
-
     Args:
         name (str): A user ID or user email.
     """
@@ -366,7 +348,6 @@ def get_custom_claims(name):
 
 def create_custom_token(uid='', email=None, claims=None):
     """Create a custom token for a given user, expires after one hour.
-
     Args:
         uid (str): A user's ID.
         email (str): A user's email.
@@ -380,7 +361,6 @@ def create_custom_token(uid='', email=None, claims=None):
 
 def verify_token(token):
     """Verify a user's custom token.
-
     Args:
         token (str): The custom token to authenticate a user.
     """
@@ -389,12 +369,10 @@ def verify_token(token):
 
 def get_user(name):
     """Get a user by user ID or by email.
-
     Args:
         name (str): A user ID, email, or phone number.
-
     Returns:
-        (Firebase user): A Firebase user object.
+        (UserRecord): A Firebase user object.
     """
     user = None
     try:
@@ -416,7 +394,6 @@ def get_user(name):
 
 def get_users():
     """Get all Firebase users.
-
     Returns:
         (list): A list of Firebase users.
     """
@@ -428,7 +405,6 @@ def get_users():
 
 def update_user(existing_user, data):
     """Update a user.
-
     Args:
         existing_user (Firebase user):
         data (dict): The values of the user to update, which can include
@@ -463,7 +439,6 @@ def update_user(existing_user, data):
 
 def delete_user(uid):
     """Delete a user from Firebase.
-
     Args:
         uid (str): A user's ID.
     """
@@ -580,7 +555,6 @@ def create_user_secret(uid):
 
 def download_file(bucket_name, source_blob_name, destination_file_name, verbose=True):
     """Downloads a file from Firebase Storage.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         source_blob_name (str): The file name to upload.
@@ -598,7 +572,6 @@ def download_file(bucket_name, source_blob_name, destination_file_name, verbose=
 
 def download_files(bucket_name, bucket_folder, local_folder, verbose=True):
     """Download all files in a given Firebase Storage folder.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         bucket_folder (str): A folder in the storage bucket.
@@ -617,7 +590,6 @@ def download_files(bucket_name, bucket_folder, local_folder, verbose=True):
 
 def upload_file(bucket_name, destination_blob_name, source_file_name, verbose=True):
     """Upload file to Firebase Storage.
-
     Args:
         bucket_name (str): The name of the storage bucket.
         destination_blob_name (str): The name to save the file as.
@@ -633,7 +605,6 @@ def upload_file(bucket_name, destination_blob_name, source_file_name, verbose=Tr
 
 def upload_files(bucket_name, bucket_folder, local_folder, verbose=True):
     """Upload multiple files to Firebase Storage.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         bucket_folder (str): A folder in the storage bucket to upload files.
@@ -652,7 +623,6 @@ def upload_files(bucket_name, bucket_folder, local_folder, verbose=True):
 
 def list_files(bucket_name, bucket_folder):
     """List all files in GCP bucket folder.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         bucket_folder (str): A folder in the storage bucket to list files.
@@ -664,7 +634,6 @@ def list_files(bucket_name, bucket_folder):
 
 def delete_file(bucket_name, bucket_folder, file_name, verbose=True):
     """Delete file from GCP bucket.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         bucket_folder (str): A folder in the storage bucket.
@@ -679,7 +648,6 @@ def delete_file(bucket_name, bucket_folder, file_name, verbose=True):
 
 def rename_file(bucket_name, bucket_folder, file_name, newfile_name, verbose=True):
     """Rename file in GCP bucket.
-    
     Args:
         bucket_name (str): The name of the storage bucket.
         bucket_folder (str): A folder in the storage bucket.
@@ -701,7 +669,6 @@ def rename_file(bucket_name, bucket_folder, file_name, newfile_name, verbose=Tru
 
 def create_log(ref, claims, action, log_type, key, changes=None):
     """Create an activity log.
-    
     Args:
         ref (str): Path to a collection of logs.
         claims (dict): A dict with user fields or a Firestore user object.
@@ -729,7 +696,6 @@ def create_log(ref, claims, action, log_type, key, changes=None):
 
 def get_keywords(name):
     """Get keywords for a given string.
-
     Args:
         string (str): A string to get keywords for.
     """
@@ -739,12 +705,17 @@ def get_keywords(name):
     return keywords
 
 
-def snake_case(name):
+def snake_case(s):
     """Turn a given string to snake case.
+    Handles CamelCase, replaces known special characters with
+    preferred namespaces, replaces spaces with underscores,
+    and removes all other nuisance characters.
     Args:
-        string (str): The string to turn to snake case.
+        s (str): The string to turn to snake case.
+    Returns"
+        (str): A snake case string.
     """
-    clean_name = name.replace(' ', '_')
+    clean_name = s.replace(' ', '_')
     clean_name = clean_name.replace('&', 'and')
     clean_name = clean_name.replace('%', 'percent')
     clean_name = clean_name.replace('#', 'number')
@@ -754,4 +725,3 @@ def snake_case(name):
     clean_name = sub('[!@#$%^&*()[]{};:,./<>?\|`~-=+]', ' ', clean_name)
     words = findall(r'[A-Z]?[a-z]+|[A-Z]{2,}(?=[A-Z][a-z]|\d|\W|$)|\d+', clean_name)
     return '_'.join(map(str.lower, words))
-

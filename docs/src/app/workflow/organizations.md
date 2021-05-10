@@ -8,5 +8,9 @@ Every organization has 1 owner that has ultimate decision-making capabilities. O
 
 ## Organization Team Members
 
-Team members are users that are members of an organization.
+Team members are users that are members of an organization. A user can be a member of multiple organizations.
+
+## Organization Licenses
+
+An organization can have multiple licenses.
 

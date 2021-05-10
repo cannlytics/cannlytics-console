@@ -21,34 +21,75 @@ export const authRequest = (endpoint, data, options) => new Promise((resolve, re
    * Make an authorized GET or POST request.
    */
   getUserToken().then((idToken) => {
-    const csrftoken = getCookie('csrftoken');
-    const headerAuth = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${idToken}`,
-      'X-CSRFToken': csrftoken,
-    });
-    const headers = { headers: headerAuth, mode: 'same-origin', method: 'GET' };
-    if (data) {
-      headers.method = 'POST';
-      headers.body = JSON.stringify(data);
-    }
-    if (options) {
-      if (options.delete) {
-        headers.method = 'DELETE';
-      }
-      if (options.params) {
-        endpoint = new URL(endpoint)
-        endpoint.search = new URLSearchParams(options.params).toString();
-      }
-    }
-    fetch(endpoint, headers)
+    apiRequest(endpoint, data, options, idToken)
       .then(response => response.json())
       .then((data) => {
         resolve(data);
       });
+    // const csrftoken = getCookie('csrftoken');
+    // const headerAuth = new Headers({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${idToken}`,
+    //   'X-CSRFToken': csrftoken,
+    // });
+    // const headers = { headers: headerAuth, mode: 'same-origin', method: 'POST' };
+    // if (data) {
+    //   // headers.method = 'POST';
+    //   headers.body = JSON.stringify(data);
+    // }
+    // if (options) {
+    //   if (options.delete) {
+    //     headers.method = 'DELETE';
+    //   }
+    //   if (options.params) {
+    //     endpoint = new URL(endpoint)
+    //     endpoint.search = new URLSearchParams(options.params).toString();
+    //   }
+    // }
+    // fetch(endpoint, headers)
+    //   .then(response => response.json())
+    //   .then((data) => {
+    //     resolve(data);
+    //   });
   }).catch((error) => {
     reject(error);
   });
+});
+
+
+export const apiRequest = (endpoint, data, options, idToken = null) => new Promise((resolve, reject) => {
+  /*
+   * Make a request to the Cannlytics API, with an ID token for authentication
+   * or without ID token when the user already has an authenticated session.
+   */
+  const csrftoken = getCookie('csrftoken');
+  const headerAuth = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${idToken}`,
+    'X-CSRFToken': csrftoken,
+  });
+  const headers = { headers: headerAuth, mode: 'same-origin', method: 'GET' };
+  if (data) {
+    headers.method = 'POST';
+    headers.body = JSON.stringify(data);
+  }
+  if (options) {
+    if (options.delete) {
+      headers.method = 'DELETE';
+    }
+    if (options.params) {
+      endpoint = new URL(endpoint)
+      endpoint.search = new URLSearchParams(options.params).toString();
+    }
+  }
+  fetch(endpoint, headers)
+    .then(response => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch((error) => {
+      reject(error);
+    });
 });
 
 

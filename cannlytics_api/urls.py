@@ -13,8 +13,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 # Internal imports
 from cannlytics_api import views
 from cannlytics_api.auth import auth
+from cannlytics_api.areas import areas
 from cannlytics_api.inventory import inventory
 from cannlytics_api.organizations import organizations
+from cannlytics_api.users import users
 
 app_name = 'cannlytics_api' # pylint: disable=invalid-name
 
@@ -22,7 +24,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('auth', include([
         path('/authenticate', auth.authenticate),
-        path('/login', auth.login),
+        # path('/login', auth.login),
         path('/logout', auth.logout),
     ])),
     # Allow for labs to choose to make their analyses public,
@@ -35,9 +37,10 @@ urlpatterns = [
         path('', views.index),
         path('/<uuid:analyte_id>', views.index),
     ])),
+    # path('areas', inventory.areas),
     path('areas', include([
-        path('', inventory.areas),
-        path('/<uuid:area_id>', inventory.areas),
+        path('', areas.areas),
+        path('/<uuid:area_id>', areas.areas),
     ])),
     path('clients', include([
         path('', views.index),
@@ -57,9 +60,9 @@ urlpatterns = [
         path('/<uuid:invoice_id>', views.index),
     ])),
     path('users', include([
-        path('', auth.users),
-        path('/<uuid:uid>', auth.users),
-        path('/<uuid:uid>/settings', auth.users),
+        path('', users.users),
+        path('/<uuid:uid>', users.users),
+        path('/<uuid:uid>/settings', users.users),
     ])),
     path('organizations', include([
         path('', organizations.organizations),

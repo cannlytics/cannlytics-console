@@ -10,6 +10,7 @@ License: MIT License <https://opensource.org/licenses/MIT>
 """
 
 import os
+import environ
 import pytest
 import requests
 
@@ -17,11 +18,11 @@ import sys
 sys.path.append('../../')
 from cannlytics import firebase
 
-BASE = 'http://127.0.0.1:4200/'
+BASE = 'http://127.0.0.1:8000/api/'
 REQUESTS = [
     {
          'endpoint': 'areas',
-         'method': 'GET',
+         'method': 'get',
          'data': None,
      },
     {
@@ -51,31 +52,47 @@ REQUESTS = [
      },
 ]
 
+TOKEN = None
+
+# Initialize Firebase
+env = environ.Env()
+env.read_env('../../.env')
+credentials = env('GOOGLE_APPLICATION_CREDENTIALS')
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials
+db = firebase.initialize_firebase()
+
 # TODO: Test authenticate.
-TOKEN = firebase.create_custom_token(email='bot@cannlytics.com')
+# if TOKEN is None:
+TOKEN = firebase.create_custom_token(email='dev@cannlytics.com')
+print('Authenticated user:', 'dev@cannlytics.com')
 HEADERS = {
-    
+    'Authorization': 'Bearer %s'
 }
 
-@pytest.fixture
-def target_endpoints():
-    """Target endpoints."""
-    return target_endpoints
+r = REQUESTS[0]
+url = BASE + r['endpoint']
+print('Requesting:', url)
+response = getattr(requests, r['method'])(url, data=r['data'], headers=HEADERS)
+
+# @pytest.fixture
+# def target_endpoints():
+#     """Target endpoints."""
+#     return target_endpoints
 
 
-@pytest.fixture
-def expected_result():
-    """Expected result to be returned."""
-    return [200] * len(REQUESTS)
+# @pytest.fixture
+# def expected_result():
+#     """Expected result to be returned."""
+#     return [200] * len(REQUESTS)
 
 
-def test_endpoints(target_endpoints, expected_result):
-    """Request each endpoint, expecting responses with 200 status code."""
-    metadata = []
-    for r in REQUESTS:
-        url = os.path.join(BASE, r['endpoint']) 
-        response = getattr(requests, r['method'])(url, data=r['data'], headers=HEADERS)
-        metadata.append(response.status_code)
-    assert metadata == expected_result
+# def test_endpoints(target_endpoints, expected_result):
+#     """Request each endpoint, expecting responses with 200 status code."""
+#     metadata = []
+#     for r in REQUESTS:
+#         url = os.path.join(BASE, r['endpoint']) 
+#         response = getattr(requests, r['method'])(url, data=r['data'], headers=HEADERS)
+#         metadata.append(response.status_code)
+#     assert metadata == expected_result
 
 

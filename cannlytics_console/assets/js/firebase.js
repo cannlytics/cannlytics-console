@@ -1,6 +1,7 @@
 /**
  * firebase.js | Cannlytics Website
  * Created: 12/22/2020
+ * Updated: 5/9/2021
  */
 
 // Initialize Firebase
@@ -14,6 +15,9 @@ firebase.initializeApp({
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 });
+
+// As session cookies are to be used, do not persist any state client side.
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 // Core modules
 const auth = firebase.auth();

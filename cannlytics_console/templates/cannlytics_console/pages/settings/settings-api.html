@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<!--
+  API Settings | Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 5/9/2021
+  Updated: 5/9/2021
+-->
+{% extends "cannlytics_console/console.html" %}
+{% block console_body %}
+
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- Header-->
+    {% include "cannlytics_console/components/notifications/breadcrumbs.html" with
+      base_page="Settings"
+      base_page_url="/settings"
+      current_page="API"
+    %}
+
+    <!-- Body -->
+    <div class="col">
+
+      <!-- TODO: API key management -->
+
+    </div><!-- End of Body -->
+
+  </main>
+
+{% endblock console_body %}
+</html>

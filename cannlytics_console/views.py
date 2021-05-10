@@ -49,12 +49,16 @@ class ConsoleView(TemplateView):
     def get_context_data(self, **kwargs):
         """Get context that is used on all pages."""
         context = super().get_context_data(**kwargs)
-        uid = self.request.session.get('uid', '')
+        # uid = self.request.session.get('uid', '')
+        # session = self.request.session.get('session', '')
+        session = self.request.COOKIES.get('session')
+        print('\nSession:', session, '\n')
+        # TODO: Set user context for the front end!!!
         context['sidebar'] = layout['sidebar']
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
-        context = get_user_specific_state(uid, context)
-        context = get_user_specific_data(uid, context)
+        # context = get_user_specific_state(session, context)
+        # context = get_user_specific_data(uid, context)
         return context
 
 

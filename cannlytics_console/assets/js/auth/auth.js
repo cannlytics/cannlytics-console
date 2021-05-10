@@ -17,11 +17,11 @@ export const auth = {
      * Initialize Firebase, waiting for the user to sign in successfully to
      * programmatically login the user and route them to the dashboard.
      */
-    try {
-      firebase.initializeApp();
-    } catch(error) {
-      // Firebase already initialized.
-    }
+    // try {
+    //   firebase.initializeApp();
+    // } catch(error) {
+    //   // Firebase already initialized.
+    // }
     // FIXME: Navigate to dashboard if redirecting from Google sign-in.
     // this.googleSignInRedirect();
   },
@@ -145,13 +145,28 @@ export const auth = {
      */
     var email = document.getElementById('login-email').value;
     var password = document.getElementById('login-password').value;
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        showNotification('Sign in error', error.message, { type: 'error' });
-      });
+    // firebase.auth().signInWithEmailAndPassword(email, password)
+    //   .then((user) => {
+    //     window.location.href = '/';
+    //   })
+    //   .catch((error) => {
+    //     showNotification('Sign in error', error.message, { type: 'error' });
+    //   });
+    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+      // Get the user's ID token as it is needed to exchange for a session cookie.
+      // return user.getIdToken().then((idToken) => {
+      //   // Session login endpoint is queried and the session cookie is set.
+      //   // CSRF protection should be taken into account.
+      //   const csrfToken = getCookie('csrftoken')
+      //   return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken);
+      // });
+      return authRequest('/api/auth/authenticate');
+    }).then(() => {
+      // A page redirect would suffice as the persistence is set to NONE.
+      return firebase.auth().signOut();
+    }).then(() => {
+      window.location.assign('/');
+    });
   },
   
   

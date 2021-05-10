@@ -110,6 +110,7 @@ class Client(Document):
     organizations in the decentralized community, a network of
     federated servers that communicate with each other."""
     _collection = 'organizations/%s/clients'
+    name: str = ''
 
 
 @dataclass
@@ -148,6 +149,7 @@ class Measurements(Document):
 class Organization(Document):
     """The place where work happens."""
     _collection = 'organizations/%s'
+    traceability_provider: str = ''
 
 
 @dataclass
@@ -157,7 +159,7 @@ class OrganizationSettings(Document):
 
 
 @dataclass
-class Prices(Document):
+class Price(Document):
     """A price for an analysis or group of analyses."""
     _collection = 'organizations/%s/prices'
 
@@ -167,6 +169,12 @@ class Project(Document):
     """A group of samples for a specific client."""
     _collection = 'organizations/%s/projects'
     status: str = ''
+
+
+@dataclass
+class Reports(Document):
+    """."""
+    _collection = 'organizations/%s/reports'
 
 
 @dataclass
@@ -191,7 +199,7 @@ class Sample(Document):
 
 
 @dataclass
-class Templates(Document):
+class Template(Document):
     """Templates for generating documents, such as invoices and
     certificates."""
     _collection = 'organizations/%s/transfers'
@@ -199,7 +207,7 @@ class Templates(Document):
 
 
 @dataclass
-class Transfers(Document):
+class Transfer(Document):
     """A group of samples or inventory being transferred between
     two organizations."""
     _collection = 'organizations/%s/transfers'
@@ -222,3 +230,10 @@ class UserSettings(Document):
 class Workflow(Document):
     """An abstract series of actions performed on a set trigger."""
     _collection = 'organizations/%s/workflows'
+
+
+# ---------------------------------------------------------------------
+# Optional class to build
+# ---------------------------------------------------------------------
+
+# Regulations

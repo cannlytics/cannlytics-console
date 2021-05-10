@@ -37,7 +37,7 @@ edit_uri: ""
 copyright: Copyright &copy; 2021 Cannlytics
 
 # Configuration
-docs_dir: docs/markdown
+docs_dir: docs/src
 site_dir: docs/build
 
 # Theme
