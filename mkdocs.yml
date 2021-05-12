@@ -242,4 +242,4 @@ plugins:
 #   - auto
 
 # FIXME: Specify development server
-dev_addr: '0.0.0.0:4200'
+# dev_addr: '0.0.0.0:4200'

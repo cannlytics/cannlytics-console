@@ -1,5 +1,6 @@
 """
 Console Views | Cannlytics
+Author: Keegan Skeate <keegan@cannlytics.com>
 Created: 12/18/2020
 Updated: 5/10/2021
 """
@@ -31,7 +32,7 @@ class ConsoleView(TemplateView):
 
     def get_template_names(self):
         """Get the screen's template based on the URL path, where the
-        URL is segmented as './{screen}/{section}/{unit}.
+        URL is segmented as 'https://{base}/{screen}/{section}/{unit}.
         A number of page template paths are tried, trying to match a unit
         first, then section, then a screen-section, finally a screen.
         Screen-sections and sections are also search for in a general folder.
@@ -58,9 +59,6 @@ class ConsoleView(TemplateView):
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
         context = get_user_context(self.request, context)
-        print('\nUser session:', context['user'], '\n')
-        # context = get_user_specific_state(session, context)
-        # context = get_user_specific_data(uid, context)
         return context
 
 

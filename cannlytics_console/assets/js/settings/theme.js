@@ -71,24 +71,21 @@ export const theme = {
 
   toggleTheme(theme) {
     /*
-     * Toggle the UI theme.
+     * Toggle the UI theme, toggling AG-Grid table class.
      */
-    console.log('Toggling theme:', theme);
-    // let currentTableClass = 'ag-theme-alpine';
-    // let newTableClass = 'ag-theme-alpine-dark';
+    let currentTableClass = 'ag-theme-alpine';
+    let newTableClass = 'ag-theme-alpine-dark';
     if (theme === 'light') {
       document.body.className = 'base';
-      // currentTableClass = 'ag-theme-alpine-dark';
-      // newTableClass = 'ag-theme-alpine';
+      currentTableClass = 'ag-theme-alpine-dark';
+      newTableClass = 'ag-theme-alpine';
     } else {
-      // if (!hasClass(document.body, 'dark')) 
-      // document.body.className += ' dark';
       document.body.classList.add('dark');
     }
     // Toggle Ag-Grid theme.
-    // let tables = document.getElementsByClassName(currentTableClass);
-    // [...tables].forEach( x => x.classList.add(newTableClass) );
-    // [...tables].forEach( x => x.classList.remove(currentTableClass) );
+    let tables = document.getElementsByClassName(currentTableClass);
+    [...tables].forEach( x => x.classList.add(newTableClass) );
+    [...tables].forEach( x => x.classList.remove(currentTableClass) );
   }
 
 
