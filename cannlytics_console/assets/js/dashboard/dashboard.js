@@ -7,7 +7,7 @@
  */
 
 import { auth, changePhotoURL, storageErrors } from '../firebase.js';
-import { authRequest, hasClass, Password, showNotification } from '../utils.js';
+import { authRequest, hasClass, Password, serializeForm, showNotification } from '../utils.js';
 
 export const dashboard = {
 
@@ -101,12 +101,8 @@ export const dashboard = {
       terms.classList.remove('is-invalid');
     }
     const user = auth.currentUser;
-    const elements = document.getElementById('userForm').elements;
-    const data = { type };
-    for (let i = 0 ; i < elements.length ; i++) {
-      const item = elements.item(i);
-      if (item.name) data[item.name] = item.value;
-    }
+    const data = serializeForm('userForm');
+    data.type = type;
     if (user === null) {
       signUp(data.email).then(() => {
         document.location.href = `/get-started/organization/?from=${type}`;

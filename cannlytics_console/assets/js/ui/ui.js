@@ -71,4 +71,22 @@ export const ui = {
   },
 
 
+  showLoadingButton(buttonId) {
+    /*
+     * Show a hidden loading button given the ID of its button counterpart.
+     */
+    document.getElementById(buttonId).classList.add('d-none');
+    document.getElementById(`${buttonId}-loading`).classList.remove('d-none');
+  },
+
+
+  hideLoadingButton() {
+    /*
+     * Hide a by-default hidden loading button given the ID of its button counterpart.
+     */
+    document.getElementById(buttonId).classList.add('d-none');
+    document.getElementById(`${buttonId}-loading`).classList.remove('d-none');
+  },
+
+
 }

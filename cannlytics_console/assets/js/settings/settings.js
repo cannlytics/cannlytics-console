@@ -8,16 +8,24 @@
 import { auth, db } from '../firebase.js';
 import { accountSettings } from './account.js';
 import { errorSettings } from './errors.js';
-import { apiRequest, showNotification } from '../utils.js';
+import { apiRequest, serializeForm, showNotification } from '../utils.js';
+import { showLoadingButton, hideLoadingButton } from '../ui/ui.js';
 
 const apiSettings = {
 
-  createAPIKey(data) {
+  createAPIKey() {
     /* 
     * Create an API key.
     */
+    const data = serializeForm('new-api-key-form');
     console.log('Creating API key...', data);
-    // TODO: Post key data
+    showLoadingButton('create-api-key-button');
+    apiRequest('/api/create-key', data).then((response) => {
+      // TODO: Add new key to the table!
+      console.log(response);
+    }).finally(() => {
+      hideLoadingButton('create-api-key-button');
+    });
   },
 
   deleteAPIKey(data) {

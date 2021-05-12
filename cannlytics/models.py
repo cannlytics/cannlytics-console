@@ -4,13 +4,13 @@ Author: Keegan Skeate <keegan@cannlytics.com>
 Created: 5/8/2021
 Updated: 5/11/2021
 
-Core models of the Cannlytics platform.
+Data schema of the Cannlytics platform.
 """
 
 # pylint: disable=no-member
 import ulid
-from dataclasses import dataclass
-from datetime import datetime
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from typing import Any, List, Optional
 from uuid import uuid4
 
@@ -57,6 +57,19 @@ class Analysis(Document):
     being measured."""
     _collection = 'organizations/%s/analysis'
     public: bool = False
+
+
+@dataclass
+class APIKey(Document):
+    """A representation of an API key HMAC data."""
+    _collection = 'admin/api/api_key_hmacs'
+    created_at: datetime = datetime.now()
+    expiration_at: datetime = datetime.now() + timedelta(365)
+    name: str = ''
+    # permissions: field(default_factory=list) = []
+    uid: str = ''
+    user_email: str = ''
+    user_name: str = ''
 
 
 @dataclass

@@ -127,6 +127,24 @@ export const Password = {
 
 
 /*---------------------------------------------------------------------
+ Form Helpers
+ --------------------------------------------------------------------*/
+
+ export function serializeForm(elementId, keepAll=false) {
+  /*
+   * Get a data object from a form, by default excluding empty fields.
+   */
+  const elements = document.getElementById(elementId).elements;
+  const data = {};
+  for (let i = 0 ; i < elements.length ; i++) {
+    const item = elements.item(i);
+    if (item.name || keepAll) data[item.name] = item.value;
+  }
+  return data
+}
+
+
+/*---------------------------------------------------------------------
  UI Helpers
  --------------------------------------------------------------------*/
 
