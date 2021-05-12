@@ -41,7 +41,7 @@ module.exports = env => {
     },
     output: {
       path: path.resolve(__dirname, `${appName}/static/${appName}`), // Should be in STATICFILES_DIRS.
-      filename: './plugins/cannlytics/[name]-[contenthash].js',
+      filename: './plugins/cannlytics/[name]-[fullhash].js', // FIXME: contenthash, 
       libraryTarget: 'var',
       library: 'cannlytics', // Turns JavaScript into a module.
       // publicPath: "/static/", // Should match Django STATIC_URL.
@@ -59,7 +59,7 @@ module.exports = env => {
             {
               loader: 'file-loader', // Output CSS.
               options: {
-                name: './plugins/cannlytics/[name]-[contenthash].css',
+                name: './plugins/cannlytics/[name]-[fullhash].css', // contenthash
                 // sourceMap: env.production,
               },
             },

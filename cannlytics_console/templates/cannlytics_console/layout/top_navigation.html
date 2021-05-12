@@ -1,36 +1,47 @@
 <!doctype html>
+<html>
 <!--
   Top Navigation | Cannlytics Console
   Author: Keegan Skeate <keegan@cannlytics.com>
   Created: 11/27/2020
-  Updated: 5/5/2021
+  Updated: 5/11/2021
 -->
 {% load static icon %}
-<html>
+
+  <!-- Header -->
   <header
     id="console-header"
     class="navbar navbar-expand flex-md-nowrap justify-content-between border-bottom px-0 py-0"
   >
 
     <!-- Menu toggle -->
-    <a
-      class="nav-link navbar-toggle d-flex d-md-none ps-3 py-0"
-      href="#"
-      id="navbarNotificationMenu"
-      role="button"
-      type="button"
+    <!-- FIXME: Show sidebar toggle on small screens
       data-bs-toggle="collapse"
       data-bs-target="#sidebarMenu"
       aria-controls="sidebarMenu"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      d-md-none
+    -->
+    {% comment %} <a
+      id="navbar-menu-button"
+      class="nav-link navbar-toggle d-flex pe-0 py-0"
+      href="#"
+      role="button"
+      type="button"
+      onclick="cannlytics.ui.showSidebar();"
     >
-      {% icon "menu" class="text-dark" %}
-    </a>
+      {% icon "menu" class="text-secondary" width="21px" height="21px" %}
+    </a> {% endcomment %}
 
     <!-- Logo -->
-    <div class="navbar-brand d-none d-md-flex align-items-center col-md-3 col-lg-2 me-0 ps-2 px-md-3">
-      <a href="/">
+    <div class="navbar-brand d-none d-md-flex align-items-center col-md-3 col-lg-2 me-0 ps-2 pe-0 px-md-3">
+      <a
+        href="/"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        title="Dashboard"
+      >
         <img
           src="{% static 'cannlytics_console/images/logos/cannlytics_logo_with_text_light.png' %}"
           style="height:30px;"
@@ -46,6 +57,20 @@
           class="dark-only"
         >
       </a>
+
+      <!-- Website Link -->
+      <!-- TODO: Fancy tooltip -->
+      <a
+        class="nav-link text-secondary navbar-toggle d-flex px-2"
+        href="https://get.cannlytics.com"
+        target="_blank"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        title="Website"
+      >
+        {% icon "globe" width="21px" height="21px" %}
+      </a>
+
     </div>
 
     <!-- Organization Choice -->
@@ -88,6 +113,9 @@
       <button
         class="btn px-2"
         onClick="cannlytics.theme.changeTheme();"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Toggle the theme"
       >
         {% icon "sun" class="light-only text-secondary" %}
         {% icon "moon" class="dark-only text-secondary" %}

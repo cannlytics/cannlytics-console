@@ -25,7 +25,7 @@
   "scripts": {
     "start": "npm-run-all --parallel livereload dev webpack",
     "webpack": "webpack-dev-server --env development",
-    "livereload": "python manage.py livereload",
+    "livereload": "python manage.py livereload --ignore-static-dirs",
     "dev": "python manage.py runserver",
     "build": "webpack --env production",
     "collectstatic": "python manage.py collectstatic --noinput",

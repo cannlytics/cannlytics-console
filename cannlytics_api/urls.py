@@ -83,31 +83,12 @@ urlpatterns = [
         path('/<uuid:sample_id>', views.index),
     ])),
     path('regulations', views.regulations),
+    path('create-key', auth.create_api_key),
+    path('delete-key', auth.delete_api_key),
+    path('get-keys', auth.get_api_key_hmacs),
 ]
-
-# TODO: Handle 404's
 
 # Add optional format suffixes to the URLs,
 # so users can explicitely specify a formatm e.g. .json.
 # https://www.django-rest-framework.org/tutorial/2-requests-and-responses/
-urlpatterns = format_suffix_patterns(urlpatterns)
-
-
-#-----------------------------------------------------------------------
-# Draft endpoints
-#-----------------------------------------------------------------------
-
-#     # Optional: Find a way to generalize
-#     # path('v1/<slug:endpoint>/', views.get_labs, name='endpoint'),
-
-#     # Functional
-#     path('scholars/', cannlypedia.scholars),
-# ]
-
-    # Make obsolete by querying organizations for type=lab
-    # path('/labs/', include([
-    #     path('', views.labs),
-    #     path('<uuid:org_id>/', views.lab),
-    #     path('<uuid:org_id>/analyses/', views.lab_analyses),
-    #     path('<uuid:org_id>/logs/', views.lab_logs),
-    # ])),
+# urlpatterns = format_suffix_patterns(urlpatterns)

@@ -2,7 +2,7 @@
 Data Models | Cannlytics
 Author: Keegan Skeate <keegan@cannlytics.com>
 Created: 5/8/2021
-Updated: 5/8/2021
+Updated: 5/11/2021
 
 Core models of the Cannlytics platform.
 """
@@ -56,6 +56,7 @@ class Analysis(Document):
     multiple analytes, specific compound or substances that are
     being measured."""
     _collection = 'organizations/%s/analysis'
+    public: bool = False
 
 
 @dataclass
@@ -65,6 +66,7 @@ class Analyte(Document):
     supporting fields, such as lowest order of detection (LOD),
     lowest order of quantification (LOQ), regulatory limit and more."""
     _collection = 'organizations/%s/analytes'
+    public: bool = False
 
 
 @dataclass
@@ -149,19 +151,21 @@ class Measurements(Document):
 class Organization(Document):
     """The place where work happens."""
     _collection = 'organizations/%s'
-    traceability_provider: str = ''
 
 
 @dataclass
 class OrganizationSettings(Document):
     """An organizations's primary settings."""
     _collection = 'organizations/%s/settings'
+    traceability_provider: str = ''
+    public: bool = False
 
 
 @dataclass
 class Price(Document):
     """A price for an analysis or group of analyses."""
     _collection = 'organizations/%s/prices'
+    public: bool = False
 
 
 @dataclass
@@ -224,6 +228,13 @@ class User(Document):
 class UserSettings(Document):
     """An organizations's primary settings."""
     _collection = 'users/%s/settings'
+    public: bool = False
+
+
+@dataclass
+class Regulation(Document):
+    """."""
+    _collection = 'regulations'
 
 
 @dataclass
@@ -231,9 +242,3 @@ class Workflow(Document):
     """An abstract series of actions performed on a set trigger."""
     _collection = 'organizations/%s/workflows'
 
-
-# ---------------------------------------------------------------------
-# Optional class to build
-# ---------------------------------------------------------------------
-
-# Regulations

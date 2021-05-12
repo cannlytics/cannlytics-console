@@ -71,3 +71,7 @@ cannlytics_console/static/cannlytics_console/webpack-stats.json
 
 # Ignore documentation build
 docs/build
+
+# Ignore Firebase source control
+# https://firebase.google.com/docs/cli/#source_control_aliases
+.firebasesrc

@@ -23,6 +23,10 @@
       height="30"
       class="rounded-circle"
       style="vertical-align:unset;"
+      data-bs-html="true"
+      data-bs-toggle="tooltip"
+      data-bs-placement="bottom"
+      title="{% if user.display_name %}{{ user.display_name }}{% else %}Personalize your account{% endif %}<br>{{ user.email }}"
     >
   </a>
 

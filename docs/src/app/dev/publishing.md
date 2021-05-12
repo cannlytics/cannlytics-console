@@ -144,6 +144,14 @@ firebase deploy --project ${PROJECT_ID} --only hosting:production
     --substitutions _REGION=$REGION
   ```
 
+### Security rules
+
+You can deploy a new set of security rules with the Firebase CLI.
+
+```shell
+firebase deploy --only firestore:rules
+```
+
 ## Monitoring
 
 You can view logs for your deployment in the Cloud run console at https://console.cloud.google.com/run/detail/us-central1/your-project/logs?project=your-project

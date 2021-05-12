@@ -2,30 +2,99 @@
  * Settings JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/3/2020
- * Updated: 4/25/2021
+ * Updated: 5/11/2021
  */
+
 import { auth, db } from '../firebase.js';
 import { accountSettings } from './account.js';
 import { errorSettings } from './errors.js';
-import { showNotification } from '../utils.js';
+import { apiRequest, showNotification } from '../utils.js';
+
+const apiSettings = {
+
+  createAPIKey(data) {
+    /* 
+    * Create an API key.
+    */
+    console.log('Creating API key...', data);
+    // TODO: Post key data
+  },
+
+  deleteAPIKey(data) {
+    /* 
+    * Delete an API key.
+    */
+    console.log('Deleting API key...', data);
+    // TODO: Post key data
+  },
+
+  getAPIKeys(uid) {
+    /* 
+    * Get all of a user's API key information.
+    */
+    console.log('Getting all API keys...', uid);
+    // FIXME: Get from /api/get_api_key_hmacs instead
+    return new Promise((resolve, reject) => {
+      apiRequest('/api/get-keys').then((response) => {
+        resolve(response['data']);
+      });
+      // db.collection('admin').doc('api').collection('api_key_hmacs')
+      // .get()
+      // .then((querySnapshot) => {
+      //   const data = [];
+      //   querySnapshot.forEach((doc) => {
+      //     data.push(doc.data());
+      //   });
+      //   resolve(data);
+      // })
+      // .catch((error) => {
+      //   reject(error);
+      // });
+      // .onSnapshot((querySnapshot) => {
+      //   var data = [];
+      //   querySnapshot.forEach((doc) => {
+      //     data.push(doc.data().name);
+      //   });
+      //   resolve(data);
+      // });
+    });
+    // const ref = db.collection('admin').document('api').collection('api_key_hmacs')
+    //   .where('uid', '==', uid);
+    // ref.onSnapshot(snapshot => {
+    //   snapshot.docChanges.forEach(change => {
+    //     this.renderAPIKey(change);
+    //   });
+    // });
+  },
+
+  renderAPIKey(change) {
+    /* 
+    * Get all of a user's API key information.
+    */
+    if (change.type === 'added') {
+      console.log('Add data to table:', change.doc);
+    }
+    else if (change.type === 'removed') {
+      console.log('Remove row from table:', change.doc.id);
+    }
+  },
+
+  selectAPIKey(data) {
+    /*
+     * Select an API key from the table.
+     */
+  },
+
+}
 
 
-export const settings = {
-  ...coreSettings,
-  ...accountSettings,
-  ...errorSettings,
-};
-
-
-const coreSettings = {
-
+const orgSettings = {
 
   newOrganization() {
     // const id = uuidv4();
     // TODO:
     console.log('Create new org');
   },
-
 
   addOrganization(data) {
     /* 
@@ -34,7 +103,6 @@ const coreSettings = {
     const collection = db.collection('organizations');
     return collection.add(data);
   },
-
 
   getOrganizations() {
     /* 
@@ -66,7 +134,6 @@ const coreSettings = {
   //  });
   },
 
-
   archiveOrganizations() {
     /* 
     * Archive one of a user's organizations.
@@ -79,7 +146,6 @@ const coreSettings = {
       });
   },
 
-
   updateOrganization() {
     /* 
     * Update a user's organizations.
@@ -87,6 +153,10 @@ const coreSettings = {
     // TODO:
   },
 
+}
+
+
+const coreSettings = {
 
   logAction() {
     /* 
@@ -94,7 +164,6 @@ const coreSettings = {
     */
     // TODO:
   },
-
 
   sendFeedback() {
     /*
@@ -124,6 +193,11 @@ const coreSettings = {
       });
   }
 
-
 };
 
+export const settings = {
+  ...apiSettings,
+  ...coreSettings,
+  ...accountSettings,
+  ...errorSettings,
+};

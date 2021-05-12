@@ -149,7 +149,11 @@ export const auth = {
     firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
       return authRequest('/api/auth/authenticate');
     }).then(() => {
-      return firebase.auth().signOut();
+      // TODO: Determine if it's okay to stay signed in.
+      // The Firestore docs show to sign out when using session cookies,
+      // but this means all requests to Firestore have to go through the API.
+      // It is still nice to be able to interact with Firestore from client-side JavaScript.
+      // return firebase.auth().signOut();
     }).then(() => {
       window.location.assign('/');
     })
@@ -187,7 +191,7 @@ export const auth = {
       .then(() => {
         apiRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
             .then(() => {
-              // window.location.assign('/account/sign-up-complete');
+              window.location.assign('/account/sign-up-complete');
             })
         // DEV: Don't send verification email in development.
         // this.verifyUser();

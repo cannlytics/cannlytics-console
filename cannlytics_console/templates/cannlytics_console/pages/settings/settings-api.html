@@ -25,29 +25,51 @@
         <!-- Title  -->
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="fs-5 mb-0 lh-base">API Keys</h1>
-            <a
+            <button
               class="btn btn-sm bg-gradient-green text-white"
-              href="/settings/api/new"
+              onclick="showNewKeyForm();"
             >
               Add a key
-            </a>
+            </button>
           </div>
 
         <!-- Table -->
 
           <!-- TODO: API key management -->
-          <div id="myGrid" style="height:500px; width:100%;" class="ag-theme-alpine"></div>
+          <div id="key-table" style="height:500px; width:100%;" class="ag-theme-alpine"></div>
 
       </div><!-- End of column -->
 
       <!-- Options -->
       <div class="col">
+
+        <!-- TODO: Create a key form -->
         <div
+          id="new-key-form"
+          class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2 d-none"
+          style="max-width: 375px;"
+        >
+          <h4 class="f2-5 text-dark">New API Key</h4>
+          <button
+            class="btn btn-sm btn-light text-dark"
+            onclick="hideNewKeyForm()"
+          >
+            Cancel
+          </button>
+        </div>
+
+        <!-- Information -->
+        <div
+          id="key-information-form"
           class="card h-100 bg-transparent border-secondary rounded-3 shadow-hover px-0 py-2"
           style="max-width: 375px;"
         >
           <h4 class="f2-5 text-dark">Key Information</h4>
+
+          <!-- TODO: Create and style key form -->
+
         </div>
+
       </div>
 
     </div><!-- End of row -->
@@ -59,7 +81,22 @@
 
   <script type="text/javascript" charset="utf-8">
 
-    // TODO: Listen to documents in admin/api/api_key_hmacs
+    function showNewKeyForm() {
+      /*
+       * Show the add new key form and hide the key information form.
+       */
+      document.getElementById('new-key-form').classList.remove('d-none');
+      document.getElementById('key-information-form').classList.add('d-none');
+    }
+
+
+    function hideNewKeyForm() {
+      /*
+       * Show the add new key form and hide the key information form.
+       */
+      document.getElementById('new-key-form').classList.add('d-none');
+      document.getElementById('key-information-form').classList.remove('d-none');
+    }
 
     
     function onSelectionChanged() {
@@ -70,13 +107,14 @@
       console.log('Selected:', selectedRows);
       //document.querySelector('#selectedRows').innerHTML =
       //  selectedRows.length === 1 ? selectedRows[0].athlete : '';
-    }
+    };
 
     // specify the columns
     const columnDefs = [
-      { field: "make" },
-      { field: "model" },
-      { field: "price" }
+      { field: 'name' },
+      { field: 'created_at' },
+      { field: 'expiration_at' },
+      { field: 'permissions' },
     ];
 
     // let the grid know which columns to use
@@ -91,22 +129,18 @@
     };
 
     // lookup the container we want the Grid to use
-    const eGridDiv = document.querySelector('#myGrid');
+    const eGridDiv = document.querySelector('#key-table');
 
     // create the grid passing in the div to use together with the columns & data we want to use
     new agGrid.Grid(eGridDiv, gridOptions);
+    cannlytics.theme.setTableTheme();
 
-    // fetch the row data to use and one ready provide it to the Grid via the Grid API
-    //agGrid.simpleHttpRequest({url: 'https://www.ag-grid.com/example-assets/row-data.json'})
-    //  .then(data => {
-    //      gridOptions.api.setRowData(data);
-    //  });
-    const data = [
-      { make: "Toyota", model: "Celica", price: 35000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Porsche", model: "Boxter", price: 72000 }
-    ];
-    gridOptions.api.setRowData(data);
+    // Fetch the row data and provide it to the Grid via the Grid API.
+    console.log(cannlytics.settings);
+    cannlytics.settings.getAPIKeys('{{ user.uid }}').then(function(data) {
+      console.log('Retrieved data in the template:', data)
+      gridOptions.api.setRowData(data);
+    });
 
   </script>
 

@@ -7,6 +7,29 @@
 
 export const ui = {
 
+  hideSidebar() {
+    /*
+     * Hides the console sidebar.
+     */
+    const sidebar = document.getElementById('sidebar-menu');
+    const sidebarToggle = document.getElementById('sidebar-console-toggle');
+    sidebar.classList.add('d-none');
+    sidebar.classList.remove('d-md-block');
+    sidebarToggle.classList.remove('d-md-none');
+  },
+
+
+  showSidebar() {
+    /*
+     * Show the console sidebar.
+     */
+    const sidebar = document.getElementById('sidebar-menu');
+    const sidebarToggle = document.getElementById('sidebar-console-toggle');
+    sidebar.classList.remove('d-none');
+    sidebar.classList.add('d-md-block');
+    sidebarToggle.classList.add('d-md-none');
+  },
+
 
   addListItem(type) {
     /*

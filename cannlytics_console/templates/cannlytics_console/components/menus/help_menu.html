@@ -11,9 +11,17 @@
     data-bs-toggle="dropdown"
     aria-expanded="false"
   >
-    {% icon 'help-circle' width="24px" height="24px" class="text-secondary" %}
+    {% icon
+      'help-circle'
+      width="24px"
+      height="24px"
+      class="text-secondary"
+      data-bs-toggle="tooltip"
+      data-bs-placement="bottom"
+      title="Get Help"
+    %}
   </button>
-  <ul class="dropdown-menu dropdown-menu-end">
+  <ul class="dropdown-menu dropdown-menu-end shadow">
     <li>
       <a class="dropdown-item text-dark" href="https://docs.cannlytics.com" target="_blank">
         Documentation <sup>{% icon 'external-link' width="16px" height="16px" %}</sup>
@@ -32,11 +40,6 @@
     <li>
       <a class="dropdown-item text-dark" href="https://github.com/cannlytics/cannlytics-console" target="_blank">
         Source Code
-      </a>
-    </li>
-    <li>
-      <a class="dropdown-item text-dark" href="https://cannlytics/web" target="_blank">
-        Website
       </a>
     </li>
     <li><hr class="dropdown-divider"></li>

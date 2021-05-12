@@ -16,8 +16,8 @@ firebase.initializeApp({
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 });
 
-// As session cookies are to be used, do not persist any state client side.
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+// FIXME: As session cookies are to be used, do not persist any state client side.
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 // Core modules
 const auth = firebase.auth();

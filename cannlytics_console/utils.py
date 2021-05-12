@@ -91,12 +91,13 @@ def get_user_context(request, context):
         context (dict): Page context updated with any user-specific context.
     """
     user_claims = auth.verify_session(request)
+    user_email = user_claims['email']
     user = {
         'email_verified': user_claims['email_verified'],
-        'display_name': user_claims['name'],
-        'photo_url': user_claims['picture'],
+        'display_name': user_claims.get('name', ''),
+        'photo_url': user_claims.get('picture', f'https://robohash.org/{user_email}?set=set5'),
         'uid': user_claims['uid'],
-        'email': user_claims['email'],
+        'email': user_email,
     }
     context.update({'user': user})
     return context

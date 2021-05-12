@@ -61,22 +61,6 @@
           organization=organization
           only
         %}
-        {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
-        {% comment %} {% if user %}
-          {% include "cannlytics_console/layout/side_navigation.html" with
-            screen=screen
-            sidebar=sidebar
-            user=user
-            organization=organization
-            only
-          %}
-        {% else %}
-          {% include "cannlytics_console/layout/side_navigation_login.html" with
-            screen=screen
-            sidebar=sidebar
-            only
-          %}
-        {% endif %} {% endcomment %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}
@@ -100,7 +84,7 @@
       cannlytics.app.initialize();
     </script>
 
-    <!-- Load page-specific JavaScript -->
+    <!-- Page-specific JavaScript -->
     {% block console_js %}{% endblock console_js %}
 
   {% endblock page_js %}

@@ -27,6 +27,7 @@ from rest_framework.decorators import api_view
 from cannlytics.firebase import (
     create_log,
     delete_document,
+    get_collection,
     get_custom_claims,
     get_document,
     update_document,
@@ -87,6 +88,10 @@ def verify_session(request):
 
 #-----------------------------------------------------------------------
 # API Key Utilities
+# FIXME: Insufficient permissions with desired design (data lives in 1 place)
+# Current fix is to save key data to both the user's collection and the admin
+# collection. It would be ideal to fix the Firestore security rules so
+# data only needs to be stored in admin/api/api_key_hmacs
 #-----------------------------------------------------------------------
 
 def create_api_key(request, *args, **argv): #pylint: disable=unused-argument
@@ -99,6 +104,7 @@ def create_api_key(request, *args, **argv): #pylint: disable=unused-argument
             `api_key` field.
     """
     user_claims = verify_session(request)
+    uid = user_claims['uid']
     api_key = token_urlsafe(48)
     app_secret = get_document('admin/api')['app_secret_key']
     code = sha256_hmac(app_secret, api_key)
@@ -112,11 +118,12 @@ def create_api_key(request, *args, **argv): #pylint: disable=unused-argument
         'expiration_at': expiration_date.isoformat(),
         'name': post_data['name'],
         'permissions': post_data['permissions'],
-        'uid': user_claims['uid'],
+        'uid': uid,
         'user_email': user_claims['email'],
         'user_name': user_claims['name'],
     }
     update_document(f'admin/api/api_key_hmacs/{code}', key_data)
+    update_document(f'users/{uid}/api_key_hmacs/{code}', key_data)
     return JsonResponse({'status': 'success', 'api_key': api_key})
 
 
@@ -130,7 +137,25 @@ def delete_api_key(request, *args, **argv): #pylint: disable=unused-argument
     api_key = authorization.split(' ')[-1]
     app_secret = get_document('admin/api')['app_secret_key']
     code = sha256_hmac(app_secret, api_key)
+    key_data = get_document(f'admin/api/api_key_hmacs/{code}')
+    uid = key_data['uid']
     delete_document(f'admin/api/api_key_hmacs/{code}')
+    delete_document(f'users/{uid}/api_key_hmacs/{code}')
+
+
+def get_api_key_hmacs(request, *args, **argv): #pylint: disable=unused-argument
+    """Get a user's API key HMAC information.
+    Args:
+        request (HTTPRequest): A request to get the user's HMAC information.
+    Returns:
+        (JsonResponse): A JSON response containing the API key HMAC
+            information in a `data` field.
+    """
+    user_claims = verify_session(request)
+    uid = user_claims['uid']
+    query = {'key': 'uid', 'operation': '==', 'value': uid}
+    docs = get_collection('admin/api/api_key_hmacs', filters=[query])
+    return JsonResponse({'status': 'success', 'data': docs})
 
 
 def get_user_from_api_key(api_key):

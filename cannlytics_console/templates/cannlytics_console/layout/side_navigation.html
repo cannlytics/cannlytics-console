@@ -10,6 +10,27 @@
     class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar-sticky collapse"
   >
 
+    <!-- Toggle Sidebar
+      data-bs-toggle="collapse"
+      data-bs-target="#sidebar-menu"
+      aria-controls="sidebar-menu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    -->
+    <button
+      id="sidebar-toggle"
+      class="btn nav-link navbar-toggle d-flex position-absolute text-secondary"
+      style="right:0; top:0; background: transparent;"
+      role="button"
+      type="button"
+      onclick="cannlytics.ui.hideSidebar();"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="Hide the sidebar"
+    >
+      {% icon "sidebar" width="16px" height="16px" %}
+    </button>
+
     <div class="pt-3">
 
       <!-- Create Organization Prompt -->
@@ -67,4 +88,19 @@
 
     </div>
   </nav>
+
+  <button
+    id="sidebar-console-toggle"
+    class="btn nav-link navbar-toggle d-flex position-absolute text-secondary"
+    style="left:0; top:72px; width:unset; background: transparent;"
+    role="button"
+    type="button"
+    onclick="cannlytics.ui.showSidebar();"
+    data-bs-toggle="tooltip"
+    data-bs-placement="right"
+    title="Show the sidebar"
+  >
+    {% icon "sidebar" width="16px" height="16px" %}
+  </button>
+
 </html>
