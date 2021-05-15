@@ -9,7 +9,7 @@ import { auth, db } from '../firebase.js';
 import { accountSettings } from './account.js';
 import { errorSettings } from './errors.js';
 import { apiRequest, serializeForm, showNotification } from '../utils.js';
-import { showLoadingButton, hideLoadingButton } from '../ui/ui.js';
+import { ui } from '../ui/ui.js';
 
 const apiSettings = {
 
@@ -19,12 +19,12 @@ const apiSettings = {
     */
     const data = serializeForm('new-api-key-form');
     console.log('Creating API key...', data);
-    showLoadingButton('create-api-key-button');
+    ui.showLoadingButton('create-api-key-button');
     apiRequest('/api/create-key', data).then((response) => {
       // TODO: Add new key to the table!
       console.log(response);
     }).finally(() => {
-      hideLoadingButton('create-api-key-button');
+      ui.hideLoadingButton('create-api-key-button');
     });
   },
 
@@ -33,7 +33,7 @@ const apiSettings = {
     * Delete an API key.
     */
     console.log('Deleting API key...', data);
-    // TODO: Post key data
+    // TODO: Post name of key that needs to be deleted.
   },
 
   getAPIKeys(uid) {

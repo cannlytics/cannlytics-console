@@ -42,6 +42,7 @@ class ConsoleView(TemplateView):
         unit = self.kwargs.get('unit', section)
         return [
             f'{BASE}/pages/{screen}/{unit}.html',
+            f'{BASE}/pages/{screen}/{screen}-{section}-{unit}.html',
             f'{BASE}/pages/{screen}/{section}.html',
             f'{BASE}/pages/{screen}/{screen}-{section}.html',
             f'{BASE}/pages/{screen}/{screen}.html',

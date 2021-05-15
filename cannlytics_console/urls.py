@@ -18,11 +18,9 @@ urlpatterns = [
     path('', views.ConsoleView.as_view(), name='index'),
     path('account/<slug:page>', views.LoginView.as_view(), name='auth'),
     path('api/', include('cannlytics_api.urls'), name='api'),
-    # Hack: Handle livereload during development.
+    # HACK: Handle livereload during development.
     path('livereload', views.no_content),
-    # path('settings/organizations/<slug:name>', views.OrganizationView.as_view()),
-    # TODO: Merge website links as /about
-    # TODO: Redirect common pages
+    # TODO: Merge website links as /about or redirect common pages
     path('<slug:screen>', views.ConsoleView.as_view()),
     path('<slug:screen>/<slug:section>', views.ConsoleView.as_view()),
     path('<slug:screen>/<slug:section>/<slug:unit>', views.ConsoleView.as_view()),

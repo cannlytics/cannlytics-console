@@ -23,9 +23,9 @@
       current_page="API"
     %}
 
-    <div class="row">
+    <div class="d-flex flex-wrap">
 
-      <div class="col col-md-6">
+      <div class="col-12">
 
         <!-- Title  -->
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -53,7 +53,7 @@
         <!-- Create a key card -->
         <div
           id="new-key-card"
-          class="card bg-transparent border-secondary rounded-3 px-2 py-2 "
+          class="card bg-transparent border-secondary rounded-3 px-2 py-2 d-none"
           style="max-width: 375px;"
         >
           <div class="simple-flex justify-content-between border-bottom pb-2 mb-3">
@@ -179,7 +179,7 @@
             <h1 class="fs-5 mb-0 lh-base">Key Information</h1>
             <button
               class="btn btn-sm btn-danger text-white"
-              onclick="showNewKeyForm();"
+              onclick="cannlytics.settings.deleteAPIKey();"
             >
               Delete
             </button>
@@ -187,7 +187,7 @@
           <h4 class="fs-5 text-dark"></h4>
 
 
-          
+
 
         </div><!-- End of key information -->
 
@@ -221,7 +221,7 @@
        * Show the add new key form and hide the key information form.
        */
       document.getElementById('new-key-card').classList.add('d-none');
-      document.getElementById('key-information-card').classList.remove('d-none');
+      // document.getElementById('key-information-card').classList.remove('d-none');
     }
 
     
