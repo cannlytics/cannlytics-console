@@ -24,8 +24,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('auth', include([
         path('/authenticate', auth.authenticate),
-        # path('/login', auth.login),
-        path('/logout', auth.logout),
+        path('/sign-out', auth.logout),
     ])),
     # Allow for labs to choose to make their analyses public,
     # so that producers can search for analyses.

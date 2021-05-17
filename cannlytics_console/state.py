@@ -181,7 +181,7 @@ material = {
             {"type": "text", "key": "license", "title": "License"},
         ],
         "options": [
-            {"title": "Change your password", "url": "/account/password-reset/"},
+            {"title": "Change your password", "url": "/account/password-reset"},
             {"title": "Set your pin", "url": "/settings/account/pin"},
             {"title": "Set your signature", "url": "/settings/account/signature"},
         ],

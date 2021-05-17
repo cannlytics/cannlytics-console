@@ -20,7 +20,7 @@ TEMPLATE_DIR = f'./{APP}/templates/{APP}/'
 # Specify templates that import bundles.
 TEMPLATES = [
     'base.html',
-    'pages/account/base_login.html'
+    'pages/account/base_sign_in.html'
 ]
 
 def get_webpack_hashes():

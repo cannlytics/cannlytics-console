@@ -99,16 +99,16 @@ function signOut() {
         'Content-Type': 'text/plain',
         'Authorization': `Bearer ${idToken}`,
       });
-      fetch('/api/auth/logout', { headers }).then(() => {
+      fetch('/api/auth/sign-out', { headers }).then(() => {
         firebase.auth().signOut().then(() => {
-          document.location.href = '/account/logout';
+          document.location.href = '/account/sign-out';
         }).catch((error) => {
-          document.location.href = '/account/logout';
+          document.location.href = '/account/sign-out';
         }); 
       });
     })
   } catch(error) {
-    document.location.href = '/account/logout';
+    document.location.href = '/account/sign-out';
   }
 }
 
