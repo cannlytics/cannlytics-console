@@ -11,6 +11,7 @@ from django.utils.crypto import get_random_string
 
 # Internal imports
 from cannlytics.firebase import get_document, get_collection, get_user
+from cannlytics_api.auth import auth
 from cannlytics_console.state import data, material
 
 
@@ -81,6 +82,29 @@ def get_screen_specific_state(kwargs, context):
     return context
 
 
+def get_user_context(request, context):
+    """Get the user-specific context.
+    Args:
+        request (HTTPRequest): A request to check for a user session.
+        context (dict): Existing page context.
+    Returns
+        context (dict): Page context updated with any user-specific context.
+    """
+    user = {}
+    user_claims = auth.verify_session(request)
+    if user_claims:
+        user_email = user_claims.get('email', '')
+        user = {
+            'email_verified': user_claims.get('email_verified', False),
+            'display_name': user_claims.get('name', ''),
+            'photo_url': user_claims.get('picture', f'https://robohash.org/{user_email}?set=set5'),
+            'uid': user_claims.get('uid'),
+            'email': user_email,
+        }
+    context.update({'user': user})
+    return context
+
+
 def get_user_specific_state(uid, context):
     """Get the user-specific UI.
     Args:
@@ -134,6 +158,7 @@ def generate_secret_key(env_file_name):
     generated_secret_key = get_random_string(50, chars)
     env_file.write('SECRET_KEY = "{}"\n'.format(generated_secret_key))
     env_file.close()
+    return generated_secret_key
 
 
 #----------------------------------------------#

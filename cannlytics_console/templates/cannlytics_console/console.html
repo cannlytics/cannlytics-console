@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
   <!-- Cannlytics Console -->
-  <!-- Created 11/26/2020 | Thanksgiving -->
+  <!-- Created: 11/26/2020 | Thanksgiving -->
+  <!-- Updated: 5/4/2021 -->
   {% extends "cannlytics_console/base.html" %}
   {% load static %}
 
@@ -28,36 +29,38 @@
     </script>
 
     <!-- Top Navigation -->
-    {% include "cannlytics_console/layout/top_navigation.html" with navbar=navbar only %}
+    {% include "cannlytics_console/layout/top_navigation.html" with
+      navbar=navbar
+      version=APP_VERSION_NUMBER
+      user=user
+      only
+    %}
 
     <!-- Console -->
     <div class="container-fluid">
       <div class="row">
+
+        <!-- Verify email prompt -->
+        <!-- TODO: Show verify email promty if uesr isn't verified. -->
+        <!-- 
+          img
+
+        Please verify your email address
+        Before you dive in, can you please verify your email address? A verification email
+        has been sent to EMAIL.
+
+        Resend
+        -->
         
         <!-- Side Navigation -->
         <!-- Optional: Custom sidebars -->
-        {% comment %} {% if organization or user.type in ['lab'] %} {% endcomment %}
-          {% include "cannlytics_console/layout/side_navigation.html" with
-            screen=screen
-            sidebar=sidebar
-            user=user
-            organization=organization
-            only
-          %}
-        {% comment %} {% elif user %}
-          {% include "cannlytics_console/layout/side_navigation_create_org.html" with
-            screen=screen
-            sidebar=sidebar
-            user=user
-            only
-          %} {% endcomment %}
-        {% comment %} {% else %}
-          {% include "cannlytics_console/layout/side_navigation_login.html" with
-            screen=screen
-            sidebar=sidebar
-            only
-          %} {% endcomment %}
-        {% comment %} {% endif %} {% endcomment %}
+        {% include "cannlytics_console/layout/side_navigation.html" with
+          screen=screen
+          sidebar=sidebar
+          user=user
+          organization=organization
+          only
+        %}
 
         <!-- Dynamic Body -->
         {% block console_body %}{% endblock console_body %}
@@ -75,11 +78,13 @@
 
   <!-- Console JavaScript -->
   {% block page_js %}
+
+    <!-- Initialize the console -->
     <script>
       cannlytics.app.initialize();
     </script>
 
-    <!-- Screen-specific JavaScript -->
+    <!-- Page-specific JavaScript -->
     {% block console_js %}{% endblock console_js %}
 
   {% endblock page_js %}

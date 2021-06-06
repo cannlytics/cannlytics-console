@@ -1,5 +1,16 @@
 {
+  "firestore": {
+    "indexes": ".firebase/firestore.indexes.json",
+    "rules": ".firebase/firestore.rules"
+  },
+  "storage": {
+    "rules": ".firebase/storage.rules"
+  },
   "hosting": [
+    {
+      "target": "docs",
+      "public": "docs/build"
+    },
     {
       "target": "dev",
       "public": "public",

@@ -1,11 +1,26 @@
 <!doctype html>
 <html>
-<!-- Areas -->
-<!-- Created 4/24/2021 -->
+<!--
+  Areas | Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 4/24/2021
+  Updated: 5/7/2021
+-->
 {% extends "cannlytics_console/console.html" %}
-{% load icon %}
+{% load static icon %}
+{% block console_css %}
+
+  <!-- Page-specific CSS -->
+  <link rel="stylesheet" href="{% static 'cannlytics_console/css/areas/areas.css' %}">
+
+{% endblock %}
 {% block console_body %}
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- TODO: Notification if user has no organization -->
+    {% if not organization %}
+      An organization is required to create areas.
+    {% endif %}
 
     <!-- Header-->
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -13,31 +28,21 @@
     </div>
 
     <!-- Body -->
-    <div class="col">
+    <div class="">
 
       <!-- Table -->
-      <div
-        id="areas-table"
-        class="ag-theme-alpine"
-        style="height: 400px; width:100%%;"
-      ></div>
+      <div id="clients-table" class="ag-theme-alpine-dark" style="height: 600px; width:100%;"></div>
+      
 
-    </div><!-- End of body -->
+    </div>
 
   </main>
 
 {% endblock console_body %}
-
 {% block console_js %}
 
-  <!-- JavaScript -->
-  <script type="text/javascript" charset="utf-8">
-
-    // Get current organization's areas.
-    cannlytics.inventory.initializeAreas();
-
-  </script>
+  <!-- Page-specific JavaScript -->
+  <script src="{% static 'cannlytics_console/js/areas/areas.js' %}"></script>
 
 {% endblock console_js %}
-
 </html>

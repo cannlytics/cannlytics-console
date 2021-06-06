@@ -1,14 +1,18 @@
 <!doctype html>
 <html>
-<!-- Cannlytics Console -->
-<!-- Created 11/26/2020 Thanksgiving -->
+<!--
+  Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 11/26/2020 Thanksgiving
+  Updated: 5/5/2021
+-->
 {% extends "cannlytics_console/console.html" %}
 {% block console_body %}
 {% load static %}
   <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mx-auto">
 
     <!-- Show main dashboard given a user -->
-    {% if user and False %}
+    {% if user %}
       <div class="row">
 
       <!-- Dashboard cards -->
@@ -90,7 +94,7 @@
 
     <!-- Show new user message -->
     {% else %}
-    <div class="mx-auto px-5" style="max-width:760px;">
+    <div class="mx-auto" style="max-width:760px;">
 
       <!-- Welcome message (Only show to new users) -->
       <div class="mt-5">
@@ -100,7 +104,7 @@
       </div>
 
       <!-- Get started cards -->
-      <h1 class="fs-5 mb-0 lh-base mt-4 mb-3">Get started with Cannlytics</h1>
+      <h1 class="fs-5 mb-0 lh-base mt-4 mb-3">Get started with Cannlytics in 5 minutes.</h1>
       <div class="row row-cols-1 row-cols-lg-2 g-4 mb-5">
         {% for item in dashboard.organization_choices %}
           <div class="col-6 my-3">
@@ -112,20 +116,24 @@
                 class="card-block stretched-link text-decoration-none"
                 href="/get-started/profile?type={{ item.type }}"
               >
+                {% comment %} <img src="{% static item.image %}"
+                  width="150px"
+                  class="float-end p-2"
+                > {% endcomment %}
                 <div class="card-body">
                   <h5 class="card-title text-dark fs-5">{{ item.title }}</h5>
-                  <p class="card-text text-secondary fs-5 mb-4">
+                  <p class="card-text text-secondary fs-5">
                     <small>{{ item.description }}</small>
                   </p>
                 </div>
-                <div class="card-footer no-border">
+                {% comment %} <div class="card-footer no-border">
                   <a
                     class="text-danger fs-6 pt-3"
                     href="/get-started/profile?type={{ item.type }}"
                   >
                     {{ item.action }} &rarr;
                   </a>
-                </div>
+                </div> {% endcomment %}
               </a>
             </div>
           </div>

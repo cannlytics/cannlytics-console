@@ -1,11 +1,13 @@
 /**
- * dashboard.js | Cannlytics Console
+ * Dashboard JavaScript | Cannlytics Console
  * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
  * Author: Keegan Skeate
  * Created: 12/3/2020
+ * Updated: 5/2/2021
  */
+
 import { auth, changePhotoURL, storageErrors } from '../firebase.js';
-import { authRequest, hasClass, Password, showNotification } from '../utils.js';
+import { authRequest, hasClass, Password, serializeForm, showNotification } from '../utils.js';
 
 export const dashboard = {
 
@@ -14,12 +16,19 @@ export const dashboard = {
     /*
      * Initializes the get started forms.
      */
-    if (stage === 'profile') {
-      authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
-    }
-    if (stage === 'organization') {
-      authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
-    }
+    // FIXME: Initialize from back-end?
+    // auth.onAuthStateChanged((user) => {
+    //   console.log('Detected user in dashboard:', user)
+    //   if (user) {
+    //     if (stage === 'profile') {
+    //       initializeGetStartedProfileUI(user)
+    //       // authRequest('/api/users').then((data) => initializeGetStartedProfileUI(data));
+    //     }
+    //   }
+    // });
+    // if (stage === 'organization') {
+    //   authRequest('/api/organizations').then((data) => initializeGetStartedOrganizationUI(data));
+    // }
   },
 
 
@@ -82,17 +91,25 @@ export const dashboard = {
     /*
      * Save's a user's data. FIXME: Kind of broken
      */
-    const user = auth.currentUser;
-    const elements = document.getElementById('userForm').elements;
-    const data = { type };
-    for (let i = 0 ; i < elements.length ; i++) {
-      const item = elements.item(i);
-      if (item.name) data[item.name] = item.value;
+    const terms = document.getElementById('login-terms-accepted');
+    if (!terms.checked) {
+      const message = 'Please accept the terms of service and read the privacy and security policies.';
+      showNotification('Terms not accepted', message, { type: 'error' });
+      terms.classList.add('is-invalid');
+      return;
+    } else {
+      terms.classList.remove('is-invalid');
     }
+    const user = auth.currentUser;
+    const data = serializeForm('userForm');
+    data.type = type;
     if (user === null) {
       signUp(data.email).then(() => {
         document.location.href = `/get-started/organization/?from=${type}`;
-      })
+      }).catch((error) => {
+        showNotification('Sign up error', error.message, { type: 'error' });
+        // TODO: Show error class if invalid (.is-invalid)
+      });
     } else {
       if (data.email !== user.email) {
         user.updateEmail(data.email);
@@ -161,15 +178,6 @@ export const dashboard = {
   },
 
 
-  addLicenseInput() {
-    /*
-     * Adds a license input field to the UI.
-     */
-    console.log('Adding license input...');
-    
-  }
-
-
 }
 
 
@@ -181,14 +189,20 @@ function signUp(email) {
   /*
    * Sign up a user.
    */
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     var password = Password.generate(32);
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          })
       })
       .catch((error) => {
-        showNotification('Sign up error', error.message, { type: 'error' });
+        reject(error);
       });
   });
   // var termsAccepted = document.getElementById('login-terms-accepted').checked;
@@ -246,8 +260,9 @@ function initializeGetStartedProfileUI(data) {
 
   // Set the user's photo.
   try {
-    if (data.photo_url) document.getElementById('user-photo-url').src = data.photo_url;
-
+    if (data.photo_url || data.photoURL || data.email) {
+      document.getElementById('user-photo-url').src = data.photo_url || data.photoURL || `https://robohash.org/${data.email}?set=set5`;
+    }
   } catch (error) {}
 
 

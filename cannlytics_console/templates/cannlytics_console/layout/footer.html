@@ -10,33 +10,23 @@
     <div class="px-3 d-flex justify-content-between align-items-center border-top">
       <div class="fs-6 text-small">
         <small>Copyright &copy; Cannlytics 2021</small>
+        &#9882;
+        <a class="text-secondary fs-6" href="https://docs.cannlytics.com/about/privacy-policy" target="_blank">
+          <small>Privacy</small>
+        </a>
         -
-        <a class="text-secondary fs-6" href="https://cannlytics.com/privacy-policy" target="_blank">
-          <small>Privacy Policy</small>
-          </a>
-          -
-          <a class="text-secondary fs-6" href="https://cannlytics.com/terms-of-service" target="_blank">
-          <small>Terms of Service</small>
-          </a>
+        <a class="text-secondary fs-6" href="https://docs.cannlytics.com/about/security-policy" target="_blank">
+          <small>Security</small>
+        </a>
+        -
+        <a class="text-secondary fs-6" href="https://docs.cannlytics.com/about/terms-of-service" target="_blank">
+          <small>Terms</small>
+        </a>
       </div>
       <div class="align-self-end"></div>
 
       <!-- Help Menu -->
-      <div class="btn-group dropup">
-        <button
-          type="button"
-          class="btn dropdown-toggle simple-dropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {% icon 'help-circle' width="18px" height="18px" class="text-secondary" %}
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item text-dark" href="/docs" target="_blank">Documentation</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li class="px-3"><small>Version {{ APP_VERSION_NUMBER }}</small></li>
-        </ul>
-      </div>
+      {% include 'cannlytics_console/components/menus/help_menu_dropup.html' %}
 
     </div>
   </footer>

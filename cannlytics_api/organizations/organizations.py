@@ -39,19 +39,20 @@ def organizations(request, format=None, org_id=None):
     claims = auth.authenticate_request(request)
     uid = claims['uid']
 
-    # TODO: Get user's organizations
+    # Get organization(s).
     if request.method == 'GET':
 
-        # TEST: Get org_id parameter
+        # Get org_id parameter
         if org_id:
             print('Query organizations by ID:', org_id)
             organization = get_document(f'organizations/{org_id}')
             if not organization:
                 message = 'No organization exists with the given ID.'
                 return Response({'error': True, 'message': message}, status=404)
+            elif organization['public']:
+                return Response(organization, content_type='application/json')
             elif uid not in organization['team']:
-                # TODO: Return only publically available information.
-                message = 'You are not a team member of this organization. Request to join before continuing.'
+                message = 'This is a private organization and you are not a team member. Request to join before continuing.'
                 return Response({'error': True, 'message': message}, status=400)
             else:
                 return Response(organization, content_type='application/json')

@@ -1,7 +1,11 @@
 <!doctype html>
 <html>
-<!-- Get Started Page - Profile | Cannlytics Console -->
-<!-- Created 2/20/2021 -->
+<!--
+  Get Started Page - Profile | Cannlytics Console
+  Author: Keegan Skeate <keegan@cannlytics.com>
+  Created: 2/20/2021
+  Updated: 5/5/2021
+-->
 {% extends "./get-started.html" %}
 {% load static icon %}
 {% block unit %}
@@ -57,6 +61,7 @@
           </label>
 
           <!-- Field input -->
+          <!-- TODO: Show error on email if invalid or no email (.is-invalid) -->
           <div class="col-sm-10">
             <input
               type="{{ item.type }}"
@@ -70,12 +75,27 @@
         </div>
       {% endfor %}
 
-      <!-- TODO: Advanced fields -->
+      <!-- Optional: Show advanced fields conditional on user type (lab | producer | retailer | consumer | integrator)-->
+      <!-- Advanced fields -->
       {% comment %} <a class="text-danger fs-6 my-3">{%icon 'plus' height="18px" width="18px" %} Advanced options</a> {% endcomment %}
 
       <!-- Signature upload -->
 
+      <!-- Terms -->
+      <div class="form-check">
+        <input id="login-terms-accepted" class="form-check-input" type="checkbox" value="">
+        <label class="form-check-label fs-6" for="login-terms-accepted">
+          Do you agree to our 
+          <a href="https://docs.cannlytics.com/about/terms-of-service/" class="fw-bold text-dark" target="_blank">terms of service</a>
+          and that you have read our
+          <a href="https://docs.cannlytics.com/about/privacy-policy/" class="fw-bold text-dark" target="_blank">privacy policy</a>
+          and
+          <a href="https://docs.cannlytics.com/about/security-policy" class="fw-bold text-dark" target="_blank">security policy</a>?
+        </label>
+      </div>
+
     </div><!-- End of account fields -->
+
   </form><!-- End of account form -->
 
   <!-- Options -->

@@ -1,6 +1,7 @@
 /**
  * firebase.js | Cannlytics Website
  * Created: 12/22/2020
+ * Updated: 5/9/2021
  */
 
 // Initialize Firebase
@@ -14,6 +15,9 @@ firebase.initializeApp({
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 });
+
+// FIXME: As session cookies are to be used, do not persist any state client side.
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 // Core modules
 const auth = firebase.auth();
@@ -95,16 +99,16 @@ function signOut() {
         'Content-Type': 'text/plain',
         'Authorization': `Bearer ${idToken}`,
       });
-      fetch('/api/logout', { headers }).then(() => {
+      fetch('/api/auth/sign-out', { headers }).then(() => {
         firebase.auth().signOut().then(() => {
-          document.location.href = '/account/logout';
+          document.location.href = '/account/sign-out';
         }).catch((error) => {
-          document.location.href = '/account/logout';
+          document.location.href = '/account/sign-out';
         }); 
       });
     })
   } catch(error) {
-    document.location.href = '/account/logout';
+    document.location.href = '/account/sign-out';
   }
 }
 

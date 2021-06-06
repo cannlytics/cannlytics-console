@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------
   Cannlytics Console Style
-  Author: Keegan Skeate
+  Author: Keegan Skeate <keegan@cannlytics.com>
   Created: 11/26/2020
+  Updated: 5/5/2021
 ---------------------------------------------------------------------------*/
 
 body {
@@ -73,11 +74,22 @@ body.dark .btn-outline-orange:hover {
   color: #1a1a1a;
 }
 
+/* Secondary buttons */
+body:not(.dark) .btn-secondary {
+  background-color: #8B9196;
+  border-color: #8B9196;
+}
+body:not(.dark) .btn-secondary:hover,
+body:not(.dark) .btn-secondary:active {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
 .text-link {
-  color: #FF9500 !important;
+  color: #e53a23 !important;
 }
 .text-link:hover {
-  color: #e53a23 !important;
+  color: #FF9500 !important;
 }
 body.dark .text-link {
   color: #ffa600 !important;
@@ -86,6 +98,24 @@ body.dark .text-link:hover {
   color: #FF9500 !important;
 }
 
+/*--------------------------------------------------------------------------
+  Tooltips
+---------------------------------------------------------------------------*/
+
+.tooltip-inner {
+  background-color: #f1f1f1 !important;
+  color: #1a1a1a;
+  text-align: left;
+}
+body.dark .tooltip-inner {
+  background-color: #000 !important;
+  color: #ccc;
+}
+.btn-tooltip-help {
+  height: 0;
+  padding: 0;
+  transform: translateY(-12px);
+}
 
 /*--------------------------------------------------------------------------
   Images and icons
@@ -315,7 +345,6 @@ body.dark .breadcrumb-item .action {
 .sidebar-sticky {
   position: relative;
   top: 0;
-  /* height: calc(100vh - 48px); */
   min-height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
@@ -325,7 +354,6 @@ body.dark .breadcrumb-item .action {
   font-weight: 500;
   color: #333;
   border-radius: .25rem;
-  /* width: 100%; */
 }
 .sidebar .nav-link .feather {
   margin-right: .5rem;
@@ -333,15 +361,14 @@ body.dark .breadcrumb-item .action {
 }
 .sidebar .nav-link:hover {
   color: inherit !important;
-  background: rgb(0 0 0 / 5%);
+  background-color: rgba(80, 250, 123, 0.15);
+  // background-color: rgba(255, 166, 0 ,.15);
 }
 .sidebar .nav-link.active {
-  color: #0BA67F !important;
-  background: rgb(0 0 0 / 5%);
+  color: #1a1a1a !important;
+  background-color: rgba(80, 250, 123, 0.15);
+  // background-color: rgba(255, 166, 0 ,.15);
   font-weight: 600;
-}
-.sidebar .nav-link.active .feather {
-  color: #0BA67F;
 }
 .sidebar-heading {
   font-size: .75rem;

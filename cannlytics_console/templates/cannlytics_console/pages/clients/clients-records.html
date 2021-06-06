@@ -2,7 +2,7 @@
 <html>
 <!-- Records Page -->
 <!-- Created 12/17/2020 -->
-{% extends "cannlytics_console/screens/clients/clients.html" %}
+{% extends "cannlytics_console/pages/clients/clients.html" %}
 
 {% block section %}
 
@@ -11,7 +11,7 @@
     <!-- Recent Activity -->
 
     <!-- Clients Table -->
-    {% include "cannlytics_console/screens/clients/records_table.html" with records=records %}
+    {% include "cannlytics_console/pages/clients/components/records_table.html" with records=records %}
 
     <!-- Client Daily Statistics Figure -->
 

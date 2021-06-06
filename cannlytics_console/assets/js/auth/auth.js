@@ -1,12 +1,11 @@
 /**
- * auth.js | Cannlytics Console
- * Licensed under GPLv3 (https://github.com/cannlytics/cannlytics_console/blob/main/LICENSE)
+ * Authentication JavaScript | Cannlytics Console
  * Author: Keegan Skeate
  * Created: 12/4/2020
- * Updated: 4/20/2021
+ * Updated: 5/9/2021
  */
 
-import { authRequest, showNotification } from '../utils.js';
+import { apiRequest, authRequest, showNotification } from '../utils.js';
 
 
 export const auth = {
@@ -17,17 +16,33 @@ export const auth = {
      * Initialize Firebase, waiting for the user to sign in successfully to
      * programmatically login the user and route them to the dashboard.
      */
-    try {
-      firebase.initializeApp();
-    } catch(error) {
-      // Firebase already initialized.
-    }
+    // try {
+    //   firebase.initializeApp();
+    // } catch(error) {
+    //   // Firebase already initialized.
+    // }
     // FIXME: Navigate to dashboard if redirecting from Google sign-in.
     // this.googleSignInRedirect();
   },
 
 
   currentUser() { return firebase.auth().currentUser },
+
+
+  anonymousSignIn() {
+    /*
+     * Anonymously sign-in a user.
+     */
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInAnonymously()
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error)
+        });
+    });
+  },
 
 
   googleSignIn() {
@@ -129,13 +144,25 @@ export const auth = {
      */
     var email = document.getElementById('login-email').value;
     var password = document.getElementById('login-password').value;
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        showNotification('Sign in error', error.message, { type: 'error' });
-      });
+    document.getElementById('sign-in-button').classList.add('d-none');
+    document.getElementById('sign-in-loading-button').classList.remove('d-none');
+    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+      return authRequest('/api/auth/authenticate');
+    }).then(() => {
+      // TODO: Determine if it's okay to stay signed in.
+      // The Firestore docs show to sign out when using session cookies,
+      // but this means all requests to Firestore have to go through the API.
+      // It is still nice to be able to interact with Firestore from client-side JavaScript.
+      // return firebase.auth().signOut();
+    }).then(() => {
+      window.location.assign('/');
+    })
+    .catch((error) => {
+      showNotification('Sign in error', error.message, { type: 'error' });
+    }).finally(() => {
+      document.getElementById('sign-in-button').classList.remove('d-none');
+      document.getElementById('sign-in-loading-button').classList.add('d-none');
+    });
   },
   
   
@@ -143,23 +170,39 @@ export const auth = {
     /*
      * Sign up a user.
      */
-    var termsAccepted = document.getElementById('login-terms-accepted').checked;
-    if (!termsAccepted) {
-      message = 'Please agree with our terms of service and read our privacy policy to create an account.';
-      showNotification('Terms not accepted', error.message, { type: 'error' });
+    const terms = document.getElementById('login-terms-accepted');
+    if (!terms.checked) {
+      const message = 'Please agree with our terms of service and read our privacy policy to create an account.';
+      showNotification('Terms not accepted', message, { type: 'error' });
+      terms.classList.add('is-invalid');
       return;
+    } else {
+      terms.classList.remove('is-invalid');
     }
-    var email = document.getElementById('login-email').value;
-    var password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    document.getElementById('sign-up-button').classList.add('d-none');
+    document.getElementById('sign-up-loading-button').classList.remove('d-none');
+    // FIXME: Ensure sign-up works with user sessions.
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        authRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` });
-        this.verifyUser();
-        window.location.href = '/account/sign-up-complete';
+        return authRequest('/api/auth/authenticate');
+      })
+      .then(() => {
+        apiRequest('/api/users', { email, photo_url: `https://robohash.org/${email}?set=set5` })
+            .then(() => {
+              window.location.assign('/account/sign-up-complete');
+            })
+        // DEV: Don't send verification email in development.
+        // this.verifyUser();
       })
       .catch((error) => {
         showNotification('Sign up error', error.message, { type: 'error' });
-      });
+      })
+      .finally(() => {
+        document.getElementById('sign-up-button').classList.remove('d-none');
+        document.getElementById('sign-up-loading-button').classList.add('d-none');
+      });;
   },
   
   
@@ -171,10 +214,10 @@ export const auth = {
     user.sendEmailVerification().then(() => {
       showNotification('Verification email sent', error.message, { type: 'success' });
     }).catch(function(error) {
+      console.log(error);
       showNotification('Verification error', error.message, { type: 'error' });
     });
   },
 
 
 }
-

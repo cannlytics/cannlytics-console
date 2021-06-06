@@ -25,6 +25,14 @@ export const theme = {
   },
 
 
+  getTheme() {
+    /*
+     * Get the current theme.
+     */
+    return (document.body.classList.contains('dark')) ? 'dark' : 'light';
+  },
+
+
   setInitialTheme () {
     /*
      * Set th initial UI theme.
@@ -42,17 +50,28 @@ export const theme = {
     }
   },
 
-  getTheme() {
+
+  setTableTheme() {
     /*
-     * Get the current theme.
+     * Set the appropriate theme for tables based on the current theme.
      */
-    return (document.body.classList.contains('dark')) ? 'dark' : 'light';
+    console.log('Setting theme on tables...');
+    let nuisanceTableClass = 'ag-theme-alpine-dark';
+    let finalTableClass = 'ag-theme-alpine';
+    if (hasClass(document.body, 'dark')) {
+      nuisanceTableClass = 'ag-theme-alpine';
+      finalTableClass = 'ag-theme-alpine-dark';
+    }
+    // Toggle Ag-Grid theme.
+    let tables = document.getElementsByClassName(nuisanceTableClass);
+    [...tables].forEach( x => x.classList.add(finalTableClass) );
+    [...tables].forEach( x => x.classList.remove(nuisanceTableClass) );
   },
 
 
   toggleTheme(theme) {
     /*
-     * Toggle the UI theme.
+     * Toggle the UI theme, toggling AG-Grid table class.
      */
     let currentTableClass = 'ag-theme-alpine';
     let newTableClass = 'ag-theme-alpine-dark';
@@ -61,8 +80,6 @@ export const theme = {
       currentTableClass = 'ag-theme-alpine-dark';
       newTableClass = 'ag-theme-alpine';
     } else {
-      // if (!hasClass(document.body, 'dark')) 
-      // document.body.className += ' dark';
       document.body.classList.add('dark');
     }
     // Toggle Ag-Grid theme.
@@ -74,7 +91,7 @@ export const theme = {
 
 }
 
-// function hasClass(element, className) {
-//   return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-// }
+function hasClass(element, className) {
+  return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+}
 

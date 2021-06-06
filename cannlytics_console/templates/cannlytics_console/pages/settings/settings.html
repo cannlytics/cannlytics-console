@@ -16,6 +16,7 @@
     <div class="col">
 
       <!-- General settings table -->
+      <!-- TODO: Render with a for-loop -->
       <div class="list-group col-md-6 py-3">
         <a
           href="/settings/account"
@@ -23,6 +24,14 @@
           aria-current="true"
         >
           Account
+          {% icon "chevron-right" %}
+        </a>
+        <a
+          href="/settings/api"
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark"
+          aria-current="true"
+        >
+          API
           {% icon "chevron-right" %}
         </a>
         <a

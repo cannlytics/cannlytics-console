@@ -1,21 +1,21 @@
 """
 Console Views | Cannlytics
+Author: Keegan Skeate <keegan@cannlytics.com>
 Created: 12/18/2020
-Updated: 4/20/2021
+Updated: 5/10/2021
 """
 
 # External imports
 from django.shortcuts import render
-from django.template import RequestContext
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse
 
 # Internal imports
 from cannlytics_console.state import layout
 from cannlytics_console.utils import (
     get_screen_specific_data,
     get_screen_specific_state,
-    get_user_specific_state,
-    get_user_specific_data,
+    get_user_context,
 )
 
 BASE = 'cannlytics_console'
@@ -24,8 +24,6 @@ BASE = 'cannlytics_console'
 # Main view
 #-----------------------------------------------------------------------
 
-# FIXME: Handle no user more elegantly. Redirect?
-
 class ConsoleView(TemplateView):
     """Main view used for most console pages."""
 
@@ -33,12 +31,18 @@ class ConsoleView(TemplateView):
     redirect_field_name = 'redirect_to'
 
     def get_template_names(self):
-        """Get the screen's template based on the URL."""
+        """Get the screen's template based on the URL path, where the
+        URL is segmented as 'https://{base}/{screen}/{section}/{unit}.
+        A number of page template paths are tried, trying to match a unit
+        first, then section, then a screen-section, finally a screen.
+        Screen-sections and sections are also search for in a general folder.
+        """
         screen = self.kwargs.get('screen', 'dashboard')
         section = self.kwargs.get('section', screen)
         unit = self.kwargs.get('unit', section)
         return [
             f'{BASE}/pages/{screen}/{unit}.html',
+            f'{BASE}/pages/{screen}/{screen}-{section}-{unit}.html',
             f'{BASE}/pages/{screen}/{section}.html',
             f'{BASE}/pages/{screen}/{screen}-{section}.html',
             f'{BASE}/pages/{screen}/{screen}.html',
@@ -47,21 +51,20 @@ class ConsoleView(TemplateView):
         ]
 
     def get_context_data(self, **kwargs):
-        """Get context that is used on all pages."""
+        """Get context that is used on all pages. The context is retrieved
+        dynamically from the app's state. The user's permissions
+        are verified on every request. User-specific context and data
+        can be returned depending on the page."""
         context = super().get_context_data(**kwargs)
-        uid = self.request.session.get('uid', '')
         context['sidebar'] = layout['sidebar']
         context = get_screen_specific_state(self.kwargs, context)
         context = get_screen_specific_data(self.kwargs, context)
-        context = get_user_specific_state(uid, context)
-        context = get_user_specific_data(uid, context)
+        context = get_user_context(self.request, context)
         return context
 
 
 #-----------------------------------------------------------------------
 # Auth
-# Optional: Re-write as functional views?
-# https://www.geeksforgeeks.org/django-authentication-project-with-firebase/
 #-----------------------------------------------------------------------
 
 class LoginView(TemplateView):
@@ -75,47 +78,24 @@ class LoginView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
-
-#-----------------------------------------------------------------------
-# Organizations
-#-----------------------------------------------------------------------
-
-class OrganizationView(TemplateView):
-    """View used for managing organizations."""
-
-    template_name = f'{BASE}/pages/settings/organization.html'
-
-    def get_context_data(self, **kwargs):
-        """ Get the screen context data. """
-        context = super().get_context_data(**kwargs)
-        organization = self.kwargs.get('name', '')
-        context['breadcrumbs'] = [
-            {'title': 'Settings', 'url': '/settings'},
-            {'title': 'Organizations', 'url': '/settings/organizations'},
-            {'title': organization.title(), 'active': True}
-        ]
-        # context = self.get_screen_material(context)
-        return context
-
-    # TODO: Create organization on post.
-
-
 #-----------------------------------------------------------------------
 # Error views
 #-----------------------------------------------------------------------
 
-def handler404(request, *args, **argv):
+def handler404(request, *args, **argv): #pylint: disable=unused-argument
     """Handle missing pages."""
     status_code = 404
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-def handler500(request, *args, **argv):
+def handler500(request, *args, **argv): #pylint: disable=unused-argument
     """Handle internal errors."""
     status_code = 500
     template = f'{BASE}/pages/general/error-pages/{status_code}.html'
     return render(request, template, {}, status=status_code)
 
 
-# Optional: Add 403 and 400 views
+def no_content(request, *args, **argv): #pylint: disable=unused-argument
+    """Return an empty response when needed, such as for a ping."""
+    return HttpResponse(status=204)

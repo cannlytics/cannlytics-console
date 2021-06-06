@@ -249,11 +249,24 @@ body.dark .markdown a:hover {
 a.text-secondary-on-light:hover {
   color: #ccc;
 }
+a.text-secondary:hover {
+  color: #000 !important;
+}
+svg.text-secondary:hover {
+  stroke: #000 !important;
+}
 body.dark a.text-secondary small,
 body.dark p.text-secondary,
 body.dark svg.text-secondary {
   color: #ccc !important;
 }
+body.dark a.text-secondary small:hover {
+  color: #fff !important;
+}
+body.dark svg.text-secondary:hover {
+  stroke: #fff !important;
+}
+
 ::-moz-selection {
   color: #1a1a1a;
   background: #96e6a1;
@@ -545,6 +558,15 @@ body.dark .sliding-action:hover {
   right: 1rem;
   top: 1rem;
 }
+.btn-outline-primary {
+  border-color: #45B649;
+  color: #3f7f34;
+  font-weight: 600;
+}
+.btn-outline-primary:hover {
+  background: #45B649;
+  color: #ffffff;
+}
 
 /*--------------------------------------------------------------------------
   Tabs
@@ -743,6 +765,12 @@ ul {
 }
 .custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
   background-color: #96e6a1;
+}
+
+/* Radio Groups */
+.form-check-input:checked {
+  background-color: #45B649;
+  border-color: #45B649;
 }
 
 /* Dark forms */

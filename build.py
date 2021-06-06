@@ -20,7 +20,7 @@ TEMPLATE_DIR = f'./{APP}/templates/{APP}/'
 # Specify templates that import bundles.
 TEMPLATES = [
     'base.html',
-    'pages/account/base_login.html'
+    'pages/account/base_sign_in.html'
 ]
 
 def get_webpack_hashes():
@@ -89,7 +89,7 @@ def get_webpack_hashes():
             print('Updated hashes in %s.' % template)
 
 
-def clean_bundle_folder(folder, history=60):
+def clean_bundle_folder(folder, history=300):
     """Remove old bundles.
     Args:
         folder (str): The path to the directory to clean old files.

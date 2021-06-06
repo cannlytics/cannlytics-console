@@ -13,20 +13,30 @@ References:
 import json
 import os
 import re
-import sys
+# import sys
 
 # External imports
 import environ
 from django.template import base
 
+# TODO: Prepare for production
+# Caching
+# https://docs.djangoproject.com/en/3.2/ref/templates/api/#django.template.loaders.cached.Loader
+# Hashing
+# https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
+
+# ------------------------------------------------------------#
+# PRODUCTION: or DEV:
+# ------------------------------------------------------------#
+PRODUCTION = True
+
 # ------------------------------------------------------------#
 # Project variables
 # ------------------------------------------------------------#
-PRODUCTION = False
 PROJECT_NAME = 'cannlytics_console'
 ROOT_URLCONF = 'cannlytics_console.urls'
 SETTINGS_NAME = 'cannlytics_console_settings'
-WSGI_APPLICATION = 'cannlytics_console.wsgi.application'
+WSGI_APPLICATION = 'cannlytics_console.core.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # sys.path.insert(0, os.path.join(BASE_DIR))
@@ -40,28 +50,39 @@ with open(os.path.join(BASE_DIR, 'package.json')) as v_file:
 # Environment variables.
 # Pulling django-environ settings file, stored in Secret Manager.
 # ------------------------------------------------------------#
-env_file = os.path.join(BASE_DIR, '.env')
-if not os.path.isfile('.env'):
-    import google.auth
-    from google.cloud import secretmanager as sm
+try:
+    env_file = os.path.join(BASE_DIR, '.env')
+    if not os.path.isfile('.env'):
+        import google.auth
+        from google.cloud import secretmanager as sm
 
-    _, project = google.auth.default()
-    if project:
-        client = sm.SecretManagerServiceClient()
-        path = client.secret_version_path(project, SETTINGS_NAME, 'latest')
-        payload = client.access_secret_version(path).payload.data.decode('UTF-8')
-        with open(env_file, 'w') as f:
-            f.write(payload)
-env = environ.Env()
-env.read_env(env_file)
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+        _, project = google.auth.default()
+        if project:
+            client = sm.SecretManagerServiceClient()
+            path = client.secret_version_path(project, SETTINGS_NAME, 'latest')
+            payload = client.access_secret_version(path).payload.data.decode('UTF-8')
+            with open(env_file, 'w') as f:
+                f.write(payload)
+    env = environ.Env()
+    env.read_env(env_file)
+    SECRET_KEY = env('SECRET_KEY')
+    DEBUG = env('DEBUG')
+except:
+    # Create a default secret key for development.
+    # https://stackoverflow.com/questions/4664724/distributing-django-projects-with-unique-secret-keys
+    DEBUG = False
+    try:
+        from cannlytics_console.secret_key import SECRET_KEY
+    except ImportError:
+        from cannlytics_console.utils import generate_secret_key
+        SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
+        SECRET_KEY = generate_secret_key(os.path.join(SETTINGS_DIR, 'secret_key.py'))
 
 if PRODUCTION:
     DEBUG = False
 
-# MONKEY
-DEBUG = False
+# DEV: MONKEY
+# DEBUG = False
 
 # ------------------------------------------------------------#
 # Apps
@@ -98,6 +119,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cannlytics_console.core.middleware.AppendOrRemoveSlashMiddleware',
 ]
 
 # ------------------------------------------------------------#
@@ -126,7 +148,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cannlytics_console.context_processors.selected_settings', # Adds select settings to the context.
+                'cannlytics_console.core.context_processors.selected_settings', # Adds select settings to the context.
             ],
         },
     },
@@ -275,3 +297,15 @@ APPEND_SLASH = False
 # Allow Django template tags to span multiple lines.
 # https://stackoverflow.com/questions/49110044/django-template-tag-on-multiple-line
 base.tag_re = re.compile(base.tag_re.pattern, re.DOTALL)
+
+# Host static documentation.
+DOCS_DIR = os.path.join(BASE_DIR, f'{PROJECT_NAME}/static/{PROJECT_NAME}/docs')
+DOCS_STATIC_NAMESPACE = os.path.basename(DOCS_DIR)
+
+# Optional: Re-write to read docs directory directly.
+# MKDOCS_CONFIG = os.path.join(BASE_DIR, 'mkdocs.yml')
+# DOCS_DIR = ''
+# DOCS_STATIC_NAMESPACE = ''
+# with open(MKDOCS_CONFIG, 'r') as f:
+#     DOCS_DIR = yaml.load(f, Loader=yaml.Loader)['site_dir']
+#     DOCS_STATIC_NAMESPACE = os.path.basename(DOCS_DIR)
