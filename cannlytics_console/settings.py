@@ -26,9 +26,13 @@ from django.template import base
 # https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
 
 # ------------------------------------------------------------#
+# PRODUCTION: or DEV:
+# ------------------------------------------------------------#
+PRODUCTION = True
+
+# ------------------------------------------------------------#
 # Project variables
 # ------------------------------------------------------------#
-PRODUCTION = False
 PROJECT_NAME = 'cannlytics_console'
 ROOT_URLCONF = 'cannlytics_console.urls'
 SETTINGS_NAME = 'cannlytics_console_settings'
@@ -46,22 +50,33 @@ with open(os.path.join(BASE_DIR, 'package.json')) as v_file:
 # Environment variables.
 # Pulling django-environ settings file, stored in Secret Manager.
 # ------------------------------------------------------------#
-env_file = os.path.join(BASE_DIR, '.env')
-if not os.path.isfile('.env'):
-    import google.auth
-    from google.cloud import secretmanager as sm
+try:
+    env_file = os.path.join(BASE_DIR, '.env')
+    if not os.path.isfile('.env'):
+        import google.auth
+        from google.cloud import secretmanager as sm
 
-    _, project = google.auth.default()
-    if project:
-        client = sm.SecretManagerServiceClient()
-        path = client.secret_version_path(project, SETTINGS_NAME, 'latest')
-        payload = client.access_secret_version(path).payload.data.decode('UTF-8')
-        with open(env_file, 'w') as f:
-            f.write(payload)
-env = environ.Env()
-env.read_env(env_file)
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+        _, project = google.auth.default()
+        if project:
+            client = sm.SecretManagerServiceClient()
+            path = client.secret_version_path(project, SETTINGS_NAME, 'latest')
+            payload = client.access_secret_version(path).payload.data.decode('UTF-8')
+            with open(env_file, 'w') as f:
+                f.write(payload)
+    env = environ.Env()
+    env.read_env(env_file)
+    SECRET_KEY = env('SECRET_KEY')
+    DEBUG = env('DEBUG')
+except:
+    # Create a default secret key for development.
+    # https://stackoverflow.com/questions/4664724/distributing-django-projects-with-unique-secret-keys
+    DEBUG = False
+    try:
+        from cannlytics_console.secret_key import SECRET_KEY
+    except ImportError:
+        from cannlytics_console.utils import generate_secret_key
+        SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
+        SECRET_KEY = generate_secret_key(os.path.join(SETTINGS_DIR, 'secret_key.py'))
 
 if PRODUCTION:
     DEBUG = False

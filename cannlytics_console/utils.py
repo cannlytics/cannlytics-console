@@ -90,15 +90,17 @@ def get_user_context(request, context):
     Returns
         context (dict): Page context updated with any user-specific context.
     """
+    user = {}
     user_claims = auth.verify_session(request)
-    user_email = user_claims['email']
-    user = {
-        'email_verified': user_claims['email_verified'],
-        'display_name': user_claims.get('name', ''),
-        'photo_url': user_claims.get('picture', f'https://robohash.org/{user_email}?set=set5'),
-        'uid': user_claims['uid'],
-        'email': user_email,
-    }
+    if user_claims:
+        user_email = user_claims.get('email', '')
+        user = {
+            'email_verified': user_claims.get('email_verified', False),
+            'display_name': user_claims.get('name', ''),
+            'photo_url': user_claims.get('picture', f'https://robohash.org/{user_email}?set=set5'),
+            'uid': user_claims.get('uid'),
+            'email': user_email,
+        }
     context.update({'user': user})
     return context
 
@@ -156,6 +158,7 @@ def generate_secret_key(env_file_name):
     generated_secret_key = get_random_string(50, chars)
     env_file.write('SECRET_KEY = "{}"\n'.format(generated_secret_key))
     env_file.close()
+    return generated_secret_key
 
 
 #----------------------------------------------#
